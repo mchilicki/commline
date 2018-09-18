@@ -1,0 +1,4 @@
+Enable-migrations -force 
+
+
+Add-Migration VERSION_NAME -ConnectionString "data source=localhost;initial catalog=Commline;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" -ConnectionProviderName "System.Data.SqlClient" -Verbose
