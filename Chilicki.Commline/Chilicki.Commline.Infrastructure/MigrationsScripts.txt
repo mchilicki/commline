@@ -1,4 +1,7 @@
 Enable-migrations -force 
 
-
 Add-Migration VERSION_NAME -ConnectionString "data source=localhost;initial catalog=Commline;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" -ConnectionProviderName "System.Data.SqlClient" -Verbose
+
+Update-Database -ConnectionString "data source=localhost;initial catalog=Commline;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" -ConnectionProviderName "System.Data.SqlClient" -projectName "Chilicki.Commline.Infrastructure" -Verbose
+
+Update-Database -targetMigration "TARGET_MIGRATION" -ConnectionString "data source=localhost;initial catalog=Commline;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" -ConnectionProviderName "System.Data.SqlClient" -projectName "Chilicki.Commline.Infrastructure" -Verbose
