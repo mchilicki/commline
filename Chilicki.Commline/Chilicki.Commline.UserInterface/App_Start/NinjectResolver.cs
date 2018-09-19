@@ -1,4 +1,5 @@
-﻿using Chilicki.Commline.Infrastructure.Databases;
+﻿using Chilicki.Commline.Application.Managers;
+using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Ninject;
 using System;
@@ -33,6 +34,7 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<DepartureRepository>().ToSelf();
             _kernel.Bind<RouteStationRepository>().ToSelf();
             _kernel.Bind<StopRepository>().ToSelf();
+            _kernel.Bind<StopManager>().ToSelf();
         }
     }
 }

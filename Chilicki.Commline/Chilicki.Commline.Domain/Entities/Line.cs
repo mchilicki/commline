@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chilicki.Commline.Domain.Enums;
+using System.Collections.Generic;
 
 namespace Chilicki.Commline.Domain.Entities
 {

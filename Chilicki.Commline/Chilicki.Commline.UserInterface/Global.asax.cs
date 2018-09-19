@@ -10,6 +10,7 @@ namespace Chilicki.Commline.UserInterface
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            AutomapperConfig.RegisterMappings();
             DependencyResolver.SetResolver(new NinjectResolver());
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
