@@ -1,8 +1,9 @@
-﻿using Ninject;
+﻿using Chilicki.Commline.Infrastructure.Databases;
+using Chilicki.Commline.Infrastructure.Repositories;
+using Ninject;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Data.Entity;
 
 namespace Chilicki.Commline.UserInterface.App_Start
 {
@@ -27,7 +28,11 @@ namespace Chilicki.Commline.UserInterface.App_Start
 
         private void AddBindings()
         {
-            
+            _kernel.Bind<DbContext>().To<CommlineDBContext>();
+            _kernel.Bind<LineRepository>().ToSelf();
+            _kernel.Bind<DepartureRepository>().ToSelf();
+            _kernel.Bind<RouteStationRepository>().ToSelf();
+            _kernel.Bind<StopRepository>().ToSelf();
         }
     }
 }
