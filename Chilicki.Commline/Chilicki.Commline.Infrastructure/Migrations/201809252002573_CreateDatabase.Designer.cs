@@ -7,13 +7,13 @@ namespace Chilicki.Commline.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CreateStopsLinesDeparturesAndRouteStations : IMigrationMetadata
+    public sealed partial class CreateDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateStopsLinesDeparturesAndRouteStations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201809182304531_CreateStopsLinesDeparturesAndRouteStations"; }
+            get { return "201809252002573_CreateDatabase"; }
         }
         
         string IMigrationMetadata.Source

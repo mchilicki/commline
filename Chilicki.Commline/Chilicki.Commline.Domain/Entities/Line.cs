@@ -1,13 +1,15 @@
 ﻿using Chilicki.Commline.Domain.Enums;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Chilicki.Commline.Domain.Entities
 {
     public class Line
     {
         public long Id { get; set; }
-        public string Number { get; set; }
+        [Required]
+        public string Name { get; set; }
         public virtual LineType LineType { get; set; }
-        public virtual ICollection<RouteStation> RouteStations { get; set; }
+        public virtual ICollection<RouteStop> RouteStops { get; set; }
     }
 }

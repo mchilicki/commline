@@ -1,8 +1,9 @@
 namespace Chilicki.Commline.Infrastructure.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
-
-    public partial class CreateStopsLinesDeparturesAndRouteStations : DbMigration
+    
+    public partial class CreateDatabase : DbMigration
     {
         public override void Up()
         {
@@ -13,24 +14,24 @@ namespace Chilicki.Commline.Infrastructure.Migrations
                         Id = c.Long(nullable: false, identity: true),
                         DepartureTime = c.Time(nullable: false, precision: 7),
                         DayType = c.Int(nullable: false),
-                        RouteStation_Id = c.Long(nullable: false),
+                        RouteStop_Id = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.RouteStations", t => t.RouteStation_Id)
-                .Index(t => t.RouteStation_Id);
+                .ForeignKey("dbo.RouteStops", t => t.RouteStop_Id, cascadeDelete: true)
+                .Index(t => t.RouteStop_Id);
             
             CreateTable(
-                "dbo.RouteStations",
+                "dbo.RouteStops",
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
-                        RouteOrderId = c.Int(nullable: false),
+                        StopIndex = c.Int(nullable: false),
                         Line_Id = c.Long(nullable: false),
                         Stop_Id = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Lines", t => t.Line_Id)
-                .ForeignKey("dbo.Stops", t => t.Stop_Id)
+                .ForeignKey("dbo.Lines", t => t.Line_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Stops", t => t.Stop_Id, cascadeDelete: true)
                 .Index(t => t.Line_Id)
                 .Index(t => t.Stop_Id);
             
@@ -39,7 +40,7 @@ namespace Chilicki.Commline.Infrastructure.Migrations
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
-                        Number = c.String(nullable: false),
+                        Name = c.String(nullable: false),
                         LineType = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -52,7 +53,7 @@ namespace Chilicki.Commline.Infrastructure.Migrations
                         Name = c.String(nullable: false),
                         Longitude = c.Double(nullable: false),
                         Latitude = c.Double(nullable: false),
-                        SiteNumber = c.Int(nullable: false),
+                        StopNumber = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -60,15 +61,15 @@ namespace Chilicki.Commline.Infrastructure.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.RouteStations", "Stop_Id", "dbo.Stops");
-            DropForeignKey("dbo.RouteStations", "Line_Id", "dbo.Lines");
-            DropForeignKey("dbo.Departures", "RouteStation_Id", "dbo.RouteStations");
-            DropIndex("dbo.RouteStations", new[] { "Stop_Id" });
-            DropIndex("dbo.RouteStations", new[] { "Line_Id" });
-            DropIndex("dbo.Departures", new[] { "RouteStation_Id" });
+            DropForeignKey("dbo.Departures", "RouteStop_Id", "dbo.RouteStops");
+            DropForeignKey("dbo.RouteStops", "Stop_Id", "dbo.Stops");
+            DropForeignKey("dbo.RouteStops", "Line_Id", "dbo.Lines");
+            DropIndex("dbo.RouteStops", new[] { "Stop_Id" });
+            DropIndex("dbo.RouteStops", new[] { "Line_Id" });
+            DropIndex("dbo.Departures", new[] { "RouteStop_Id" });
             DropTable("dbo.Stops");
             DropTable("dbo.Lines");
-            DropTable("dbo.RouteStations");
+            DropTable("dbo.RouteStops");
             DropTable("dbo.Departures");
         }
     }

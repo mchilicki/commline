@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Domain.Enums;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Chilicki.Commline.Domain.Entities
 {
@@ -8,6 +9,7 @@ namespace Chilicki.Commline.Domain.Entities
         public long Id { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public virtual DayType DayType { get; set; }
-        public virtual RouteStation RouteStation { get; set; }
+        [Required]
+        public virtual RouteStop RouteStop { get; set; }
     }
 }

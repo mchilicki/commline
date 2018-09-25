@@ -85,7 +85,7 @@
     <Compile Include="DTOs\StopDTO.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
     <Compile Include="Managers\LineManager.cs" />
-    <Compile Include="Managers\RouteStationManager.cs" />
+    <Compile Include="Managers\RouteStopManager.cs" />
     <Compile Include="Managers\StopManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

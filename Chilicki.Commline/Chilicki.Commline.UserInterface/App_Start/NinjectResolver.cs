@@ -32,7 +32,7 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<DbContext>().To<CommlineDBContext>();
             _kernel.Bind<LineRepository>().ToSelf();
             _kernel.Bind<DepartureRepository>().ToSelf();
-            _kernel.Bind<RouteStationRepository>().ToSelf();
+            _kernel.Bind<RouteStopRepository>().ToSelf();
             _kernel.Bind<StopRepository>().ToSelf();
             _kernel.Bind<StopManager>().ToSelf();
         }
