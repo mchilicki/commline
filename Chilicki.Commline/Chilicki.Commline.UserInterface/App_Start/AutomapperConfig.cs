@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Chilicki.Commline.UserInterface.App_Start
 {

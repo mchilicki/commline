@@ -1,4 +1,5 @@
-﻿using Chilicki.Commline.Infrastructure.Resources;
+﻿using Chilicki.Commline.Infrastructure.Databases;
+using Chilicki.Commline.Infrastructure.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,10 +9,10 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
 {
     public abstract class BaseRepository<TEntity> where TEntity : class
     {
-        internal DbContext _db;
+        internal CommlineDBContext _db;
         internal DbSet<TEntity> _dbSet;
 
-        public BaseRepository(DbContext db)
+        public BaseRepository(CommlineDBContext db)
         {
             _db = db;
             _dbSet = db.Set<TEntity>();

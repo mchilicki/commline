@@ -2,11 +2,7 @@
 using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chilicki.Commline.Application.Managers
 {
@@ -16,12 +12,12 @@ namespace Chilicki.Commline.Application.Managers
         readonly StopManager _stopManager;
         readonly RouteStopRepository _RouteStopRepository;
 
-        public LineManager(LineRepository LineRepository, StopManager stopManager, 
-            RouteStopRepository RouteStopRepository)
+        public LineManager(LineRepository lineRepository, StopManager stopManager, 
+            RouteStopRepository routeStopRepository)
         {
-            _lineRepository = LineRepository;
+            _lineRepository = lineRepository;
             _stopManager = stopManager;
-            _RouteStopRepository = RouteStopRepository;
+            _RouteStopRepository = routeStopRepository;
         }
 
         public LineDTO GetById(long id)

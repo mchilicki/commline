@@ -1,40 +1,36 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chilicki.Commline.Application.Managers
 {
     public class RouteStopManager
     {
-        readonly RouteStopRepository _RouteStopRepository;
+        readonly RouteStopRepository _routeStopRepository;
 
-        public RouteStopManager(RouteStopRepository RouteStopRepository)
+        public RouteStopManager(RouteStopRepository routeStopRepository)
         {
-            _RouteStopRepository = RouteStopRepository;
+            _routeStopRepository = routeStopRepository;
         }
 
         public RouteStop GetById(long id)
         {
-            return _RouteStopRepository.GetById(id);
+            return _routeStopRepository.GetById(id);
         }
 
         public IEnumerable<RouteStop> GetAll()
         {
-            return _RouteStopRepository.GetAll();
+            return _routeStopRepository.GetAll();
         }
 
         public void Create(RouteStop RouteStop)
         {
-            _RouteStopRepository.Insert(RouteStop);
+            _routeStopRepository.Insert(RouteStop);
         }
 
         public void Edit(RouteStop RouteStop)
         {
-            _RouteStopRepository.Update(RouteStop);
+            _routeStopRepository.Update(RouteStop);
         }
     }
 }

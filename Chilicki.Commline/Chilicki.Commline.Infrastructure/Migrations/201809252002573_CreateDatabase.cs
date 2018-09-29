@@ -1,8 +1,7 @@
 namespace Chilicki.Commline.Infrastructure.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class CreateDatabase : DbMigration
     {
         public override void Up()

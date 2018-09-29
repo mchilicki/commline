@@ -10,11 +10,12 @@ namespace Chilicki.Commline.UserInterface
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            AutomapperConfig.RegisterMappings();
             DependencyResolver.SetResolver(new NinjectResolver());
+            AutomapperConfig.RegisterMappings();            
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

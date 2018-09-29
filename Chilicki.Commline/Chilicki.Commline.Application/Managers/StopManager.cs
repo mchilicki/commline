@@ -2,21 +2,19 @@
 using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chilicki.Commline.Application.Managers
 {
     public class StopManager
     {
         readonly StopRepository _stopRepository;
+        readonly MixedRepository _mixedRepository;
 
-        public StopManager(StopRepository stopRepository)
+        public StopManager(StopRepository stopRepository, MixedRepository mixedRepository)
         {
             _stopRepository = stopRepository;
+            _mixedRepository = mixedRepository;
         }
 
         public StopDTO GetById(long id)
@@ -33,7 +31,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public IEnumerable<StopDTO> GetAllForLine(long id)
         {
-            var stopDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_stopRepository.GetAllForLineId(id));
+            var stopDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_mixedRepository.GetAllStopsForLineId(id));
             return stopDTOs;
         }
 
