@@ -25,19 +25,9 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public JsonResult GetAllLines()
         {
-            var line = _lineManager.GetById(1);
-            ViewBag.Message = "";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return Json(_lineManager.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAllStops()
