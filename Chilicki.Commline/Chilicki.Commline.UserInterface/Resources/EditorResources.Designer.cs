@@ -22,14 +22,14 @@ namespace Chilicki.Commline.UserInterface.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class BaseResources {
+    public class EditorResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal BaseResources() {
+        internal EditorResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chilicki.Commline.UserInterface.Resources.BaseResources", typeof(BaseResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chilicki.Commline.UserInterface.Resources.EditorResources", typeof(EditorResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,20 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Commline.
+        ///   Looks up a localized string similar to Bus Stop Tool.
         /// </summary>
-        public static string AppName {
+        public static string BusStopTool {
             get {
-                return ResourceManager.GetString("AppName", resourceCulture);
+                return ResourceManager.GetString("BusStopTool", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editor.
+        ///   Looks up a localized string similar to Use Bus Stop Tool to add, edit or delete bus stops.
         /// </summary>
-        public static string Editor {
+        public static string BusStopToolDescription {
             get {
-                return ResourceManager.GetString("Editor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Home Page.
-        /// </summary>
-        public static string HomePage {
-            get {
-                return ResourceManager.GetString("HomePage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Menu.
-        /// </summary>
-        public static string Menu {
-            get {
-                return ResourceManager.GetString("Menu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No details map.
-        /// </summary>
-        public static string NoDetailsMap {
-            get {
-                return ResourceManager.GetString("NoDetailsMap", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toolbox.
-        /// </summary>
-        public static string Toolbox {
-            get {
-                return ResourceManager.GetString("Toolbox", resourceCulture);
+                return ResourceManager.GetString("BusStopToolDescription", resourceCulture);
             }
         }
     }

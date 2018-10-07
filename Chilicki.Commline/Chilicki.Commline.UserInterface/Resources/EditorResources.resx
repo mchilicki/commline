@@ -117,22 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppName" xml:space="preserve">
-    <value>Commline</value>
+  <data name="BusStopTool" xml:space="preserve">
+    <value>Bus Stop Tool</value>
   </data>
-  <data name="Editor" xml:space="preserve">
-    <value>Editor</value>
-  </data>
-  <data name="HomePage" xml:space="preserve">
-    <value>Home Page</value>
-  </data>
-  <data name="Menu" xml:space="preserve">
-    <value>Menu</value>
-  </data>
-  <data name="NoDetailsMap" xml:space="preserve">
-    <value>No details map</value>
-  </data>
-  <data name="Toolbox" xml:space="preserve">
-    <value>Toolbox</value>
+  <data name="BusStopToolDescription" xml:space="preserve">
+    <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
   </data>
 </root>
