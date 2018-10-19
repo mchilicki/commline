@@ -1,43 +1,55 @@
-﻿<!DOCTYPE html>
+﻿@using Chilicki.Commline.UserInterface.Resources
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Commline</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/shared.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/main.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/sidenav.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/modal-window.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/map.css")" />
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)    
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
-            </div>
-        </div>
+
+<body class="w3-light-grey">
+    <div class="w3-bar w3-top w3-large w3-indigo" style="z-index:4">
+        <span class="w3-bar-item w3-center">@BaseResources.AppName</span>
+        <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="switchMainMenuSidenav()"><i class="fa fa-bars"></i>  @BaseResources.Menu</button>
+        <button id="toolboxButton" class="w3-bar-item w3-button w3-right w3-hover-none w3-hover-text-light-grey" hidden><i class="fa fa-bars"></i>  @BaseResources.Toolbox</button>
+        <button id="saveModification" class="w3-bar-item w3-button w3-right w3-hover-none w3-hover-text-light-grey" hidden><i class="fa fa-save"></i>  @BaseResources.Save</button>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
+    <div id="mainMenuSidenav" class="sidenav primary-element">
+        @Html.ActionLink(BaseResources.HomePage, "Index", "Home")
+        @Html.ActionLink(BaseResources.Editor, "Index", "Editor")
     </div>
+
+    @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+        var sidenavOpened = false;
+        function switchMainMenuSidenav() {
+            if (sidenavOpened == false) {
+                document.getElementById("mainMenuSidenav").style.width = "250px";
+                sidenavOpened = true;
+            }
+            else {
+                document.getElementById("mainMenuSidenav").style.width = "0";
+                sidenavOpened = false;
+            }
+        }
+    </script>
 </body>
 </html>

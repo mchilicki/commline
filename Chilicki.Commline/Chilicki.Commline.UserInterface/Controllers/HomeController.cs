@@ -1,17 +1,23 @@
 ﻿using Chilicki.Commline.Application.Managers;
+using Chilicki.Commline.Infrastructure.Repositories;
 using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {
     public class HomeController : Controller
     {
-        StopManager _stopManager;
-        LineManager _lineManager;
+        readonly LineManager _lineManager;
+        readonly StopManager _stopManager;
+        readonly RouteStopManager _routeStopManager;
+        readonly DepartureManager _departureManager;
 
-        public HomeController(StopManager stopManager, LineManager lineManager)
+        public HomeController(LineManager lineManager, StopManager stopManager, 
+            RouteStopManager routeStopManager, DepartureManager departureManager)
         {
-            _stopManager = stopManager;
             _lineManager = lineManager;
+            _stopManager = stopManager;
+            _routeStopManager = routeStopManager;
+            _departureManager = departureManager;
         }
 
         public ActionResult Index()
@@ -19,19 +25,14 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public JsonResult GetAllLines()
         {
-            var line = _lineManager.GetById(1);
-            ViewBag.Message = "";
-
-            return View();
+            return Json(_lineManager.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact()
+        public JsonResult GetAllStops()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return Json(_stopManager.GetAll(), JsonRequestBehavior.AllowGet);
         }
     }
 }

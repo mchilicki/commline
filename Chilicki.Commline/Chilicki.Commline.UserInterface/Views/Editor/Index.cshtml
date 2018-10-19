@@ -1,0 +1,117 @@
+﻿@using Chilicki.Commline.UserInterface.Resources
+@using Chilicki.Commline.Domain.Enums
+
+<div>
+    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Editor } })
+</div>
+
+<div id="toolboxSidenav" class="sidenav-toolbox">
+    <abbr title="@EditorResources.BusStopToolDescription">
+        <a onclick="setCurrentTool(this, '@EditorToolType.BusStop')">@EditorResources.BusStopTool</a>
+    </abbr>
+</div>
+
+<div id="newStopModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@EditorResources.GiveStopDetails</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <label>@EditorResources.StopName</label>
+                    <input id="modalStopName" type="text" />
+                </p>
+                <p>
+                    <label>@EditorResources.StationNumber</label>
+                    <input id="modalStationNumber" type="number" min="1" onkeypress="return event.charCode >= 48"/>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" 
+                        onclick="addStopToContainer()">@BaseResources.Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" 
+                        onclick="deleteLastMarker()">@BaseResources.Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>  
+    var toolboxOpened = false;
+    var currentTool = '@EditorToolType.None';
+    var editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
+
+    var lastStopLongitude;
+    var lastStopLatitude;
+
+    $(document).ready(function () {
+        $("#toolboxButton").show();  
+        $("#toolboxButton").click(switchToolboxSidenav);
+        $("#saveModification").show();
+        $("#saveModification").click(saveStops);
+    });
+
+    function saveStops() {
+        var sendData = { 'stopsEditionModel': editedStops };
+        $.post("Editor/SaveStops",
+            sendData,
+            function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+    }
+
+    function onMapClick(coordinates) {
+        if (currentTool == '@EditorToolType.BusStop') {
+            placeBusMarkerAndCreateStop(coordinates);
+        } 
+        if (currentTool == '@EditorToolType.TramStop') {
+            // tram tool
+        }
+        if (currentTool == '@EditorToolType.Line') {
+            // line tool
+        }
+    }
+
+    function addStopToContainer() {
+        var newStop = {
+            'Name': $("#modalStopName").val(),
+            'SiteNumber': $("#modalStationNumber").val(),
+            'Longitude': lastStopLongitude,
+            'Latitude': lastStopLatitude,
+        };
+        allLines.StopsWithoutLines.push(newStop);
+        editedStops.Added.push(newStop);
+        $("#modalStopName").val('');
+        $("#modalStationNumber").val('');
+    }
+
+    function placeBusMarkerAndCreateStop(coordinates) {
+        drawMarker(MAP, '', coordinates);
+        $("#newStopModal").modal({ backdrop: "static" });
+        lastStopLatitude = coordinates.lat;
+        lastStopLongitude = coordinates.lng;
+    }
+
+    function setCurrentTool(toolButton, newTool) {
+        if (currentTool != newTool) {
+            currentTool = newTool;
+            $(toolButton).css('color', '#ffffff');
+        }
+        else {
+            currentTool = '@EditorToolType.None';
+            $(toolButton).css('color', '#818181');
+        }            
+    }
+
+    function switchToolboxSidenav() {
+        if (toolboxOpened == false) {
+            document.getElementById("toolboxSidenav").style.width = "250px";
+            toolboxOpened = true;
+        }
+        else {
+            document.getElementById("toolboxSidenav").style.width = "0";
+            toolboxOpened = false;
+        }
+    }
+</script>

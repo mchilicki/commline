@@ -1,7 +1,6 @@
 ﻿using Chilicki.Commline.Domain.Entities;
+using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
-using System.Data.Entity;
-using System.Linq;
 
 namespace Chilicki.Commline.Infrastructure.Repositories
 {
@@ -9,7 +8,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
     {
         readonly StopRepository _stopRepository;
 
-        public LineRepository(DbContext db, StopRepository stopRepository) : base(db)
+        public LineRepository(CommlineDBContext db, StopRepository stopRepository) : base(db)
         {
             _stopRepository = stopRepository;
         }

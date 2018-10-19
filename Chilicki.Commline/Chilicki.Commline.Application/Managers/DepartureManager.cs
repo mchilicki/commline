@@ -1,10 +1,6 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chilicki.Commline.Application.Managers
 {
@@ -12,9 +8,9 @@ namespace Chilicki.Commline.Application.Managers
     {
         readonly DepartureRepository _departureRepository;
 
-        public DepartureManager(DepartureRepository DepartureRepository)
+        public DepartureManager(DepartureRepository departureRepository)
         {
-            _departureRepository = DepartureRepository;
+            _departureRepository = departureRepository;
         }
 
         public Departure GetById(long id)

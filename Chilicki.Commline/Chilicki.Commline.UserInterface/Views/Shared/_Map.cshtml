@@ -1,0 +1,192 @@
+﻿@using Chilicki.Commline.UserInterface.Models
+
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyBWGMUQJXHJ6E0oOLMs-4Ps1hNCPo3zcno&sensor=true" type="text/javascript"></script>
+
+<br />
+<div id="map_canvas"></div>
+
+<section class="scripts">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript">
+        var stopIconSize = 18;
+        var MAP;
+        var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
+        var stopMarkerList = [];
+
+        var busStopImage = new google.maps.MarkerImage(
+            'https://maps.gstatic.com/mapfiles/transit/iw2/6/bus.png',
+            new google.maps.Size(stopIconSize, stopIconSize), //size
+            null, //origin
+            null, //anchor
+            new google.maps.Size(stopIconSize, stopIconSize) //scale
+        );
+
+        $(document).ready(function () {
+            initializeMap();
+            loadAllLines();
+        });
+
+        function initializeMap() {
+            google.maps.visualRefresh = true;
+            var Tychy = new google.maps.LatLng(50.120965, 19.015120);
+            var styles =
+                [
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    }
+                ]
+            var styledMap = new google.maps.StyledMapType(styles, { name: '@ViewData["viewName"]' });
+            var mapOptions = {
+                zoom: 13,
+                center: Tychy,
+                mapTypeControlOptions:
+                    {
+                        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+                    }
+            };
+            MAP = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+            MAP.mapTypes.set('map_style', styledMap);
+            MAP.setMapTypeId('map_style');
+
+            google.maps.event.addListener(MAP, 'zoom_changed', function () {
+                onZoomChanged(MAP);
+            });
+
+            google.maps.event.addListener(MAP, 'click', function (event) {
+                onMapClick(event.latLng);
+            });
+        }
+
+        function onZoomChanged(map) {
+            var pixelSizeAtZoom0 = 5;
+            var maxPixelSize = stopIconSize;
+            var relativePixelSize = Math.round(pixelSizeAtZoom0 * Math.pow(2, map.getZoom()));
+            if (relativePixelSize > maxPixelSize)
+                relativePixelSize = maxPixelSize;
+            if (map.getZoom() <= 12)
+                relativePixelSize = 0;
+            $.each(stopMarkerList, function (i, stopMarker) {
+                stopMarker.setIcon(
+                    new google.maps.MarkerImage(
+                        busStopImage.url,
+                        null,
+                        null,
+                        null,
+                        new google.maps.Size(relativePixelSize, relativePixelSize)
+                    )
+                );
+            })
+        }
+
+        function onMapClick(coordinates) {
+            // Do nothing
+        }
+
+        function drawMarker(map, stopName, coordinates) {
+            var stopMarker = new google.maps.Marker({
+                'position': coordinates,
+                'map': map,
+                'title': stopName,
+                'icon': busStopImage,
+            });
+
+            var infowindow = new google.maps.InfoWindow({
+                content: "<div class='infoDiv'><h2>" + stopName + "</div></div>"
+            });
+
+            google.maps.event.addListener(stopMarker, 'click', function () {
+                infowindow.open(map, stopMarker);
+            });
+            stopMarkerList.push(stopMarker);
+            return stopMarker;
+        }
+
+        function drawAllStopsWithoutLines(map, stops) {
+            $.each(stops, function (stopIndex, stop) {
+                drawMarker(map, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude));
+            });
+        }
+
+        function drawLine(map, stopList) {
+            var stopLocations = []
+            $.each(stopList, function (i, stop) {
+                var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
+                stopLocations.push(coordinates);
+                drawMarker(map, stop.Name, coordinates);
+            })
+
+            var stopPath = new google.maps.Polyline({
+                path: stopLocations,
+                strokeColor: getRandomColor(),
+                strokeOpacity: 0.8,
+                strokeWeight: 6
+            });
+            stopPath.setMap(map);
+        }
+
+        function drawAllLines(map, lines) {            
+            $.each(lines, function (i, line) {
+                drawLine(map, line.Stops)
+            });
+        }
+
+        function loadAllLines() {
+            $.ajax({
+                type: "GET",
+                url: 'Editor/GetAllLines',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    allLines = result;
+                    drawAllLines(MAP, result.Lines);
+                    drawAllStopsWithoutLines(MAP, result.StopsWithoutLines);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                }
+            });
+        }
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</section>
