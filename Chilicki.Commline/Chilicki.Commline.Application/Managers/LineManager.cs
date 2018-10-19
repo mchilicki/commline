@@ -38,6 +38,15 @@ namespace Chilicki.Commline.Application.Managers
             return lineDTOs;
         }
 
+        public AllLinesDTO GetEverything()
+        {
+            return new AllLinesDTO()
+            {
+                Lines = GetAll(),
+                StopsWithoutLines = _stopManager.GetAllNotConnectedToAnyLine(),
+            };
+        }
+
         public void Create(LineDTO lineDTO)
         {
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);

@@ -1,29 +1,72 @@
 ﻿@using Chilicki.Commline.UserInterface.Resources
+@using Chilicki.Commline.Domain.Enums
 
 <div>
     @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Editor } })
 </div>
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
-    <abbr title="@EditorResources.BusStopToolDescription"><a onclick="setCurrentTool(this, 'busStopTool')">@EditorResources.BusStopTool</a></abbr>
+    <abbr title="@EditorResources.BusStopToolDescription">
+        <a onclick="setCurrentTool(this, '@EditorToolType.BusStop')">@EditorResources.BusStopTool</a>
+    </abbr>
+</div>
+
+<div id="newStopModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@EditorResources.GiveStopDetails</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <label>@EditorResources.StopName</label>
+                    <input id="modalStopName" type="text" />
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" 
+                        onclick="addStopToContainer()">@BaseResources.Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" 
+                        onclick="deleteLastMarker()">@BaseResources.Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>  
     var toolboxOpened = false;
-    var currentTool = 'none';
+    var currentTool = '@EditorToolType.None';
+
+    var lastStopLongitude;
+    var lastStopLatitude;
 
     $(document).ready(function () {
-        $("#toolboxButton").show();        
+        $("#toolboxButton").show();    
     });
 
     function onMapClick(coordinates) {
-        if (currentTool == 'busStopTool') {
+        if (currentTool == '@EditorToolType.BusStop') {
             placeBusMarkerAndCreateStop(coordinates);
         } 
+        if (currentTool == '@EditorToolType.TramStop') {
+            // tram tool
+        }
+        if (currentTool == '@EditorToolType.Line') {
+            // line tool
+        }
+    }
+
+    function addStopToContainer() {
+        var stopName = $("#modalStopName").text();
+        var newStop = { 'Name': stopName, 'Longitude': lastStopLongitude, 'Latitude': lastStopLatitude };
+        allLines.StopsWithoutLines.push(newStop);
     }
 
     function placeBusMarkerAndCreateStop(coordinates) {
-        drawMarker(MAP, '', coordinates);
+        var newStopMarker = drawMarker(MAP, '', coordinates);
+        $("#newStopModal").modal({ backdrop: "static" });
+        lastStopLatitude = coordinates.lat;
+        lastStopLongitude = coordinates.lng;
     }
 
     function setCurrentTool(toolButton, newTool) {
@@ -32,7 +75,7 @@
             $(toolButton).css('color', '#ffffff');
         }
         else {
-            currentTool = 'none';
+            currentTool = '@EditorToolType.None';
             $(toolButton).css('color', '#818181');
         }            
     }

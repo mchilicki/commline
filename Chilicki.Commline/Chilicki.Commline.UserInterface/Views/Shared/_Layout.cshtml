@@ -6,91 +6,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commline</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/shared.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/main.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/sidenav.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/modal-window.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/map.css")" />
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)    
 </head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-html, body, h1, h2, h3, h4, h5 {
-    font-family: "Raleway", sans-serif
 
-}
-body {
-    height: 100%;
-    width: 100%;
-}
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #000;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 20px;
-    margin-top: 40px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #ffffff;
-}
-
-.sidenav-toolbox {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: #000;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 20px;
-    margin-top: 40px;
-}
-
-.sidenav-toolbox a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav-toolbox a:hover {
-    color: #ffffff;
-}
-
-@@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-</style>
 <body class="w3-light-grey">
-    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+    <div class="w3-bar w3-top w3-large w3-indigo" style="z-index:4">
         <span class="w3-bar-item w3-center">@BaseResources.AppName</span>
-        <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="switchMainMenuSidenav();"><i class="fa fa-bars"></i>  @BaseResources.Menu</button>
-        <button id="toolboxButton" class="w3-bar-item w3-button w3-right w3-hover-none w3-hover-text-light-grey" hidden onclick="switchToolboxSidenav();"><i class="fa fa-bars"></i>  @BaseResources.Toolbox</button>
+        <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="switchMainMenuSidenav()"><i class="fa fa-bars"></i>  @BaseResources.Menu</button>
+        <button id="toolboxButton" class="w3-bar-item w3-button w3-right w3-hover-none w3-hover-text-light-grey" hidden onclick="switchToolboxSidenav()"><i class="fa fa-bars"></i>  @BaseResources.Toolbox</button>
     </div>
 
-    <div id="mainMenuSidenav" class="sidenav">
+    <div id="mainMenuSidenav" class="sidenav primary-element">
         @Html.ActionLink(BaseResources.HomePage, "Index", "Home")
         @Html.ActionLink(BaseResources.Editor, "Index", "Editor")
     </div>
@@ -102,7 +39,6 @@ body {
     @RenderSection("scripts", required: false)
     <script>
         var sidenavOpened = false;
-
         function switchMainMenuSidenav() {
             if (sidenavOpened == false) {
                 document.getElementById("mainMenuSidenav").style.width = "250px";
@@ -111,7 +47,7 @@ body {
             else {
                 document.getElementById("mainMenuSidenav").style.width = "0";
                 sidenavOpened = false;
-            }            
+            }
         }
     </script>
 </body>

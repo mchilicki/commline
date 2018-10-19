@@ -3,6 +3,7 @@ using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.UserInterface.Controllers;
 using Ninject;
+using Ninject.Web.Common;
 using System;
 using System.Collections.Generic;
 
@@ -29,13 +30,13 @@ namespace Chilicki.Commline.UserInterface.App_Start
 
         private void AddBindings()
         {
-            _kernel.Bind<CommlineDBContext>().ToSelf().InSingletonScope();
+            _kernel.Bind<CommlineDBContext>().ToSelf().InRequestScope();
 
-            _kernel.Bind<StopRepository>().ToSelf().InSingletonScope();
-            _kernel.Bind<LineRepository>().ToSelf().InSingletonScope();
-            _kernel.Bind<DepartureRepository>().ToSelf().InSingletonScope();
-            _kernel.Bind<RouteStopRepository>().ToSelf().InSingletonScope();
-            _kernel.Bind<MixedRepository>().ToSelf().InSingletonScope();
+            _kernel.Bind<StopRepository>().ToSelf().InRequestScope();
+            _kernel.Bind<LineRepository>().ToSelf().InRequestScope();
+            _kernel.Bind<DepartureRepository>().ToSelf().InRequestScope();
+            _kernel.Bind<RouteStopRepository>().ToSelf().InRequestScope();
+            _kernel.Bind<MixedRepository>().ToSelf().InRequestScope();
 
             _kernel.Bind<StopManager>().ToSelf();
             _kernel.Bind<LineManager>().ToSelf();

@@ -123,4 +123,10 @@
   <data name="BusStopToolDescription" xml:space="preserve">
     <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
   </data>
+  <data name="GiveStopDetails" xml:space="preserve">
+    <value>Please enter details of new stop</value>
+  </data>
+  <data name="StopName" xml:space="preserve">
+    <value>Stop name</value>
+  </data>
 </root>

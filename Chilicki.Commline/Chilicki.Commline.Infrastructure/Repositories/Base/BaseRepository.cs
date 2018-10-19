@@ -30,7 +30,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            return _dbSet.ToList();
+            return _dbSet;
         }
 
         public virtual void Insert(TEntity entity)

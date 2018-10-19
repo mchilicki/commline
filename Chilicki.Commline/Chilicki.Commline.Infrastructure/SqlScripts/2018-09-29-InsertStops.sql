@@ -18,10 +18,6 @@ INSERT INTO [dbo].[Stops]
 		   ('Tychy Paprocany Dymarek'
            ,50.096574, 18.993309
            ,1),
-		   ('Tychy Jezioro Paprocañskie'
-           ,50.090366, 
-		   18.996214
-           ,1),
 		   ('Tychy Osiedle W'
            ,50.099021, 18.990290
            ,1),

@@ -8,6 +8,7 @@ namespace Chilicki.Commline.Application.DTOs
 {
     public class AllLinesDTO
     {
-        IEnumerable<LineDTO> Lines { get; set; }
+        public IEnumerable<LineDTO> Lines { get; set; }
+        public IEnumerable<StopDTO> StopsWithoutLines { get; set; }
     }
 }

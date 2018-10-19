@@ -120,6 +120,9 @@
   <data name="AppName" xml:space="preserve">
     <value>Commline</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Editor" xml:space="preserve">
     <value>Editor</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="NoDetailsMap" xml:space="preserve">
     <value>No details map</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="Toolbox" xml:space="preserve">
     <value>Toolbox</value>

@@ -77,5 +77,23 @@ namespace Chilicki.Commline.UserInterface.Resources {
                 return ResourceManager.GetString("BusStopToolDescription", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter details of new stop.
+        /// </summary>
+        public static string GiveStopDetails {
+            get {
+                return ResourceManager.GetString("GiveStopDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop name.
+        /// </summary>
+        public static string StopName {
+            get {
+                return ResourceManager.GetString("StopName", resourceCulture);
+            }
+        }
     }
 }
