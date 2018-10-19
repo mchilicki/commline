@@ -35,8 +35,6 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
 
         public virtual void Insert(TEntity entity)
         {
-            if (_dbSet.Contains(entity))
-                throw new InvalidOperationException(DatabaseResources.Exception_EntityAlreadyExists);
             _dbSet.Add(entity);
             _db.SaveChanges();
         }     

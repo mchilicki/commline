@@ -88,6 +88,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Station number.
+        /// </summary>
+        public static string StationNumber {
+            get {
+                return ResourceManager.GetString("StationNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stop name.
         /// </summary>
         public static string StopName {

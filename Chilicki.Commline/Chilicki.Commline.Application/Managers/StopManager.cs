@@ -47,6 +47,14 @@ namespace Chilicki.Commline.Application.Managers
             return GetAllForLine(lineDTO.Id);
         }
 
+        public void Create(IEnumerable<StopDTO> stopDTOs)
+        {
+            foreach (var stopDTO in stopDTOs)
+            {
+                Create(stopDTO);
+            }
+        }
+
         public void Create(StopDTO stopDTO)
         {
             Stop stop = Mapper.Map<StopDTO, Stop>(stopDTO);

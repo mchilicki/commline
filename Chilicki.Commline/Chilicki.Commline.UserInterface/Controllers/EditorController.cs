@@ -1,4 +1,5 @@
-﻿using Chilicki.Commline.Application.Managers;
+﻿using Chilicki.Commline.Application.DTOs;
+using Chilicki.Commline.Application.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,26 @@ namespace Chilicki.Commline.UserInterface.Controllers
         public JsonResult GetAllStops()
         {
             return Json(_stopManager.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SaveStops(StopsEditionModel stopsEditionModel)
+        {
+            string errorMessage = "";
+            try
+            {
+                if (stopsEditionModel.Added != null)
+                    _stopManager.Create(stopsEditionModel.Added);
+                //if (stopsEditionModel.Modified != null)
+                    //_stopManager.Edit(stopsEditionModel.Modified);
+                //if (stopsEditionModel.Deleted != null)
+                    //_stopManager.Delete(stopsEditionModel.Deleted);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+            return Json(errorMessage);
         }
     }
 }

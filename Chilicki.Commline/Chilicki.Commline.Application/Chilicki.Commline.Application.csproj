@@ -84,6 +84,7 @@
     <Compile Include="DTOs\AllLinesDTO.cs" />
     <Compile Include="DTOs\LineDTO.cs" />
     <Compile Include="DTOs\StopDTO.cs" />
+    <Compile Include="DTOs\StopsEditionModel.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
     <Compile Include="Managers\LineManager.cs" />
     <Compile Include="Managers\RouteStopManager.cs" />

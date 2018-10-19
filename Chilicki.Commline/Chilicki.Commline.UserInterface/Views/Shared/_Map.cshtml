@@ -12,7 +12,7 @@
     <script type="text/javascript">
         var stopIconSize = 18;
         var MAP;
-        var allLines = {};
+        var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
         var stopMarkerList = [];
 
         var busStopImage = new google.maps.MarkerImage(
@@ -28,7 +28,7 @@
             loadAllLines();
         });
 
-        function initializeMap(map) {
+        function initializeMap() {
             google.maps.visualRefresh = true;
             var Tychy = new google.maps.LatLng(50.120965, 19.015120);
             var styles =
@@ -134,6 +134,12 @@
             return stopMarker;
         }
 
+        function drawAllStopsWithoutLines(map, stops) {
+            $.each(stops, function (stopIndex, stop) {
+                drawMarker(map, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude));
+            });
+        }
+
         function drawLine(map, stopList) {
             var stopLocations = []
             $.each(stopList, function (i, stop) {
@@ -151,9 +157,8 @@
             stopPath.setMap(map);
         }
 
-        function drawAllLines(map, allLinesResult) {
-            allLines = allLinesResult;
-            $.each(allLines.Lines, function (i, line) {
+        function drawAllLines(map, lines) {            
+            $.each(lines, function (i, line) {
                 drawLine(map, line.Stops)
             });
         }
@@ -161,11 +166,13 @@
         function loadAllLines() {
             $.ajax({
                 type: "GET",
-                url: 'Home/GetAllLines',
+                url: 'Editor/GetAllLines',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
-                    drawAllLines(MAP, result);
+                    allLines = result;
+                    drawAllLines(MAP, result.Lines);
+                    drawAllStopsWithoutLines(MAP, result.StopsWithoutLines);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);

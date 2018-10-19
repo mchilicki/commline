@@ -22,6 +22,10 @@
                     <label>@EditorResources.StopName</label>
                     <input id="modalStopName" type="text" />
                 </p>
+                <p>
+                    <label>@EditorResources.StationNumber</label>
+                    <input id="modalStationNumber" type="number" min="1" onkeypress="return event.charCode >= 48"/>
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" 
@@ -36,13 +40,26 @@
 <script>  
     var toolboxOpened = false;
     var currentTool = '@EditorToolType.None';
+    var editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
 
     var lastStopLongitude;
     var lastStopLatitude;
 
     $(document).ready(function () {
-        $("#toolboxButton").show();    
+        $("#toolboxButton").show();  
+        $("#toolboxButton").click(switchToolboxSidenav);
+        $("#saveModification").show();
+        $("#saveModification").click(saveStops);
     });
+
+    function saveStops() {
+        var sendData = { 'stopsEditionModel': editedStops };
+        $.post("Editor/SaveStops",
+            sendData,
+            function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+    }
 
     function onMapClick(coordinates) {
         if (currentTool == '@EditorToolType.BusStop') {
@@ -57,13 +74,20 @@
     }
 
     function addStopToContainer() {
-        var stopName = $("#modalStopName").text();
-        var newStop = { 'Name': stopName, 'Longitude': lastStopLongitude, 'Latitude': lastStopLatitude };
+        var newStop = {
+            'Name': $("#modalStopName").val(),
+            'SiteNumber': $("#modalStationNumber").val(),
+            'Longitude': lastStopLongitude,
+            'Latitude': lastStopLatitude,
+        };
         allLines.StopsWithoutLines.push(newStop);
+        editedStops.Added.push(newStop);
+        $("#modalStopName").val('');
+        $("#modalStationNumber").val('');
     }
 
     function placeBusMarkerAndCreateStop(coordinates) {
-        var newStopMarker = drawMarker(MAP, '', coordinates);
+        drawMarker(MAP, '', coordinates);
         $("#newStopModal").modal({ backdrop: "static" });
         lastStopLatitude = coordinates.lat;
         lastStopLongitude = coordinates.lng;

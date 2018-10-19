@@ -14,11 +14,11 @@ namespace Chilicki.Commline.UserInterface.App_Start
                 config.CreateMap<LineDTO, Line>()
                     .ForMember(dest => dest.RouteStops, opt => opt.Ignore());
 
-                config.CreateMap<Stop, StopDTO>();
+                config.CreateMap<Stop, StopDTO>()
+                    .ForMember(dest => dest.SiteNumber, opt => opt.MapFrom(src => src.StopNumber));
                 config.CreateMap<StopDTO, Stop>()
-                    .ForMember(dest => dest.RouteStops, opt => opt.Ignore());
-
-
+                    .ForMember(dest => dest.RouteStops, opt => opt.Ignore())
+                    .ForMember(dest => dest.StopNumber, opt => opt.MapFrom(src => src.SiteNumber));
             });
         }
     }
