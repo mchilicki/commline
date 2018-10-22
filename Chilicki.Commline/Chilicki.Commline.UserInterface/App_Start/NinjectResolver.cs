@@ -1,4 +1,5 @@
 ﻿using Chilicki.Commline.Application.Managers;
+using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.UserInterface.Controllers;
@@ -42,6 +43,8 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<LineManager>().ToSelf();
             _kernel.Bind<DepartureManager>().ToSelf();
             _kernel.Bind<RouteStopManager>().ToSelf();
+
+            _kernel.Bind<LineValidator>().ToSelf();
 
             _kernel.Bind<HomeController>().ToSelf();
             _kernel.Bind<EditorController>().ToSelf();

@@ -35,9 +35,9 @@ namespace Chilicki.Commline.Infrastructure.Repositories
 
         public void InsertForLineAndStops(Line line, IEnumerable<Stop> stops)
         {
-            if (!_lineRepository.DoesLineHaveEmptyRoute(line.Id))
-                throw new InvalidOperationException($"{DatabaseResources.Exception_LineWithId} " +
-                    $"{line.Id} {DatabaseResources.Exception_lineHasStops}");
+            //if (!_lineRepository.DoesLineHaveEmptyRoute(line.Id))
+            //    throw new InvalidOperationException($"{DatabaseResources.Exception_LineWithId} " +
+            //        $"{line.Id} {DatabaseResources.Exception_lineHasStops}");
             int stopIndex = 1;
             foreach (var stop in stops)
             {

@@ -2,12 +2,16 @@
 @using Chilicki.Commline.Domain.Enums
 
 <div>
-    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Editor } })
+    @Html.Partial("~/Views/Shared/_Map.cshtml", 
+        new ViewDataDictionary { { "viewName", BaseResources.Editor } })
 </div>
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
     <abbr title="@EditorResources.BusStopToolDescription">
         <a onclick="setCurrentTool(this, '@EditorToolType.BusStop')">@EditorResources.BusStopTool</a>
+    </abbr>
+    <abbr title="@EditorResources.BusStopToolDescription">
+        <a onclick="setCurrentTool(this, '@EditorToolType.Line')">@EditorResources.LineTool</a>
     </abbr>
 </div>
 
@@ -24,7 +28,8 @@
                 </p>
                 <p>
                     <label>@EditorResources.StationNumber</label>
-                    <input id="modalStationNumber" type="number" min="1" onkeypress="return event.charCode >= 48"/>
+                    <input id="modalStationNumber" type="number" min="1" 
+                           onkeypress="return event.charCode >= 48"/>
                 </p>
             </div>
             <div class="modal-footer">
@@ -37,10 +42,42 @@
     </div>
 </div>
 
+<div id="newLineModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@EditorResources.NewLineCreation</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <label>@EditorResources.LineName</label>
+                    <input id="modalLineName" type="text" />
+                </p>
+                @*<p>
+                    <label>@EditorResources.LineNumber</label>
+                    <input id="modalLineNumber" type="number" min="1" 
+                           onkeypress="return event.charCode >= 48" />
+                </p>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="addLineToContainer()">
+                    @BaseResources.Save
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    @BaseResources.Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>  
     var toolboxOpened = false;
-    var currentTool = '@EditorToolType.None';
+    
     var editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
+    var editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
+    var currentEditedLine = {};
 
     var lastStopLongitude;
     var lastStopLatitude;
@@ -49,14 +86,30 @@
         $("#toolboxButton").show();  
         $("#toolboxButton").click(switchToolboxSidenav);
         $("#saveModification").show();
-        $("#saveModification").click(saveStops);
+        $("#saveModification").click(saveEverything);
     });
+
+    function saveEverything() {
+        saveStops();
+        saveLines();
+    }
 
     function saveStops() {
         var sendData = { 'stopsEditionModel': editedStops };
         $.post("Editor/SaveStops",
             sendData,
             function (data, status) {
+                editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+    }
+
+    function saveLines() {
+        var sendData = { 'linesEditionModel': editedLines };
+        $.post("Editor/SaveLines",
+            sendData,
+            function (data, status) {
+                editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
                 alert("Data: " + data + "\nStatus: " + status);
             });
     }
@@ -68,9 +121,27 @@
         if (currentTool == '@EditorToolType.TramStop') {
             // tram tool
         }
-        if (currentTool == '@EditorToolType.Line') {
-            // line tool
-        }
+    }
+
+    function addStopToLine(marker) {
+        var sendData = { 'id': marker.id };
+        $.post("Editor/GetStop",
+            sendData,
+            function (data, status) {
+                currentEditedLine.Stops.push(data);
+            });
+    }
+
+    function addLineToContainer() {
+        var newLine = {
+            'Name': $("#modalLineName").val(),
+            'Stops': [],
+        };
+        allLines.Lines.push(newLine);
+        editedLines.Added.push(newLine);
+        currentEditedLine = newLine;
+        $("#modalLineName").val('');
+        $("#modalLineNumber").val('');
     }
 
     function addStopToContainer() {
@@ -84,7 +155,7 @@
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
         $("#modalStationNumber").val('');
-    }
+    }   
 
     function placeBusMarkerAndCreateStop(coordinates) {
         drawMarker(MAP, '', coordinates);
@@ -101,7 +172,10 @@
         else {
             currentTool = '@EditorToolType.None';
             $(toolButton).css('color', '#818181');
-        }            
+        }
+        if (currentTool == '@EditorToolType.Line') {
+            $("#newLineModal").modal();
+        }
     }
 
     function switchToolboxSidenav() {

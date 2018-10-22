@@ -15,7 +15,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
 
         public bool DoesLineHaveEmptyRoute(long lineId)
         {
-            return _stopRepository.GetCount() == 0;
+            return _stopRepository.GetCount() < 2;
         }
     }
 }

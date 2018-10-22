@@ -1,4 +1,5 @@
 ﻿@using Chilicki.Commline.UserInterface.Models
+@using Chilicki.Commline.Domain.Enums
 
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBWGMUQJXHJ6E0oOLMs-4Ps1hNCPo3zcno&sensor=true" type="text/javascript"></script>
 
@@ -14,6 +15,7 @@
         var MAP;
         var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
         var stopMarkerList = [];
+        var currentTool = '@EditorToolType.None';
 
         var busStopImage = new google.maps.MarkerImage(
             'https://maps.gstatic.com/mapfiles/transit/iw2/6/bus.png',
@@ -115,12 +117,17 @@
             // Do nothing
         }
 
-        function drawMarker(map, stopName, coordinates) {
+        function addStopToLine(marker) {
+            // Do nothing
+        }
+
+        function drawMarker(map, id, stopName, coordinates) {
             var stopMarker = new google.maps.Marker({
                 'position': coordinates,
                 'map': map,
                 'title': stopName,
                 'icon': busStopImage,
+                'id': id,
             });
 
             var infowindow = new google.maps.InfoWindow({
@@ -128,7 +135,10 @@
             });
 
             google.maps.event.addListener(stopMarker, 'click', function () {
-                infowindow.open(map, stopMarker);
+                if (currentTool == '@EditorToolType.None')
+                    infowindow.open(map, stopMarker);
+                if (currentTool == '@EditorToolType.Line')
+                    addStopToLine(stopMarker);
             });
             stopMarkerList.push(stopMarker);
             return stopMarker;
@@ -136,7 +146,7 @@
 
         function drawAllStopsWithoutLines(map, stops) {
             $.each(stops, function (stopIndex, stop) {
-                drawMarker(map, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude));
+                drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude));
             });
         }
 
@@ -145,7 +155,7 @@
             $.each(stopList, function (i, stop) {
                 var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
                 stopLocations.push(coordinates);
-                drawMarker(map, stop.Name, coordinates);
+                drawMarker(map, stop.Id, stop.Name, coordinates);
             })
 
             var stopPath = new google.maps.Polyline({
@@ -157,7 +167,7 @@
             stopPath.setMap(map);
         }
 
-        function drawAllLines(map, lines) {            
+        function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
                 drawLine(map, line.Stops)
             });

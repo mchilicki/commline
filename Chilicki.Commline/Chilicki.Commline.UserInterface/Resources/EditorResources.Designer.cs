@@ -88,6 +88,42 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line name.
+        /// </summary>
+        public static string LineName {
+            get {
+                return ResourceManager.GetString("LineName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line number.
+        /// </summary>
+        public static string LineNumber {
+            get {
+                return ResourceManager.GetString("LineNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Tool.
+        /// </summary>
+        public static string LineTool {
+            get {
+                return ResourceManager.GetString("LineTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter details of new line.
+        /// </summary>
+        public static string NewLineCreation {
+            get {
+                return ResourceManager.GetString("NewLineCreation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Station number.
         /// </summary>
         public static string StationNumber {

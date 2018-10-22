@@ -58,5 +58,40 @@ namespace Chilicki.Commline.UserInterface.Controllers
             }
             return Json(errorMessage);
         }
+
+        [HttpPost]
+        public JsonResult SaveLines(LinesEditionModel linesEditionModel)
+        {
+            string errorMessage = "";
+            try
+            {
+                if (linesEditionModel.Added != null)
+                    _lineManager.Create(linesEditionModel.Added);
+                //if (stopsEditionModel.Modified != null)
+                //_stopManager.Edit(stopsEditionModel.Modified);
+                //if (stopsEditionModel.Deleted != null)
+                //_stopManager.Delete(stopsEditionModel.Deleted);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+            return Json(errorMessage);
+        }
+
+        [HttpPost]
+        public JsonResult GetStop(long id)
+        {
+            StopDTO stop = null;
+            try
+            {
+                stop = _stopManager.GetById(id);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Json(stop, JsonRequestBehavior.AllowGet);
+        }
     }
 }

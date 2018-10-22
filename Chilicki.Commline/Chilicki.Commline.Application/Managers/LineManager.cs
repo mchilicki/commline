@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Chilicki.Commline.Application.DTOs;
+using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System.Collections.Generic;
@@ -10,14 +11,16 @@ namespace Chilicki.Commline.Application.Managers
     {
         readonly LineRepository _lineRepository;
         readonly StopManager _stopManager;
-        readonly RouteStopRepository _RouteStopRepository;
+        readonly RouteStopRepository _routeStopRepository;
+        readonly LineValidator _lineValidator;
 
         public LineManager(LineRepository lineRepository, StopManager stopManager, 
-            RouteStopRepository routeStopRepository)
+            RouteStopRepository routeStopRepository, LineValidator lineValidator)
         {
             _lineRepository = lineRepository;
             _stopManager = stopManager;
-            _RouteStopRepository = routeStopRepository;
+            _routeStopRepository = routeStopRepository;
+            _lineValidator = lineValidator;
         }
 
         public LineDTO GetById(long id)
@@ -47,16 +50,26 @@ namespace Chilicki.Commline.Application.Managers
             };
         }
 
+        public void Create(IEnumerable<LineDTO> lineDTOs)
+        {
+            foreach (var lineDTO in lineDTOs)
+            {
+                Create(lineDTO);
+            }
+        }
+
         public void Create(LineDTO lineDTO)
         {
-            Line line = Mapper.Map<LineDTO, Line>(lineDTO);
+            _lineValidator.ValidateLine(lineDTO);
+            Line line = Mapper.Map<LineDTO, Line>(lineDTO);            
             _lineRepository.Insert(line);
-            _RouteStopRepository.InsertForLineAndStops(line, 
+            _routeStopRepository.InsertForLineAndStops(line, 
                 Mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
         }
 
         public void Edit(LineDTO lineDTO)
         {
+            _lineValidator.ValidateLine(lineDTO);
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);
             _lineRepository.Update(line);
         }        
