@@ -8,10 +8,10 @@
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
     <abbr title="@EditorResources.BusStopToolDescription">
-        <a onclick="setCurrentTool(this, '@EditorToolType.BusStop')">@EditorResources.BusStopTool</a>
+        <a id="stopToolButton" onclick="setCurrentTool(this, '@EditorToolType.BusStop')">@EditorResources.BusStopTool</a>
     </abbr>
     <abbr title="@EditorResources.BusStopToolDescription">
-        <a onclick="setCurrentTool(this, '@EditorToolType.Line')">@EditorResources.LineTool</a>
+        <a id="lineToolButton" onclick="setCurrentTool(this, '@EditorToolType.Line')">@EditorResources.LineTool</a>
     </abbr>
 </div>
 
@@ -64,7 +64,8 @@
                         onclick="addLineToContainer()">
                     @BaseResources.Save
                 </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        onclick="cancelNewLineCreation()">
                     @BaseResources.Cancel
                 </button>
             </div>
@@ -92,6 +93,7 @@
     function saveEverything() {
         saveStops();
         saveLines();
+        location.reload();
     }
 
     function saveStops() {
@@ -100,7 +102,7 @@
             sendData,
             function (data, status) {
                 editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
-                alert("Data: " + data + "\nStatus: " + status);
+                //alert("Data: " + data + "\nStatus: " + status);
             });
     }
 
@@ -110,7 +112,7 @@
             sendData,
             function (data, status) {
                 editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
-                alert("Data: " + data + "\nStatus: " + status);
+                //alert("Data: " + data + "\nStatus: " + status);
             });
     }
 
@@ -144,6 +146,11 @@
         $("#modalLineNumber").val('');
     }
 
+    function cancelNewLineCreation() {
+        currentEditedLine = {};
+        setCurrentTool("#lineToolButton", '@EditorToolType.None');
+    }
+
     function addStopToContainer() {
         var newStop = {
             'Name': $("#modalStopName").val(),
@@ -157,20 +164,21 @@
         $("#modalStationNumber").val('');
     }   
 
-    function placeBusMarkerAndCreateStop(coordinates) {
-        drawMarker(MAP, '', coordinates);
+    function placeBusMarkerAndCreateStop(coordinates) {        
         $("#newStopModal").modal({ backdrop: "static" });
         lastStopLatitude = coordinates.lat;
         lastStopLongitude = coordinates.lng;
+        drawMarker(MAP, '', $("#modalStopName").val(), coordinates);
     }
 
     function setCurrentTool(toolButton, newTool) {
-        if (currentTool != newTool) {
+        if (newTool != '@EditorToolType.None' && currentTool != newTool) {
             currentTool = newTool;
             $(toolButton).css('color', '#ffffff');
         }
         else {
             currentTool = '@EditorToolType.None';
+            currentEditedLine = {};
             $(toolButton).css('color', '#818181');
         }
         if (currentTool == '@EditorToolType.Line') {
