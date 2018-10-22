@@ -117,34 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BusStopTool" xml:space="preserve">
-    <value>Bus Stop Tool</value>
+  <data name="Target" xml:space="preserve">
+    <value>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</value>
   </data>
-  <data name="BusStopToolDescription" xml:space="preserve">
-    <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
-  </data>
-  <data name="GiveStopDetails" xml:space="preserve">
-    <value>Please enter details of new stop</value>
-  </data>
-  <data name="LineColor" xml:space="preserve">
-    <value>Line color</value>
-  </data>
-  <data name="LineName" xml:space="preserve">
-    <value>Line name</value>
-  </data>
-  <data name="LineNumber" xml:space="preserve">
-    <value>Line number</value>
-  </data>
-  <data name="LineTool" xml:space="preserve">
-    <value>Line Tool</value>
-  </data>
-  <data name="NewLineCreation" xml:space="preserve">
-    <value>Please enter details of new line</value>
-  </data>
-  <data name="StationNumber" xml:space="preserve">
-    <value>Station number</value>
-  </data>
-  <data name="StopName" xml:space="preserve">
-    <value>Stop name</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>

@@ -117,34 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BusStopTool" xml:space="preserve">
-    <value>Bus Stop Tool</value>
+  <data name="LineNameIsEmpty" xml:space="preserve">
+    <value>Line name is empty</value>
   </data>
-  <data name="BusStopToolDescription" xml:space="preserve">
-    <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
-  </data>
-  <data name="GiveStopDetails" xml:space="preserve">
-    <value>Please enter details of new stop</value>
-  </data>
-  <data name="LineColor" xml:space="preserve">
-    <value>Line color</value>
-  </data>
-  <data name="LineName" xml:space="preserve">
-    <value>Line name</value>
-  </data>
-  <data name="LineNumber" xml:space="preserve">
-    <value>Line number</value>
-  </data>
-  <data name="LineTool" xml:space="preserve">
-    <value>Line Tool</value>
-  </data>
-  <data name="NewLineCreation" xml:space="preserve">
-    <value>Please enter details of new line</value>
-  </data>
-  <data name="StationNumber" xml:space="preserve">
-    <value>Station number</value>
-  </data>
-  <data name="StopName" xml:space="preserve">
-    <value>Stop name</value>
+  <data name="LineStopsLessThanTwo" xml:space="preserve">
+    <value>Line need to have at least two stops</value>
   </data>
 </root>

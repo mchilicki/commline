@@ -18,5 +18,12 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                 .Where(e => !e.RouteStops.Any())
                 .ToList();
         }
+
+        public int GetStopNumberForStopName(string stopName)
+        {
+            return _dbSet
+                .Where(e => e.Name == stopName)
+                .Count() + 1;
+        }
     }
 }
