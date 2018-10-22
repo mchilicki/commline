@@ -26,11 +26,6 @@
                     <label>@EditorResources.StopName</label>
                     <input id="modalStopName" type="text" />
                 </p>
-                <p>
-                    <label>@EditorResources.StationNumber</label>
-                    <input id="modalStationNumber" type="number" min="1" 
-                           onkeypress="return event.charCode >= 48"/>
-                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" 
@@ -57,11 +52,6 @@
                     <label>@EditorResources.LineColor</label>
                     <input id="modalLineColor" type="color" />
                 </p>
-                @*<p>
-                    <label>@EditorResources.LineNumber</label>
-                    <input id="modalLineNumber" type="number" min="1" 
-                           onkeypress="return event.charCode >= 48" />
-                </p>*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
@@ -159,14 +149,12 @@
     function addStopToContainer() {
         var newStop = {
             'Name': $("#modalStopName").val(),
-            'SiteNumber': $("#modalStationNumber").val(),
             'Longitude': lastStopLongitude,
             'Latitude': lastStopLatitude,
         };
         allLines.StopsWithoutLines.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
-        $("#modalStationNumber").val('');
     }   
 
     function placeBusMarkerAndCreateStop(coordinates) {        
