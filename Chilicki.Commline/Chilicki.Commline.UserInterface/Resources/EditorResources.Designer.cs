@@ -88,6 +88,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line color.
+        /// </summary>
+        public static string LineColor {
+            get {
+                return ResourceManager.GetString("LineColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line name.
         /// </summary>
         public static string LineName {

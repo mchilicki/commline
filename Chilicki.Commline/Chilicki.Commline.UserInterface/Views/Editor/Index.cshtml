@@ -53,6 +53,10 @@
                     <label>@EditorResources.LineName</label>
                     <input id="modalLineName" type="text" />
                 </p>
+                <p>
+                    <label>@EditorResources.LineColor</label>
+                    <input id="modalLineColor" type="color" />
+                </p>
                 @*<p>
                     <label>@EditorResources.LineNumber</label>
                     <input id="modalLineNumber" type="number" min="1" 
@@ -138,6 +142,7 @@
         var newLine = {
             'Name': $("#modalLineName").val(),
             'Stops': [],
+            'Color': $("#modalLineColor").val(),
         };
         allLines.Lines.push(newLine);
         editedLines.Added.push(newLine);

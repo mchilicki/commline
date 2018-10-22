@@ -150,7 +150,7 @@
             });
         }
 
-        function drawLine(map, stopList) {
+        function drawLine(map, stopList, color) {
             var stopLocations = []
             $.each(stopList, function (i, stop) {
                 var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
@@ -158,9 +158,12 @@
                 drawMarker(map, stop.Id, stop.Name, coordinates);
             })
 
+            if (color === null)
+                color = getRandomColor();
+
             var stopPath = new google.maps.Polyline({
                 path: stopLocations,
-                strokeColor: getRandomColor(),
+                strokeColor: color,
                 strokeOpacity: 0.8,
                 strokeWeight: 6
             });
@@ -169,7 +172,7 @@
 
         function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
-                drawLine(map, line.Stops)
+                drawLine(map, line.Stops, line.Color);
             });
         }
 

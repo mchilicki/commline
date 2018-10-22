@@ -9,6 +9,7 @@ namespace Chilicki.Commline.Domain.Entities
         public long Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public string Color { get; set; }
         public virtual LineType LineType { get; set; }
         public virtual ICollection<RouteStop> RouteStops { get; set; }
     }
