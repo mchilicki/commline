@@ -79,6 +79,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Departures Tool to establish departures times for lines.
+        /// </summary>
+        public static string DeparturesDescription {
+            get {
+                return ResourceManager.GetString("DeparturesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter details of new stop.
         /// </summary>
         public static string GiveStopDetails {

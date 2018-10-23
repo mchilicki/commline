@@ -29,6 +29,11 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return View();
         }
 
+        public ActionResult Departures()
+        {
+            return View("Departures");
+        }
+
         public JsonResult GetAllLines()
         {
             return Json(_lineManager.GetEverything(), JsonRequestBehavior.AllowGet);

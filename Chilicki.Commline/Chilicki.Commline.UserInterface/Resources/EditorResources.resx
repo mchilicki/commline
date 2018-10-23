@@ -123,6 +123,9 @@
   <data name="BusStopToolDescription" xml:space="preserve">
     <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
   </data>
+  <data name="DeparturesDescription" xml:space="preserve">
+    <value>Use Departures Tool to establish departures times for lines</value>
+  </data>
   <data name="GiveStopDetails" xml:space="preserve">
     <value>Please enter details of new stop</value>
   </data>

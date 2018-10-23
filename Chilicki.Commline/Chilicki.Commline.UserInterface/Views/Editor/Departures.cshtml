@@ -1,0 +1,21 @@
+﻿@using Chilicki.Commline.UserInterface.Resources
+@{
+    ViewBag.Title = "Departures";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<h2>@BaseResources.Departures</h2>
+
+<input id="timePicker" type="text" class="form-control" data-dtp="dtp_e4KEb"/>
+
+<section class="scripts">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('timePicker').bootstrapMaterialDatePicker({ date: false });
+        });
+
+    </script>
+</section>

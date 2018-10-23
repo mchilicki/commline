@@ -17,23 +17,29 @@
 
 <div id="newStopModal" class="modal fade primary-element" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@EditorResources.GiveStopDetails</h4>
+        <form id="newStopForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@EditorResources.GiveStopDetails</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <label>@EditorResources.StopName</label>
+                        <input id="modalStopName" type="text" />
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                            onclick="addStopToContainer()">
+                        @BaseResources.Save
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="deleteLastMarker()">
+                        @BaseResources.Cancel
+                    </button>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>
-                    <label>@EditorResources.StopName</label>
-                    <input id="modalStopName" type="text" />
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" 
-                        onclick="addStopToContainer()">@BaseResources.Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" 
-                        onclick="deleteLastMarker()">@BaseResources.Cancel</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -87,7 +93,6 @@
     function saveEverything() {
         saveStops();
         saveLines();
-        location.reload();
     }
 
     function saveStops() {
@@ -107,6 +112,7 @@
             function (data, status) {
                 editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
                 //alert("Data: " + data + "\nStatus: " + status);
+                location.reload();
             });
     }
 
