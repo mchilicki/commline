@@ -19,6 +19,12 @@ namespace Chilicki.Commline.UserInterface.App_Start
                 config.CreateMap<StopDTO, Stop>()
                     .ForMember(dest => dest.RouteStops, opt => opt.Ignore())
                     .ForMember(dest => dest.StopNumber, opt => opt.MapFrom(src => src.SiteNumber));
+
+                config.CreateMap<Departure, DepartureDTO>();
+                config.CreateMap<DepartureDTO, Departure>();
+
+                config.CreateMap<RouteStop, RouteStopDTO>();
+                config.CreateMap<RouteStopDTO, RouteStop>();
             });
         }
     }

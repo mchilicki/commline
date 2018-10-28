@@ -3,7 +3,6 @@ using Chilicki.Commline.Application.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
@@ -30,12 +29,18 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return View();
         }
 
+        public ActionResult Editor()
+        {
+            return Index();
+        }
+
         [HttpPost]
         public ActionResult Departures()
         {
             long lineId = long.Parse(Request.Form["lineDropdown"]);
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
-            return View("Departures");
+            var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
+            return View("Departures", lineDepartures);
         }
 
         public JsonResult GetAllLines()

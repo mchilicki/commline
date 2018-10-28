@@ -1,5 +1,4 @@
 ﻿using Chilicki.Commline.Application.Managers;
-using Chilicki.Commline.Infrastructure.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;

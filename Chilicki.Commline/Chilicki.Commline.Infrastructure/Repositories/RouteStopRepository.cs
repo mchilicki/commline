@@ -1,8 +1,6 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
-using Chilicki.Commline.Infrastructure.Resources;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
