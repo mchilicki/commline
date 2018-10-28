@@ -88,6 +88,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Departures for.
+        /// </summary>
+        public static string DeparturesFor {
+            get {
+                return ResourceManager.GetString("DeparturesFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Give line.
         /// </summary>
         public static string GiveLine {

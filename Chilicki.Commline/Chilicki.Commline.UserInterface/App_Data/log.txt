@@ -1,0 +1,6 @@
+INFO  2018-10-28 15:08:03,110  3435ms MvcApplication         Application_Start  - Startup application.
+INFO  2018-10-28 15:12:22,293  2935ms MvcApplication         Application_Start  - Startup application.
+INFO  2018-10-28 15:15:09,373  2702ms MvcApplication         Application_Start  - Startup application.
+INFO  2018-10-28 15:16:07,342  3022ms MvcApplication         Application_Start  - Startup application.
+INFO  2018-10-28 15:19:02,806  3288ms MvcApplication         Application_Start  - Startup application.
+INFO  2018-10-28 15:19:59,167  2960ms MvcApplication         Application_Start  - Startup application.

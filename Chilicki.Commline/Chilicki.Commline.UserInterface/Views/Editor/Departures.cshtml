@@ -1,26 +1,38 @@
 ﻿@using Chilicki.Commline.UserInterface.Resources
-@{
-    ViewBag.Title = "Departures";
+@using Chilicki.Commline.Application.DTOs
+
+@model LineDeparturesDTO
+
+@{ 
+    ViewBag.Title = BaseResources.Departures;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
-
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css" />
-
 <link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" />
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
-
-
-<h2>@BaseResources.Departures</h2>
+<h2>@EditorResources.DeparturesFor @Model.Line.Name</h2>
 
 <input id="time" class="timepicker" />
+
+<table class="table table-bordered table-responsive table-hover">
+    <tr>
+        @foreach (var routeStop in Model.RouteStops)
+        {
+            <th>@routeStop.StopIndex @routeStop.Stop.Name</th>
+        }
+    </tr>
+    @foreach (var departure in Model.RouteStops)
+    {
+
+    }
+</table>
 
 <section class="scripts">
     <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
@@ -32,7 +44,11 @@
     <script type="text/javascript" src="~/Scripts/bootstrap-material-datetimepicker.js"></script>
 
     <script type="text/javascript">
-        $('#time').bootstrapMaterialDatePicker({ date: false });
+        $('#time').bootstrapMaterialDatePicker({
+            date: false,
+            shortTime: false,
+            format: 'HH:mm',
+        });
 
     </script>
 </section>

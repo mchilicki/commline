@@ -1,5 +1,7 @@
 ﻿using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Infrastructure.Repositories;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
@@ -22,6 +24,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             return View();
         }
 
@@ -33,6 +36,13 @@ namespace Chilicki.Commline.UserInterface.Controllers
         public JsonResult GetAllStops()
         {
             return Json(_stopManager.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+        public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()
+        {
+            return _lineManager.GetAll()
+                .OrderBy(p => p.Name)
+                .Select(p => new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
         }
     }
 }

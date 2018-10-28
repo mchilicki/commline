@@ -61,6 +61,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Affirm.
+        /// </summary>
+        public static string Affirm {
+            get {
+                return ResourceManager.GetString("Affirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commline.
         /// </summary>
         public static string AppName {

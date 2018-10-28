@@ -7,10 +7,14 @@ namespace Chilicki.Commline.Application.Managers
     public class RouteStopManager
     {
         readonly RouteStopRepository _routeStopRepository;
+        readonly DepartureRepository _departureRepository;
 
-        public RouteStopManager(RouteStopRepository routeStopRepository)
+        public RouteStopManager(
+            RouteStopRepository routeStopRepository,
+            DepartureRepository departureRepository)
         {
             _routeStopRepository = routeStopRepository;
+            _departureRepository = departureRepository;
         }
 
         public RouteStop GetById(long id)

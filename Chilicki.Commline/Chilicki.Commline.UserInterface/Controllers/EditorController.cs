@@ -26,11 +26,15 @@ namespace Chilicki.Commline.UserInterface.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             return View();
         }
 
+        [HttpPost]
         public ActionResult Departures()
         {
+            long lineId = long.Parse(Request.Form["lineDropdown"]);
+            ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             return View("Departures");
         }
 
@@ -42,6 +46,13 @@ namespace Chilicki.Commline.UserInterface.Controllers
         public JsonResult GetAllStops()
         {
             return Json(_stopManager.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+        public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()
+        {
+            return _lineManager.GetAll()
+                .OrderBy(p => p.Name)
+                .Select(p => new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
         }
 
         [HttpPost]

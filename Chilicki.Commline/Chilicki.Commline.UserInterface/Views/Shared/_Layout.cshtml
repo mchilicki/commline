@@ -33,12 +33,13 @@
     <div id="mainMenuSidenav" class="sidenav primary-element">
         @Html.ActionLink(BaseResources.HomePage, "Index", "Home")
         @Html.ActionLink(BaseResources.Editor, "Index", "Editor")
-        @Html.ActionLink(BaseResources.Departures, "Departures", "Editor");
+        <a href="#" onclick='$("#enterDeparturesModal").modal()'>@BaseResources.Departures</a>
     </div>
 
     <div id="enterDeparturesModal" class="modal fade primary-element" role="dialog">
         <div class="modal-dialog">
-            <form id="enterDeparturesForm">
+            @using (Html.BeginForm("Departures", "Editor", FormMethod.Post, new { name = "departuresForm", id = "departuresForm" }))
+            {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">@EditorResources.GiveLine</h4>
@@ -46,21 +47,19 @@
                     <div class="modal-body">
                         <p>
                             <label>@EditorResources.LineName</label>
-                            <input id="modalStopName" type="text" />
+                            @Html.DropDownList("lineDropdown", new SelectList(ViewBag.LinesIdsNames, "Value", "Text"))
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal"
-                                onclick="addStopToContainer()">
-                            @BaseResources.Save
+                        <button type="submit" class="btn btn-primary">
+                            @BaseResources.Affirm
                         </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="deleteLastMarker()">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
                             @BaseResources.Cancel
                         </button>
                     </div>
                 </div>
-            </form>
+            }
         </div>
     </div>
 
@@ -71,6 +70,7 @@
     @RenderSection("scripts", required: false)
     <script>
         var sidenavOpened = false;
+
         function switchMainMenuSidenav() {
             if (sidenavOpened == false) {
                 document.getElementById("mainMenuSidenav").style.width = "250px";

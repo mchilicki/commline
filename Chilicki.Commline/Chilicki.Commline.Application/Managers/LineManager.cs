@@ -4,6 +4,7 @@ using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Chilicki.Commline.Application.Managers
 {
@@ -40,6 +41,8 @@ namespace Chilicki.Commline.Application.Managers
             }
             return lineDTOs;
         }
+
+        
 
         public AllLinesDTO GetEverything()
         {
