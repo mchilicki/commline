@@ -88,6 +88,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Give line.
+        /// </summary>
+        public static string GiveLine {
+            get {
+                return ResourceManager.GetString("GiveLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter details of new stop.
         /// </summary>
         public static string GiveStopDetails {

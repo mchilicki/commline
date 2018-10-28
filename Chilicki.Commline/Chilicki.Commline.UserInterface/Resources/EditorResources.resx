@@ -126,6 +126,9 @@
   <data name="DeparturesDescription" xml:space="preserve">
     <value>Use Departures Tool to establish departures times for lines</value>
   </data>
+  <data name="GiveLine" xml:space="preserve">
+    <value>Give line</value>
+  </data>
   <data name="GiveStopDetails" xml:space="preserve">
     <value>Please enter details of new stop</value>
   </data>

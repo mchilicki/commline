@@ -36,6 +36,34 @@
         @Html.ActionLink(BaseResources.Departures, "Departures", "Editor");
     </div>
 
+    <div id="enterDeparturesModal" class="modal fade primary-element" role="dialog">
+        <div class="modal-dialog">
+            <form id="enterDeparturesForm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">@EditorResources.GiveLine</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <label>@EditorResources.LineName</label>
+                            <input id="modalStopName" type="text" />
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                                onclick="addStopToContainer()">
+                            @BaseResources.Save
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="deleteLastMarker()">
+                            @BaseResources.Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
