@@ -19,37 +19,52 @@
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<div>
+<div style="width: initial">
     <h2>@EditorResources.DeparturesFor @Model.Line.LineType.NameOf().ToLowerInvariant() @Model.Line.Name</h2>
 
-    <table class="table table-bordered table-condensed table-striped table-responsive table-hover">
-        <tr>
-            @foreach (var stop in Model.Line.Stops)
-            {
-                <th>@stop.Name</th>
-            }
-        </tr>
-        @foreach (var departureRun in Model.Departures)
-        {
+    <table id="departureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover">
+        <thead>
             <tr>
-                @foreach (var departure in departureRun)
+                @foreach (var stop in Model.Line.Stops)
                 {
-                    <td>
-                        <input id="time" class="timepicker" value="@departure.DepartureTime" />
-
-                    </td>
+                    <th>@stop.Name</th>
                 }
             </tr>
-        }
-        <tr>
+        </thead>
+        <tbody>
+            @foreach (var departureRun in Model.Departures)
+            {
+                <tr>
+                    @foreach (var departure in departureRun)
+                    {
+                        <td>
+                            <input id="time" class="timepicker" value="@departure.DepartureTime" />
+
+                        </td>
+                    }
+                </tr>
+            }
+            <tr>
             @foreach (var stop in Model.Line.Stops)
             {
                 <td><input id="time" class="timepicker" /></td>
             }
-        </tr>
-    </table>
+            </tr>
+            @for (int i = 0; i < 100; i++)
+            {
+                <tr id="row-time-@i" hidden>
+                    @foreach (var stop in Model.Line.Stops)
+                    {
+                        <td><input id="time" class="timepicker" /></td>
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+    <button type="button" class="btn btn-default" onclick="addNewDepartureRun()">
+        @EditorResources.AddNextDepartureRun
+    </button>
 </div>
-
 
 <section class="scripts">
     <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
@@ -60,11 +75,21 @@
     <script type="text/javascript" src="~/Scripts/bootstrap-material-datetimepicker.js"></script>
 
     <script type="text/javascript">
+        var currentHiddenDepartureRunRowIndex = 0;
+
         $('.timepicker').bootstrapMaterialDatePicker({
             date: false,
             shortTime: false,
             format: 'HH:mm',
         });
 
+        $(document).ready(function () {
+            $("#toolboxButton").hide();            
+        });        
+
+        function addNewDepartureRun() {
+            $('#row-time-' + currentHiddenDepartureRunRowIndex).show();
+            currentHiddenDepartureRunRowIndex++;
+        }
     </script>
 </section>
