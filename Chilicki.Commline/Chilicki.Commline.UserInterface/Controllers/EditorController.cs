@@ -101,6 +101,21 @@ namespace Chilicki.Commline.UserInterface.Controllers
         }
 
         [HttpPost]
+        public JsonResult SaveDepartures(LineDeparturesDTO lineDepartures)
+        {
+            string errorMessage = "";
+            try
+            {
+                _departureManager.ChangeLineDepartures(lineDepartures);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+            return Json(errorMessage);
+        }
+
+        [HttpPost]
         public JsonResult GetStop(long id)
         {
             StopDTO stop = null;

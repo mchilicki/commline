@@ -11,7 +11,34 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         public DepartureRepository(CommlineDBContext db) : base(db)
         {
 
-        }        
+        }    
+        
+        public void Create(Line line, IEnumerable<IEnumerable<Departure>> departures)
+        {
+            int runIndex = 0;
+            foreach(var departureRun in departures)
+            {
+                int stopIndex = 0;
+                foreach(var departure in departureRun)
+                {
+                    departure.RunIndex = runIndex;
+                    departure.RouteStop = line.RouteStops
+                        .First(p => p.Line == line && p.StopIndex == stopIndex);
+                    _entities.Add(departure);
+                    stopIndex++;
+                }
+                runIndex++;
+            }
+            _database.SaveChanges();
+        }
+
+        public void DeleteAllDeparturesForLine(Line line)
+        {
+            _entities.RemoveRange(
+                _entities
+                    .Where(e => e.RouteStop.Line == line));
+            _database.SaveChanges();
+        }
 
         public IEnumerable<IEnumerable<Departure>> 
             GetAllLineDeparturesOrderedByRuns(long lineId)
@@ -20,7 +47,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             var runIndexes = GetLineRunIndexes(lineId);
             foreach (int runIndex in runIndexes)
             {
-                departures.Add(_dbSet
+                departures.Add(_entities
                     .Where(p => 
                         p.RouteStop.Line.Id == lineId && 
                         p.RunIndex == runIndex)
@@ -32,7 +59,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
 
         private IEnumerable<int> GetLineRunIndexes(long lineId)
         {
-            return _dbSet
+            return _entities
                 .Select(p => p.RunIndex)
                 .Distinct();
         }

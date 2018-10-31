@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Chilicki.Commline.Application.Validators
 {
-    public class LineValidator
+    public class LineValidator : IValidator<LineDTO>
     {
         public bool Validate(LineDTO lineDTO)
         {

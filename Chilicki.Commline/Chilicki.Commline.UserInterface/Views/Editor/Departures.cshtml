@@ -77,15 +77,15 @@
     <script type="text/javascript">
         var currentHiddenDepartureRunRowIndex = 0;
 
+        $(document).ready(function () {
+            $("#toolboxButton").hide();
+        });
+
         $('.timepicker').bootstrapMaterialDatePicker({
             date: false,
             shortTime: false,
             format: 'HH:mm',
-        });
-
-        $(document).ready(function () {
-            $("#toolboxButton").hide();            
-        });        
+        });                
 
         function addNewDepartureRun() {
             $('#row-time-' + currentHiddenDepartureRunRowIndex).show();

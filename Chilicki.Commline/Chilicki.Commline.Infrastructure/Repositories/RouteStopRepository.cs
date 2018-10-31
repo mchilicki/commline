@@ -41,7 +41,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             foreach (var stop in stops)
             {
                 var entityStop = _stopRepository.GetById(stop.Id);
-                _dbSet.Add(new RouteStop()
+                _entities.Add(new RouteStop()
                 {
                     Line = entityLine,
                     Stop = entityStop,
@@ -49,7 +49,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                 });
                 stopIndex++;
             }
-            _db.SaveChanges();
+            _database.SaveChanges();
         }
     }
 }
