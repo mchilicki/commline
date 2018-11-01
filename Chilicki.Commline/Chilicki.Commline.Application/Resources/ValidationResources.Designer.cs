@@ -61,6 +61,15 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At least one of given departures is empty.
+        /// </summary>
+        internal static string DepartureEmpty {
+            get {
+                return ResourceManager.GetString("DepartureEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line name is empty.
         /// </summary>
         internal static string LineNameIsEmpty {
@@ -75,6 +84,24 @@ namespace Chilicki.Commline.Application.Resources {
         internal static string LineStopsLessThanTwo {
             get {
                 return ResourceManager.GetString("LineStopsLessThanTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No departures.
+        /// </summary>
+        internal static string NoDepartures {
+            get {
+                return ResourceManager.GetString("NoDepartures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops in departures do not match with line stops.
+        /// </summary>
+        internal static string StopsInDeparturesDoNotMatch {
+            get {
+                return ResourceManager.GetString("StopsInDeparturesDoNotMatch", resourceCulture);
             }
         }
     }

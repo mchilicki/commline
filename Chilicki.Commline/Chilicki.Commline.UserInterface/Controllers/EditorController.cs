@@ -1,9 +1,9 @@
 ﻿using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Managers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
@@ -26,7 +26,26 @@ namespace Chilicki.Commline.UserInterface.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             return View();
+        }
+
+        public ActionResult Editor()
+        {
+            return Index();
+        }
+
+        [HttpPost]
+        public ActionResult Departures()
+        {
+            var choosenLine = Request.Form["lineDropdown"];
+            if (choosenLine == null)
+                return RedirectToAction("Index", "Home");
+            long lineId = long.Parse(choosenLine);
+            ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
+            var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
+            ViewData["LineDepartures"] = JsonConvert.SerializeObject(lineDepartures);
+            return View("Departures", lineDepartures);
         }
 
         public JsonResult GetAllLines()
@@ -37,6 +56,13 @@ namespace Chilicki.Commline.UserInterface.Controllers
         public JsonResult GetAllStops()
         {
             return Json(_stopManager.GetAll(), JsonRequestBehavior.AllowGet);
+        }
+
+        public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()
+        {
+            return _lineManager.GetAll()
+                .OrderBy(p => p.Name)
+                .Select(p => new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
         }
 
         [HttpPost]
@@ -71,6 +97,21 @@ namespace Chilicki.Commline.UserInterface.Controllers
                 //_stopManager.Edit(stopsEditionModel.Modified);
                 //if (stopsEditionModel.Deleted != null)
                 //_stopManager.Delete(stopsEditionModel.Deleted);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+            return Json(errorMessage);
+        }
+
+        [HttpPost]
+        public JsonResult SaveDepartures(LineDeparturesDTO lineDepartures)
+        {
+            string errorMessage = "";
+            try
+            {
+                _departureManager.ChangeLineDepartures(lineDepartures);
             }
             catch (Exception ex)
             {

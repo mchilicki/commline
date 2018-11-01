@@ -61,6 +61,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add next departure run.
+        /// </summary>
+        public static string AddNextDepartureRun {
+            get {
+                return ResourceManager.GetString("AddNextDepartureRun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bus Stop Tool.
         /// </summary>
         public static string BusStopTool {
@@ -75,6 +84,33 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string BusStopToolDescription {
             get {
                 return ResourceManager.GetString("BusStopToolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Departures Tool to establish departures times for lines.
+        /// </summary>
+        public static string DeparturesDescription {
+            get {
+                return ResourceManager.GetString("DeparturesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Departures for.
+        /// </summary>
+        public static string DeparturesFor {
+            get {
+                return ResourceManager.GetString("DeparturesFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Give line.
+        /// </summary>
+        public static string GiveLine {
+            get {
+                return ResourceManager.GetString("GiveLine", resourceCulture);
             }
         }
         

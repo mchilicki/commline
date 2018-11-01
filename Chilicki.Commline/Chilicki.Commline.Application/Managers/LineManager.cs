@@ -13,14 +13,20 @@ namespace Chilicki.Commline.Application.Managers
         readonly StopManager _stopManager;
         readonly RouteStopRepository _routeStopRepository;
         readonly LineValidator _lineValidator;
+        readonly DepartureRepository _departureRepository;
 
-        public LineManager(LineRepository lineRepository, StopManager stopManager, 
-            RouteStopRepository routeStopRepository, LineValidator lineValidator)
+        public LineManager(
+            LineRepository lineRepository, 
+            StopManager stopManager, 
+            RouteStopRepository routeStopRepository,
+            DepartureRepository departureRepository,
+            LineValidator lineValidator)
         {
             _lineRepository = lineRepository;
             _stopManager = stopManager;
             _routeStopRepository = routeStopRepository;
             _lineValidator = lineValidator;
+            _departureRepository = departureRepository;
         }
 
         public LineDTO GetById(long id)
@@ -39,7 +45,7 @@ namespace Chilicki.Commline.Application.Managers
                 lineDTO.Stops = _stopManager.GetAllForLine(lineDTO);
             }
             return lineDTOs;
-        }
+        }        
 
         public AllLinesDTO GetEverything()
         {
@@ -47,6 +53,18 @@ namespace Chilicki.Commline.Application.Managers
             {
                 Lines = GetAll(),
                 StopsWithoutLines = _stopManager.GetAllNotConnectedToAnyLine(),
+            };
+        }
+
+        public LineDeparturesDTO GetDeparturesForLine(long lineId)
+        {
+            return new LineDeparturesDTO()
+            {
+                Line = GetById(lineId),
+                Departures = Mapper.Map<
+                        IEnumerable<IEnumerable<Departure>>, 
+                        IEnumerable<IEnumerable<DepartureDTO>>>
+                    (_departureRepository.GetAllLineDeparturesOrderedByRuns(lineId)),              
             };
         }
 
@@ -60,7 +78,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(LineDTO lineDTO)
         {
-            _lineValidator.ValidateLine(lineDTO);
+            _lineValidator.Validate(lineDTO);
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);            
             _lineRepository.Insert(line);
             _routeStopRepository.InsertForLineAndStops(line, 
@@ -69,7 +87,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Edit(LineDTO lineDTO)
         {
-            _lineValidator.ValidateLine(lineDTO);
+            _lineValidator.Validate(lineDTO);
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);
             _lineRepository.Update(line);
         }        

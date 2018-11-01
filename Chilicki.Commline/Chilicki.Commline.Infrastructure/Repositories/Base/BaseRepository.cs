@@ -9,41 +9,41 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
 {
     public abstract class BaseRepository<TEntity> where TEntity : class
     {
-        internal CommlineDBContext _db;
-        internal DbSet<TEntity> _dbSet;
+        internal CommlineDBContext _database;
+        internal DbSet<TEntity> _entities;
 
-        public BaseRepository(CommlineDBContext db)
+        public BaseRepository(CommlineDBContext database)
         {
-            _db = db;
-            _dbSet = db.Set<TEntity>();
+            _database = database;
+            _entities = database.Set<TEntity>();
         }
 
         public virtual int GetCount()
         {
-            return _dbSet.Count();
+            return _entities.Count();
         }
 
         public virtual TEntity GetById(long id)
         {
-            return _dbSet.Find(id);
+            return _entities.Find(id);
         }
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            return _dbSet;
+            return _entities;
         }
 
         public virtual void Insert(TEntity entity)
         {
-            _dbSet.Add(entity);
-            _db.SaveChanges();
+            _entities.Add(entity);
+            _database.SaveChanges();
         }     
         
         public virtual void Update(TEntity entity)
         {
-            if (!_dbSet.Contains(entity))
+            if (!_entities.Contains(entity))
                 throw new InvalidOperationException(DatabaseResources.Exception_EntityDoesntExist);
-            _db.SaveChanges();
+            _database.SaveChanges();
         }
     }
 }

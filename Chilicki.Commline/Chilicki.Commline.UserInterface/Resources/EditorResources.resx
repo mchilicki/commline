@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNextDepartureRun" xml:space="preserve">
+    <value>Add next departure run</value>
+  </data>
   <data name="BusStopTool" xml:space="preserve">
     <value>Bus Stop Tool</value>
   </data>
   <data name="BusStopToolDescription" xml:space="preserve">
     <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
+  </data>
+  <data name="DeparturesDescription" xml:space="preserve">
+    <value>Use Departures Tool to establish departures times for lines</value>
+  </data>
+  <data name="DeparturesFor" xml:space="preserve">
+    <value>Departures for</value>
+  </data>
+  <data name="GiveLine" xml:space="preserve">
+    <value>Give line</value>
   </data>
   <data name="GiveStopDetails" xml:space="preserve">
     <value>Please enter details of new stop</value>

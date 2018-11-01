@@ -85,6 +85,10 @@
     <Compile Include="Migrations\201810221213086_AddLineColor.Designer.cs">
       <DependentUpon>201810221213086_AddLineColor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810282025135_AddRunIndex.cs" />
+    <Compile Include="Migrations\201810282025135_AddRunIndex.Designer.cs">
+      <DependentUpon>201810282025135_AddRunIndex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810221213086_AddLineColor.resx">
       <DependentUpon>201810221213086_AddLineColor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810282025135_AddRunIndex.resx">
+      <DependentUpon>201810282025135_AddRunIndex.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\DatabaseResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

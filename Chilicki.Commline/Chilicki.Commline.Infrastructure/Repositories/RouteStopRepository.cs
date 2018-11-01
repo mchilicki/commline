@@ -1,8 +1,6 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
-using Chilicki.Commline.Infrastructure.Resources;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,15 +33,12 @@ namespace Chilicki.Commline.Infrastructure.Repositories
 
         public void InsertForLineAndStops(Line line, IEnumerable<Stop> stops)
         {
-            //if (!_lineRepository.DoesLineHaveEmptyRoute(line.Id))
-            //    throw new InvalidOperationException($"{DatabaseResources.Exception_LineWithId} " +
-            //        $"{line.Id} {DatabaseResources.Exception_lineHasStops}");
-            int stopIndex = 1;
+            int stopIndex = 0;
             var entityLine = _lineRepository.GetById(line.Id);
             foreach (var stop in stops)
             {
                 var entityStop = _stopRepository.GetById(stop.Id);
-                _dbSet.Add(new RouteStop()
+                _entities.Add(new RouteStop()
                 {
                     Line = entityLine,
                     Stop = entityStop,
@@ -51,7 +46,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                 });
                 stopIndex++;
             }
-            _db.SaveChanges();
+            _database.SaveChanges();
         }
     }
 }

@@ -82,8 +82,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\AllLinesDTO.cs" />
+    <Compile Include="DTOs\DepartureDTO.cs" />
+    <Compile Include="DTOs\LineDeparturesDTO.cs" />
     <Compile Include="DTOs\LineDTO.cs" />
     <Compile Include="DTOs\LinesEditionModel.cs" />
+    <Compile Include="DTOs\RouteStopDTO.cs" />
     <Compile Include="DTOs\StopDTO.cs" />
     <Compile Include="DTOs\StopsEditionModel.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
@@ -96,6 +99,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Validators\DeparturesValidator.cs" />
+    <Compile Include="Validators\IValidator.cs" />
     <Compile Include="Validators\LineValidator.cs" />
   </ItemGroup>
   <ItemGroup>

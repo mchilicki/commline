@@ -14,14 +14,14 @@ namespace Chilicki.Commline.Infrastructure.Repositories
 
         public IEnumerable<Stop> GetAllNotConnectedToAnyLine()
         {
-            return _dbSet
+            return _entities
                 .Where(e => !e.RouteStops.Any())
                 .ToList();
         }
 
         public int GetStopNumberForStopName(string stopName)
         {
-            return _dbSet
+            return _entities
                 .Where(e => e.Name == stopName)
                 .Count() + 1;
         }
