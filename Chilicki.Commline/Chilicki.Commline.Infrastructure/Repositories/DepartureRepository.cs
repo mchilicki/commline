@@ -15,21 +15,24 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         
         public void Create(Line line, IEnumerable<IEnumerable<Departure>> departures)
         {
-            int runIndex = 0;
-            foreach(var departureRun in departures)
+            if (departures != null)
             {
-                int stopIndex = 0;
-                foreach (var departure in departureRun)
+                int runIndex = 0;
+                foreach (var departureRun in departures)
                 {
-                    departure.RunIndex = runIndex;
-                    departure.RouteStop = line.RouteStops
-                        .First(p => p.StopIndex == stopIndex); 
-                    _entities.Add(departure);
-                    stopIndex++;
+                    int stopIndex = 0;
+                    foreach (var departure in departureRun)
+                    {
+                        departure.RunIndex = runIndex;
+                        departure.RouteStop = line.RouteStops
+                            .First(p => p.StopIndex == stopIndex);
+                        _entities.Add(departure);
+                        stopIndex++;
+                    }
+                    runIndex++;
                 }
-                runIndex++;
-            }
-            _database.SaveChanges();
+                _database.SaveChanges();
+            }            
         }
 
         public void DeleteAllDeparturesForLine(Line line)
@@ -61,6 +64,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         private IEnumerable<int> GetLineRunIndexes(long lineId)
         {
             return _entities
+                .Where(p => p.RouteStop.Line.Id == lineId)
                 .Select(p => p.RunIndex)
                 .Distinct();
         }
