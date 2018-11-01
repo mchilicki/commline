@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Managers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,13 @@ namespace Chilicki.Commline.UserInterface.Controllers
         [HttpPost]
         public ActionResult Departures()
         {
-            long lineId = long.Parse(Request.Form["lineDropdown"]);
+            var choosenLine = Request.Form["lineDropdown"];
+            if (choosenLine == null)
+                return RedirectToAction("Index", "Home");
+            long lineId = long.Parse(choosenLine);
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
+            ViewData["LineDepartures"] = JsonConvert.SerializeObject(lineDepartures);
             return View("Departures", lineDepartures);
         }
 

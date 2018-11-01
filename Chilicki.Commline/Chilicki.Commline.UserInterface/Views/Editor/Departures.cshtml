@@ -1,12 +1,16 @@
 ﻿@using Chilicki.Commline.UserInterface.Resources
 @using Chilicki.Commline.Application.DTOs
 @using Chilicki.Commline.Domain.Enums.Extensions
+@using Chilicki.Commline.Domain.Enums
+
 
 @model LineDeparturesDTO
 
 @{ 
     ViewBag.Title = BaseResources.Departures;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int departureRunIndex = 0;
+    int alreadyAddedDepartureRuns = Model.Departures.Count() + 1;
 }
 
 <link rel="stylesheet" href="~/Styles/main.css"/>
@@ -18,45 +22,54 @@
 <link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" />
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div style="width: initial">
+<div style="margin-left: 50px; margin-right: 50px">
     <h2>@EditorResources.DeparturesFor @Model.Line.LineType.NameOf().ToLowerInvariant() @Model.Line.Name</h2>
 
-    <table id="departureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover">
+    <table id="departureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" style="width: auto">
         <thead>
-            <tr>
+            <tr id="row-time-@departureRunIndex">
                 @foreach (var stop in Model.Line.Stops)
                 {
-                    <th>@stop.Name</th>
+                    <th width="auto">@stop.Name</th>
                 }
+                <th width="auto">@BaseResources.Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var departureRun in Model.Departures)
             {
-                <tr>
+                int tempDepartureIndex = 0;
+                <tr id="row-time-@departureRunIndex">
                     @foreach (var departure in departureRun)
                     {
-                        <td>
-                            <input id="time" class="timepicker" value="@departure.DepartureTime" />
-
-                        </td>
+                        <td><input id="time-@departureRunIndex-@tempDepartureIndex" class="timepicker" value="@departure.DepartureTime" style="width: 40px"/></td>
+                        tempDepartureIndex++;
                     }
+                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); departureRuns--;"><i class="fa fa-trash"></i></button></td>                    
                 </tr>
+                departureRunIndex++;
             }
-            <tr>
-            @foreach (var stop in Model.Line.Stops)
-            {
-                <td><input id="time" class="timepicker" /></td>
-            }
-            </tr>
-            @for (int i = 0; i < 100; i++)
-            {
-                <tr id="row-time-@i" hidden>
-                    @foreach (var stop in Model.Line.Stops)
+                <tr id="row-time-@departureRunIndex">
+                    @for (int stopIndex = 0; stopIndex < Model.Line.Stops.Count(); stopIndex++)
                     {
-                        <td><input id="time" class="timepicker" /></td>
+                        <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker" style="width: 40px"/></td>
+                        if (stopIndex == Model.Line.Stops.Count() - 1)
+                        {
+                            departureRunIndex++;
+                        }
                     }
+                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); departureRuns--;"><i class="fa fa-trash"></i></button></td>
+                </tr>
+            @for (; departureRunIndex < alreadyAddedDepartureRuns + 100; departureRunIndex++)
+            {
+                <tr id="row-time-@departureRunIndex" hidden>
+                    @for (int stopIndex = 0; stopIndex < Model.Line.Stops.Count(); stopIndex++)
+                    {
+                        <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker" style="width: 40px"/></td>
+                    }
+                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); departureRuns--;"><i class="fa fa-trash"></i></button></td>
                 </tr>
             }
             </tbody>
@@ -75,21 +88,63 @@
     <script type="text/javascript" src="~/Scripts/bootstrap-material-datetimepicker.js"></script>
 
     <script type="text/javascript">
-        var currentHiddenDepartureRunRowIndex = 0;
+        var lineDepartures = JSON.parse('@Html.Raw(ViewData["LineDepartures"])');
+        var departureRuns = @Model.Departures.Count() + 1;
+        var departureRunIdToNextUnhidden = @Model.Departures.Count() + 1;        
 
         $(document).ready(function () {
             $("#toolboxButton").hide();
+            $("#saveModification").click(saveModification);
         });
 
         $('.timepicker').bootstrapMaterialDatePicker({
             date: false,
             shortTime: false,
             format: 'HH:mm',
-        });                
+        });
+
+        function saveModification() {
+            var times = [];
+            times = collectDeparturesData(times);
+            sendDepartures(times);
+        }
 
         function addNewDepartureRun() {
-            $('#row-time-' + currentHiddenDepartureRunRowIndex).show();
-            currentHiddenDepartureRunRowIndex++;
+            $('#row-time-' + departureRunIdToNextUnhidden).show();
+            departureRunIdToNextUnhidden++;
+            departureRuns++;
+        }
+
+        function collectDeparturesData(times) {
+            for (var currentRunIndex = 0; currentRunIndex < departureRuns; currentRunIndex++) {
+                var rowTimes = [];
+                for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
+                    rowTimes.push({
+                        'RunIndex': currentRunIndex,
+                        'DepartureTime': $("#time-" + currentRunIndex + "-" + currentStopIndex).val(),
+                        'DayType': @((int)(DayType.Workday))
+                });
+                }
+                times.push(rowTimes);
+            }    
+            return times;
+        }
+
+        function sendDepartures(times) {
+            var sendData = {
+                'lineDepartures': {
+                    'Line': lineDepartures.Line,
+                    'Departures': times
+                }
+            };
+            $.post("SaveDepartures",
+                sendData,
+                function (data, status) {
+                    if (data === "")
+                        location.reload();
+                    else
+                        alert('@BaseResources.ErrorOccured:' + data);
+                });
         }
     </script>
 </section>

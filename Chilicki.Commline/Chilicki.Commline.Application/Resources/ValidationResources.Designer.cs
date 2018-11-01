@@ -61,7 +61,7 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Departure is empty.
+        ///   Looks up a localized string similar to At least one of given departures is empty.
         /// </summary>
         internal static string DepartureEmpty {
             get {

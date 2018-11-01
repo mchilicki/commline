@@ -23,7 +23,7 @@ namespace Chilicki.Commline.Application.Validators
                     throw new ArgumentException(ValidationResources.StopsInDeparturesDoNotMatch);
                 foreach(var departure in departureRun)
                 {
-                    if (departure.DepartureTime.Equals(TimeSpan.Zero))
+                    if (departure == null || departure.DepartureTime.Equals(TimeSpan.Zero))
                         throw new ArgumentException(ValidationResources.DepartureEmpty);
                 }
             }

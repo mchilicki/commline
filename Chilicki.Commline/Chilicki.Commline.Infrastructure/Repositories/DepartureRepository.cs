@@ -19,11 +19,11 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             foreach(var departureRun in departures)
             {
                 int stopIndex = 0;
-                foreach(var departure in departureRun)
+                foreach (var departure in departureRun)
                 {
                     departure.RunIndex = runIndex;
                     departure.RouteStop = line.RouteStops
-                        .First(p => p.Line == line && p.StopIndex == stopIndex);
+                        .First(p => p.StopIndex == stopIndex); 
                     _entities.Add(departure);
                     stopIndex++;
                 }
@@ -34,9 +34,10 @@ namespace Chilicki.Commline.Infrastructure.Repositories
 
         public void DeleteAllDeparturesForLine(Line line)
         {
-            _entities.RemoveRange(
-                _entities
-                    .Where(e => e.RouteStop.Line == line));
+            var departuresToRemove = _entities
+                    .Where(e => e.RouteStop.Line.Id == line.Id);
+            if (departuresToRemove != null && departuresToRemove.Count() > 0)
+                _entities.RemoveRange(departuresToRemove);
             _database.SaveChanges();
         }
 
