@@ -1,8 +1,15 @@
 ﻿@using Chilicki.Commline.UserInterface.Resources
 @using Chilicki.Commline.Domain.Enums
 
+@{
+    var lineRouteTypes = new List<SelectListItem> {
+        new SelectListItem { Text = BaseResources.TwoWay, Value = "false", Selected = true },
+        new SelectListItem { Text = BaseResources.Circular, Value = "true" }
+    };
+}
+
 <div>
-    @Html.Partial("~/Views/Shared/_Map.cshtml", 
+    @Html.Partial("~/Views/Shared/_Map.cshtml",
         new ViewDataDictionary { { "viewName", BaseResources.Editor } })
 </div>
 
@@ -58,6 +65,10 @@
                     <label>@EditorResources.LineColor</label>
                     <input id="modalLineColor" type="color" />
                 </p>
+                <p>
+                    <label>@EditorResources.LineRouteType</label>
+                    @Html.DropDownList("modalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"))
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
@@ -73,9 +84,10 @@
     </div>
 </div>
 
-<script>  
+<script>
+
     var toolboxOpened = false;
-    
+
     var editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
     var editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
     var currentEditedLine = {};
@@ -84,7 +96,7 @@
     var lastStopLatitude;
 
     $(document).ready(function () {
-        $("#toolboxButton").show();  
+        $("#toolboxButton").show();
         $("#toolboxButton").click(switchToolboxSidenav);
         $("#saveModification").show();
         $("#saveModification").click(saveEverything);
@@ -99,8 +111,11 @@
         var sendData = { 'stopsEditionModel': editedStops };
         $.post("Editor/SaveStops",
             sendData,
-            function (data, status) {
-                editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
+            function (data, status) {                
+                if (data === "") 
+                    editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
+                else
+                    alert('@BaseResources.ErrorOccured: ' + data);
             });
     }
 
@@ -108,16 +123,21 @@
         var sendData = { 'linesEditionModel': editedLines };
         $.post("Editor/SaveLines",
             sendData,
-            function (data, status) {
-                editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
-                location.reload();
+            function (data, status) {                
+                if (data === "") {
+                    editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
+                    location.reload();
+                }
+                else {
+                    alert('@BaseResources.ErrorOccured: ' + data);
+                }                    
             });
     }
 
     function onMapClick(coordinates) {
         if (currentTool == '@EditorToolType.BusStop') {
             placeBusMarkerAndCreateStop(coordinates);
-        } 
+        }
         if (currentTool == '@EditorToolType.TramStop') {
             // tram tool
         }
@@ -137,6 +157,7 @@
             'Name': $("#modalLineName").val(),
             'Stops': [],
             'Color': $("#modalLineColor").val(),
+            'IsCircular': $("#modalLineRouteType").val(),            
         };
         allLines.Lines.push(newLine);
         editedLines.Added.push(newLine);
@@ -159,9 +180,9 @@
         allLines.StopsWithoutLines.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
-    }   
+    }
 
-    function placeBusMarkerAndCreateStop(coordinates) {        
+    function placeBusMarkerAndCreateStop(coordinates) {
         $("#newStopModal").modal({ backdrop: "static" });
         lastStopLatitude = coordinates.lat;
         lastStopLongitude = coordinates.lng;

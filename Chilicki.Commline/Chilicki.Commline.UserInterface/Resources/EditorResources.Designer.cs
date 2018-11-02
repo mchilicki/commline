@@ -151,6 +151,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line route type.
+        /// </summary>
+        public static string LineRouteType {
+            get {
+                return ResourceManager.GetString("LineRouteType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line Tool.
         /// </summary>
         public static string LineTool {

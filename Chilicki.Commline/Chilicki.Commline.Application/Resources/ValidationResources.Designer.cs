@@ -61,6 +61,24 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Circular line must start and end in the same stop.
+        /// </summary>
+        internal static string CircularLineMustStartAndEndInTheSameStop {
+            get {
+                return ResourceManager.GetString("CircularLineMustStartAndEndInTheSameStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circular line must have at least three stops.
+        /// </summary>
+        internal static string CircularLineStopsLessThanThree {
+            get {
+                return ResourceManager.GetString("CircularLineStopsLessThanThree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one of given departures is empty.
         /// </summary>
         internal static string DepartureEmpty {

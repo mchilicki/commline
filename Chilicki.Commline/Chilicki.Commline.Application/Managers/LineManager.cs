@@ -4,6 +4,7 @@ using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Chilicki.Commline.Application.Managers
 {
@@ -80,9 +81,17 @@ namespace Chilicki.Commline.Application.Managers
         {
             _lineValidator.Validate(lineDTO);
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);            
-            _lineRepository.Insert(line);
+            _lineRepository.Insert(line);                           
             _routeStopRepository.InsertForLineAndStops(line, 
                 Mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
+            if (!lineDTO.IsCircular)
+            {
+                lineDTO.Stops = lineDTO.Stops.Reverse();
+                Line reversedLine = Mapper.Map<LineDTO, Line>(lineDTO);
+                _lineRepository.Insert(reversedLine);
+                _routeStopRepository.InsertForLineAndStops(reversedLine,
+                    Mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
+            }
         }
 
         public void Edit(LineDTO lineDTO)

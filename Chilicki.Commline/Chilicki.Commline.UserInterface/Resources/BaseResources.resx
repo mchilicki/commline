@@ -129,6 +129,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Circular" xml:space="preserve">
+    <value>Circular</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -155,5 +158,8 @@
   </data>
   <data name="Toolbox" xml:space="preserve">
     <value>Toolbox</value>
+  </data>
+  <data name="TwoWay" xml:space="preserve">
+    <value>Two way</value>
   </data>
 </root>

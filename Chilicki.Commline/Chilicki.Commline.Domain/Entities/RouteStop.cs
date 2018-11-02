@@ -8,6 +8,7 @@ namespace Chilicki.Commline.Domain.Entities
         public long Id { get; set; }
         [Required]
         public int StopIndex { get; set; }
+        public bool IsReturnStop { get; set; }
         public virtual ICollection<Departure> Departures { get; set; }
         [Required]
         public virtual Line Line { get; set; }

@@ -117,49 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNextDepartureRun" xml:space="preserve">
-    <value>Add next departure run</value>
+  <data name="Target" xml:space="preserve">
+    <value>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</value>
   </data>
-  <data name="BusStopTool" xml:space="preserve">
-    <value>Bus Stop Tool</value>
-  </data>
-  <data name="BusStopToolDescription" xml:space="preserve">
-    <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
-  </data>
-  <data name="DeparturesDescription" xml:space="preserve">
-    <value>Use Departures Tool to establish departures times for lines</value>
-  </data>
-  <data name="DeparturesFor" xml:space="preserve">
-    <value>Departures for</value>
-  </data>
-  <data name="GiveLine" xml:space="preserve">
-    <value>Give line</value>
-  </data>
-  <data name="GiveStopDetails" xml:space="preserve">
-    <value>Please enter details of new stop</value>
-  </data>
-  <data name="LineColor" xml:space="preserve">
-    <value>Line color</value>
-  </data>
-  <data name="LineName" xml:space="preserve">
-    <value>Line name</value>
-  </data>
-  <data name="LineNumber" xml:space="preserve">
-    <value>Line number</value>
-  </data>
-  <data name="LineRouteType" xml:space="preserve">
-    <value>Line route type</value>
-  </data>
-  <data name="LineTool" xml:space="preserve">
-    <value>Line Tool</value>
-  </data>
-  <data name="NewLineCreation" xml:space="preserve">
-    <value>Please enter details of new line</value>
-  </data>
-  <data name="StationNumber" xml:space="preserve">
-    <value>Station number</value>
-  </data>
-  <data name="StopName" xml:space="preserve">
-    <value>Stop name</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>

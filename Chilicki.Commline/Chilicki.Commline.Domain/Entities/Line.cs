@@ -10,6 +10,7 @@ namespace Chilicki.Commline.Domain.Entities
         [Required]
         public string Name { get; set; }
         public string Color { get; set; }
+        public bool IsCircular { get; set; }
         public virtual LineType LineType { get; set; }
         public virtual ICollection<RouteStop> RouteStops { get; set; }
     }
