@@ -3,11 +3,11 @@ using Chilicki.Commline.Domain.Resources;
 
 namespace Chilicki.Commline.Domain.Enums
 {
-    public enum LineType
+    public enum StopType
     {
-        [LocalizedDescription("Shared_Bus", typeof(CommlineResources))]
+        [LocalizedDescription("Shared_BusStop", typeof(CommlineResources))]
         Bus,
-        [LocalizedDescription("Shared_Tram", typeof(CommlineResources))]
+        [LocalizedDescription("Shared_TramStop", typeof(CommlineResources))]
         Tram
     }
 }

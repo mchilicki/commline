@@ -120,11 +120,17 @@
   <data name="Shared_Bus" xml:space="preserve">
     <value>Bus</value>
   </data>
+  <data name="Shared_BusStop" xml:space="preserve">
+    <value>Bus stop</value>
+  </data>
   <data name="Shared_Free" xml:space="preserve">
     <value>Free day</value>
   </data>
   <data name="Shared_Tram" xml:space="preserve">
     <value>Tram</value>
+  </data>
+  <data name="Shared_TramStop" xml:space="preserve">
+    <value>Tram stop</value>
   </data>
   <data name="Shared_WorkDay" xml:space="preserve">
     <value>Workday</value>

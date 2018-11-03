@@ -2,16 +2,16 @@ namespace Chilicki.Commline.Infrastructure.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class RemoveIsReturnStop : DbMigration
+    public partial class AddStopType : DbMigration
     {
         public override void Up()
         {
-            DropColumn("dbo.RouteStops", "IsReturnStop");
+            AddColumn("dbo.Stops", "StopType", c => c.Int(nullable: false));
         }
         
         public override void Down()
         {
-            AddColumn("dbo.RouteStops", "IsReturnStop", c => c.Boolean(nullable: false));
+            DropColumn("dbo.Stops", "StopType");
         }
     }
 }

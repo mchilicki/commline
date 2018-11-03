@@ -9,6 +9,7 @@
     };
 
     LineType dropdownSelectedLineType = LineType.Bus;
+    StopType dropdownStopType = StopType.Bus;
 }
 
 <div>
@@ -18,10 +19,10 @@
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
     <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="stopToolButton" onclick="setCurrentTool(this, '@EditorToolType.BusStop')">@EditorResources.BusStopTool</a>
+        <a id="stopToolButton" onclick="setCurrentTool(this, '@EditorToolType.CreateStop')">@EditorResources.CreateStopTool</a>
     </abbr>
     <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="lineToolButton" onclick="setCurrentTool(this, '@EditorToolType.Line')">@EditorResources.LineTool</a>
+        <a id="lineToolButton" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.LineTool</a>
     </abbr>
 </div>
 
@@ -37,14 +38,17 @@
                         <label>@EditorResources.StopName</label>
                         <input id="modalStopName" type="text" />
                     </p>
+                    <p>
+                        <label>@EditorResources.StopName</label>
+                        @Html.DropDownList("modalStopType", dropdownStopType.ToSelectList())
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" data-dismiss="modal"
                             onclick="addStopToContainer()">
                         @BaseResources.Save
                     </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                            onclick="deleteLastMarker()">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
                         @BaseResources.Cancel
                     </button>
                 </div>
@@ -99,8 +103,7 @@
     var editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
     var currentEditedLine = {};
 
-    var lastStopLongitude;
-    var lastStopLatitude;
+    var lastCoordinates;
 
     $(document).ready(function () {
         $("#toolboxButton").show();
@@ -142,11 +145,9 @@
     }
 
     function onMapClick(coordinates) {
-        if (currentTool == '@EditorToolType.BusStop') {
-            placeBusMarkerAndCreateStop(coordinates);
-        }
-        if (currentTool == '@EditorToolType.TramStop') {
-            // tram tool
+        if (currentTool == '@EditorToolType.CreateStop') {
+            lastCoordinates = coordinates;
+            $("#newStopModal").modal({ backdrop: "static" });            
         }
     }
 
@@ -180,21 +181,17 @@
     }
 
     function addStopToContainer() {
+        var stopType = castEnumValueToKey(stopTypes, $("#modalStopType").val());
         var newStop = {
             'Name': $("#modalStopName").val(),
-            'Longitude': lastStopLongitude,
-            'Latitude': lastStopLatitude,
+            'StopType': stopType,
+            'Longitude': lastCoordinates.lng(),
+            'Latitude': lastCoordinates.lat(),
         };
+        drawMarker(MAP, '', $("#modalStopName").val(), lastCoordinates, stopType);
         allLines.StopsWithoutLines.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
-    }
-
-    function placeBusMarkerAndCreateStop(coordinates) {
-        $("#newStopModal").modal({ backdrop: "static" });
-        lastStopLatitude = coordinates.lat;
-        lastStopLongitude = coordinates.lng;
-        drawMarker(MAP, '', $("#modalStopName").val(), coordinates);
     }
 
     function setCurrentTool(toolButton, newTool) {
@@ -207,9 +204,17 @@
             currentEditedLine = {};
             $(toolButton).css('color', '#818181');
         }
-        if (currentTool == '@EditorToolType.Line') {
+        if (currentTool == '@EditorToolType.CreateLine') {
             $("#newLineModal").modal();
         }
+    }
+
+
+    function castEnumValueToKey(enumTable, value) {
+        for (var i = 0; i < Object.keys(enumTable).length; i++)
+            if (enumTable[i] === value)
+                return i;
+        return false;
     }
 
     function switchToolboxSidenav() {

@@ -187,7 +187,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Html Extensions\HtmlEnumExtensions.cs" />
+    <Compile Include="HtmlExtensions\HtmlDayTypeExtensions.cs" />
+    <Compile Include="HtmlExtensions\HtmlLineTypeExtensions.cs" />
+    <Compile Include="HtmlExtensions\HtmlStopTypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\BaseResources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -78,11 +78,12 @@
     <Compile Include="Entities\Departure.cs" />
     <Compile Include="Entities\Line.cs" />
     <Compile Include="Enums\EditorToolType.cs" />
-    <Compile Include="Enums\Extensions\DayTypeExtensions.cs" />
-    <Compile Include="Enums\Extensions\LineTypeExtensions.cs" />
+    <Compile Include="Enums\Extensions\EnumExtensions.cs" />
+    <Compile Include="Enums\Extensions\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Enums\LineType.cs" />
     <Compile Include="Entities\RouteStop.cs" />
     <Compile Include="Entities\Stop.cs" />
+    <Compile Include="Enums\StopType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\DomainErrors.Designer.cs">
       <AutoGen>True</AutoGen>

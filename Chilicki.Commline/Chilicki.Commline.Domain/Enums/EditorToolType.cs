@@ -3,8 +3,7 @@
     public enum EditorToolType
     {
         None,
-        BusStop,
-        TramStop,
-        Line,
+        CreateStop,
+        CreateLine,
     }
 }

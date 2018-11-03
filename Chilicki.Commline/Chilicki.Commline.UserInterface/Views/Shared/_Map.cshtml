@@ -16,15 +16,23 @@
         var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
         var stopMarkerList = [];
         var currentTool = '@EditorToolType.None';
-        var lineTypes = @(Html.EnumToString<LineType>());
+        var lineTypes = @(Html.LineTypeToString());
+        var stopTypes = @(Html.StopTypeToString());
 
-        var busStopImage = new google.maps.MarkerImage(
-            'https://maps.gstatic.com/mapfiles/transit/iw2/6/bus.png',
-            new google.maps.Size(stopIconSize, stopIconSize), //size
-            null, //origin
-            null, //anchor
-            new google.maps.Size(stopIconSize, stopIconSize) //scale
-        );
+        var stopIcons = [ new google.maps.MarkerImage(
+                'https://maps.gstatic.com/mapfiles/transit/iw2/6/bus.png',
+                new google.maps.Size(stopIconSize, stopIconSize), //size
+                null, //origin
+                null, //anchor
+                new google.maps.Size(stopIconSize, stopIconSize) //scale
+            ),
+            new google.maps.MarkerImage(
+                'https://maps.gstatic.com/mapfiles/transit/iw2/6/tram.png',
+                new google.maps.Size(stopIconSize, stopIconSize), //size
+                null, //origin
+                null, //anchor
+                new google.maps.Size(stopIconSize, stopIconSize) //scale
+            ) ];
 
         $(document).ready(function () {
             initializeMap();
@@ -104,7 +112,7 @@
             $.each(stopMarkerList, function (i, stopMarker) {
                 stopMarker.setIcon(
                     new google.maps.MarkerImage(
-                        busStopImage.url,
+                        stopMarker.icon.url,
                         null,
                         null,
                         null,
@@ -122,23 +130,24 @@
             // Do nothing
         }
 
-        function drawMarker(map, id, stopName, coordinates) {
+        function drawMarker(map, id, stopName, coordinates, stopType) {
+            var stopIcon = getStopIconByStopType(stopType);
             var stopMarker = new google.maps.Marker({
                 'position': coordinates,
                 'map': map,
                 'title': stopName,
-                'icon': busStopImage,
+                'icon': stopIcon,
                 'id': id,
             });
 
             var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h2>" + stopName + "</div></div>"
+                content: "<div class='infoDiv'><h2>" + stopTypes[stopType] + " " + stopName + "</div></div>"
             });
 
             google.maps.event.addListener(stopMarker, 'click', function () {
                 if (currentTool == '@EditorToolType.None')
                     infowindow.open(map, stopMarker);
-                if (currentTool == '@EditorToolType.Line')
+                if (currentTool == '@EditorToolType.CreateLine')
                     addStopToLine(stopMarker);
             });
             stopMarkerList.push(stopMarker);
@@ -147,7 +156,7 @@
 
         function drawAllStopsWithoutLines(map, stops) {
             $.each(stops, function (stopIndex, stop) {
-                drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude));
+                drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude), stop.StopType);
             });
         }
 
@@ -156,7 +165,7 @@
             $.each(stopList, function (i, stop) {
                 var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
                 stopLocations.push(coordinates);
-                drawMarker(map, stop.Id, stop.Name, coordinates);
+                drawMarker(map, stop.Id, stop.Name, coordinates, stop.StopType);
             })
 
             if (color === null)
@@ -194,11 +203,12 @@
                     allLines = result;
                     drawAllLines(MAP, result.Lines);
                     drawAllStopsWithoutLines(MAP, result.StopsWithoutLines);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
                 }
             });
+        }
+
+        function getStopIconByStopType(stopType) {
+            return stopIcons[stopType];
         }
 
         function getRandomColor() {

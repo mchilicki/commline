@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div style="margin-left: 50px; margin-right: 50px">
-    <h2>@EditorResources.DeparturesFor @Model.Line.LineType.NameOf().ToLowerInvariant() @Model.Line.Name</h2>
+    <h2>@EditorResources.DeparturesFor @Model.Line.LineType.GetDescription().ToLowerInvariant() @Model.Line.Name</h2>
 
     <table id="departureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" style="width: auto">
         <thead>
@@ -122,7 +122,7 @@
                     rowTimes.push({
                         'RunIndex': currentRunIndex,
                         'DepartureTime': $("#time-" + currentRunIndex + "-" + currentStopIndex).val(),
-                        'DayType': @((int)(DayType.Workday))
+                        'DayType': @((int)(DayType.Workday)) // TODO This should be editable
                 });
                 }
                 times.push(rowTimes);

@@ -70,20 +70,20 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bus Stop Tool.
-        /// </summary>
-        public static string BusStopTool {
-            get {
-                return ResourceManager.GetString("BusStopTool", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Use Bus Stop Tool to add, edit or delete bus stops.
         /// </summary>
         public static string BusStopToolDescription {
             get {
                 return ResourceManager.GetString("BusStopToolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Stop Tool.
+        /// </summary>
+        public static string CreateStopTool {
+            get {
+                return ResourceManager.GetString("CreateStopTool", resourceCulture);
             }
         }
         

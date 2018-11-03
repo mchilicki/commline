@@ -2,7 +2,6 @@
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Chilicki.Commline.Infrastructure.Repositories
 {
