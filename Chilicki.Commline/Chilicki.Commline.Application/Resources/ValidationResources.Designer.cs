@@ -133,6 +133,15 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line can be routed on stops of matching type, for example bus line can only go through bus stops.
+        /// </summary>
+        internal static string StopLineTypesDoNotMatch {
+            get {
+                return ResourceManager.GetString("StopLineTypesDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stops in departures do not match with line stops.
         /// </summary>
         internal static string StopsInDeparturesDoNotMatch {

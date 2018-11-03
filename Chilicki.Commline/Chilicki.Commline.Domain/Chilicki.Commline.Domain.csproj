@@ -95,6 +95,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommlineResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\StopLineTypesMatchCheckingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">
@@ -105,7 +106,6 @@
   <ItemGroup>
     <Folder Include="Aggregates\" />
     <Folder Include="Factories\" />
-    <Folder Include="Services\" />
     <Folder Include="ValueObjects\" />
   </ItemGroup>
   <ItemGroup>

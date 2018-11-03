@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Validators;
+using Chilicki.Commline.Domain.Services;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.UserInterface.Controllers;
@@ -38,6 +39,8 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<DepartureRepository>().ToSelf().InRequestScope();
             _kernel.Bind<RouteStopRepository>().ToSelf().InRequestScope();
             _kernel.Bind<MixedRepository>().ToSelf().InRequestScope();
+
+            _kernel.Bind<StopLineTypesMatchCheckingService>().ToSelf();
 
             _kernel.Bind<StopManager>().ToSelf();
             _kernel.Bind<LineManager>().ToSelf();

@@ -123,4 +123,7 @@
   <data name="InvalidLineType" xml:space="preserve">
     <value>Invalid line type</value>
   </data>
+  <data name="InvalidStopType" xml:space="preserve">
+    <value>Invalid stop type</value>
+  </data>
 </root>

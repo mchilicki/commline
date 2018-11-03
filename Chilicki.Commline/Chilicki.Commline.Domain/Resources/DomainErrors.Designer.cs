@@ -77,5 +77,14 @@ namespace Chilicki.Commline.Domain.Resources {
                 return ResourceManager.GetString("InvalidLineType", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid stop type.
+        /// </summary>
+        internal static string InvalidStopType {
+            get {
+                return ResourceManager.GetString("InvalidStopType", resourceCulture);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Resources;
 using Chilicki.Commline.Application.Validators.Base;
+using Chilicki.Commline.Domain.Services;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System;
 using System.Linq;
@@ -10,16 +11,26 @@ namespace Chilicki.Commline.Application.Validators
     public class LineValidator : IValidator<LineDTO>
     {
         readonly LineRepository _lineRepository;
+        readonly StopLineTypesMatchCheckingService _stopLineTypesMatchCheckingService;
 
-        public LineValidator(LineRepository lineRepository)
+        public LineValidator(
+            LineRepository lineRepository,
+            StopLineTypesMatchCheckingService stopLineTypesMatchCheckingService)
         {
             _lineRepository = lineRepository;
+            _stopLineTypesMatchCheckingService = stopLineTypesMatchCheckingService;
         }
 
         public bool Validate(LineDTO lineDTO)
         {
             if (string.IsNullOrEmpty(lineDTO.Name))
-                throw new ArgumentException(ValidationResources.LineNameIsEmpty);            
+                throw new ArgumentException(ValidationResources.LineNameIsEmpty);      
+            foreach (var stopType in lineDTO.Stops.Select(p => p.StopType))
+            {
+                if (!_stopLineTypesMatchCheckingService.AreStopAndLineTypesMatching
+                        (stopType, lineDTO.LineType))
+                    throw new ArgumentException(ValidationResources.StopLineTypesDoNotMatch);                
+            }
             if (lineDTO.IsCircular)
             {
                 if (lineDTO.Stops == null || lineDTO.Stops.Count() < 3)
