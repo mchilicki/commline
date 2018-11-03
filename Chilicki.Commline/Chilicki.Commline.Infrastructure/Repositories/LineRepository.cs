@@ -20,5 +20,14 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                 .Where(p => p.Name == lineName)
                 .Count();
         }
+
+        public Line GetReturnLine(Line line)
+        {
+            var returnLines = _entities
+                .Where(p => p.Id != line.Id && p.Name == line.Name);
+            if (returnLines != null && returnLines.Count() > 0)
+                return returnLines.First();
+            return null;
+        }
     }
 }

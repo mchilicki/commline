@@ -28,6 +28,25 @@ namespace Chilicki.Commline.Application.Validators
                             throw new ArgumentException(ValidationResources.DepartureEmpty);
                     }
                 }
+                if (dto.ReturnLine != null)
+                {
+                    if (dto.ReturnDepartures != null)
+                    {
+                        if (dto.ReturnDepartures.Count() <= 0)
+                            throw new ArgumentException(ValidationResources.NoDepartures);
+                        int returnStopsCount = dto.ReturnLine.Stops.Count();
+                        foreach (var departureRun in dto.Departures)
+                        {
+                            if (departureRun.Count() != returnStopsCount)
+                                throw new ArgumentException(ValidationResources.StopsInDeparturesDoNotMatch);
+                            foreach (var departure in departureRun)
+                            {
+                                if (departure == null || departure.DepartureTime.Equals(TimeSpan.Zero))
+                                    throw new ArgumentException(ValidationResources.DepartureEmpty);
+                            }
+                        }
+                    }
+                }
             }            
             return true;
         }

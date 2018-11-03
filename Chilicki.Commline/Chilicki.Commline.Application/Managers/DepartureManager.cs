@@ -26,11 +26,18 @@ namespace Chilicki.Commline.Application.Managers
         public void ChangeLineDepartures(LineDeparturesDTO lineDepartures)
         {
             _departuresValidator.Validate(lineDepartures);
-            Line line = _lineRepository.GetById(lineDepartures.Line.Id);
+            ChangeLineDeparturesFor(lineDepartures.Line, lineDepartures.Departures);
+            if (lineDepartures.ReturnLine != null)
+                ChangeLineDeparturesFor(lineDepartures.ReturnLine, lineDepartures.ReturnDepartures);
+        }
+
+        private void ChangeLineDeparturesFor(LineDTO lineDTO, IEnumerable<IEnumerable<DepartureDTO>> departuresDTO)
+        {
+            Line line = _lineRepository.GetById(lineDTO.Id);
             var departures = Mapper.Map
                 <IEnumerable<IEnumerable<DepartureDTO>>,
                 IEnumerable<IEnumerable<Departure>>>
-                (lineDepartures.Departures);
+                (departuresDTO);
             _departureRepository.DeleteAllDeparturesForLine(line);
             _departureRepository.Create(line, departures);
         }

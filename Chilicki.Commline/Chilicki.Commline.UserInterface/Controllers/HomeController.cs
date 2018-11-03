@@ -40,6 +40,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()
         {
             return _lineManager.GetAll()
+                .Distinct()
                 .OrderBy(p => p.Name)
                 .Select(p => new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
         }

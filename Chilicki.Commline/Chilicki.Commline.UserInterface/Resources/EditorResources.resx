@@ -120,6 +120,9 @@
   <data name="AddNextDepartureRun" xml:space="preserve">
     <value>Add next departure run</value>
   </data>
+  <data name="AddNextReturnDepartureRun" xml:space="preserve">
+    <value>Add next return departure run</value>
+  </data>
   <data name="BusStopToolDescription" xml:space="preserve">
     <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
   </data>

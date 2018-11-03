@@ -70,6 +70,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add next return departure run.
+        /// </summary>
+        public static string AddNextReturnDepartureRun {
+            get {
+                return ResourceManager.GetString("AddNextReturnDepartureRun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Bus Stop Tool to add, edit or delete bus stops.
         /// </summary>
         public static string BusStopToolDescription {

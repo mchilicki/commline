@@ -36,6 +36,15 @@ namespace Chilicki.Commline.Application.Managers
             return lineDTO;
         }
 
+        public LineDTO GetReturnLine(LineDTO lineDTO)
+        {
+            Line line = _lineRepository.GetById(lineDTO.Id);
+            LineDTO returnLineDTO = Mapper.Map<Line, LineDTO>(_lineRepository.GetReturnLine(line));
+            if (returnLineDTO != null)
+                returnLineDTO.Stops = _stopManager.GetAllForLine(returnLineDTO.Id);
+            return returnLineDTO;
+        }
+
         public IEnumerable<LineDTO> GetAll()
         {
             var lineDTOs = Mapper.Map<IEnumerable<Line>, IEnumerable<LineDTO>>
@@ -58,13 +67,23 @@ namespace Chilicki.Commline.Application.Managers
 
         public LineDeparturesDTO GetDeparturesForLine(long lineId)
         {
+            var line = Mapper.Map<Line, LineDTO>(_lineRepository.GetById(lineId));
+            var returnLine = GetReturnLine(line);
+            IEnumerable<IEnumerable<DepartureDTO>> returnDepartures = null;
+            if (returnLine != null)
+                returnDepartures = Mapper.Map<
+                        IEnumerable<IEnumerable<Departure>>,
+                        IEnumerable<IEnumerable<DepartureDTO>>>
+                    (_departureRepository.GetAllLineDeparturesOrderedByRuns(returnLine.Id));
             return new LineDeparturesDTO()
             {
-                Line = GetById(lineId),
+                Line = GetById(line.Id),
                 Departures = Mapper.Map<
-                        IEnumerable<IEnumerable<Departure>>, 
+                        IEnumerable<IEnumerable<Departure>>,
                         IEnumerable<IEnumerable<DepartureDTO>>>
-                    (_departureRepository.GetAllLineDeparturesOrderedByRuns(lineId)),              
+                    (_departureRepository.GetAllLineDeparturesOrderedByRuns(line.Id)),
+                ReturnLine = returnLine,
+                ReturnDepartures = returnDepartures,
             };
         }
 
