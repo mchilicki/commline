@@ -153,13 +153,13 @@
   <data name="NoDetailsMap" xml:space="preserve">
     <value>No details map</value>
   </data>
+  <data name="OneWay" xml:space="preserve">
+    <value>One way</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="Toolbox" xml:space="preserve">
     <value>Toolbox</value>
-  </data>
-  <data name="TwoWay" xml:space="preserve">
-    <value>Two way</value>
   </data>
 </root>

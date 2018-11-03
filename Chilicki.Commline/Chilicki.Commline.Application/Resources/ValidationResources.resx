@@ -135,6 +135,12 @@
   <data name="NoDepartures" xml:space="preserve">
     <value>No departures</value>
   </data>
+  <data name="OnlyOneCircularLineCanExist" xml:space="preserve">
+    <value>Only one circular line with the same name can exist</value>
+  </data>
+  <data name="OnlyTwoOneWaysLinesCanExist" xml:space="preserve">
+    <value>Only two one-ways lines with the same name can exist</value>
+  </data>
   <data name="StopsInDeparturesDoNotMatch" xml:space="preserve">
     <value>Stops in departures do not match with line stops</value>
   </data>

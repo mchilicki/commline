@@ -1,6 +1,7 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
+using System.Linq;
 
 namespace Chilicki.Commline.Infrastructure.Repositories
 {
@@ -13,9 +14,11 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             _stopRepository = stopRepository;
         }
 
-        public bool DoesLineHaveEmptyRoute(long lineId)
+        public int GetCountByLineName(string lineName)
         {
-            return _stopRepository.GetCount() < 2;
+            return _entities
+                .Where(p => p.Name == lineName)
+                .Count();
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿@using Chilicki.Commline.UserInterface.Resources
 @using Chilicki.Commline.Domain.Enums
+@using Chilicki.Commline.UserInterface.HtmlExtensions
 
 @{
     var lineRouteTypes = new List<SelectListItem> {
-        new SelectListItem { Text = BaseResources.TwoWay, Value = "false", Selected = true },
+        new SelectListItem { Text = BaseResources.OneWay, Value = "false", Selected = true },
         new SelectListItem { Text = BaseResources.Circular, Value = "true" }
     };
+
+    LineType dropdownSelectedLineType = LineType.Bus;
 }
 
 <div>
@@ -60,6 +63,10 @@
                 <p>
                     <label>@EditorResources.LineName</label>
                     <input id="modalLineName" type="text" />
+                </p>
+                <p>
+                    <label>@EditorResources.LineType</label>
+                    @Html.DropDownList("modalLineType", dropdownSelectedLineType.ToSelectList())
                 </p>
                 <p>
                     <label>@EditorResources.LineColor</label>
@@ -155,6 +162,7 @@
     function addLineToContainer() {
         var newLine = {
             'Name': $("#modalLineName").val(),
+            'LineType': $("#modalLineType").val(),
             'Stops': [],
             'Color': $("#modalLineColor").val(),
             'IsCircular': $("#modalLineRouteType").val(),            

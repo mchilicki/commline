@@ -115,6 +115,24 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only one circular line with the same name can exist.
+        /// </summary>
+        internal static string OnlyOneCircularLineCanExist {
+            get {
+                return ResourceManager.GetString("OnlyOneCircularLineCanExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only two one-ways lines with the same name can exist.
+        /// </summary>
+        internal static string OnlyTwoOneWaysLinesCanExist {
+            get {
+                return ResourceManager.GetString("OnlyTwoOneWaysLinesCanExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stops in departures do not match with line stops.
         /// </summary>
         internal static string StopsInDeparturesDoNotMatch {

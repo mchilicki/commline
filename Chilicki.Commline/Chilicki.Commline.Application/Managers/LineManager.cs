@@ -84,14 +84,6 @@ namespace Chilicki.Commline.Application.Managers
             _lineRepository.Insert(line);                           
             _routeStopRepository.InsertForLineAndStops(line, 
                 Mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
-            if (!lineDTO.IsCircular)
-            {
-                lineDTO.Stops = lineDTO.Stops.Reverse();
-                Line reversedLine = Mapper.Map<LineDTO, Line>(lineDTO);
-                _lineRepository.Insert(reversedLine);
-                _routeStopRepository.InsertForLineAndStops(reversedLine,
-                    Mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
-            }
         }
 
         public void Edit(LineDTO lineDTO)

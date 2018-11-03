@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201811021058233_AddReturningAndCircularLines.Designer.cs">
       <DependentUpon>201811021058233_AddReturningAndCircularLines.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811031715041_RemoveIsReturnStop.cs" />
+    <Compile Include="Migrations\201811031715041_RemoveIsReturnStop.Designer.cs">
+      <DependentUpon>201811031715041_RemoveIsReturnStop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
@@ -137,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811021058233_AddReturningAndCircularLines.resx">
       <DependentUpon>201811021058233_AddReturningAndCircularLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811031715041_RemoveIsReturnStop.resx">
+      <DependentUpon>201811031715041_RemoveIsReturnStop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\DatabaseResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

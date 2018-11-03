@@ -169,6 +169,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One way.
+        /// </summary>
+        public static string OneWay {
+            get {
+                return ResourceManager.GetString("OneWay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -183,15 +192,6 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string Toolbox {
             get {
                 return ResourceManager.GetString("Toolbox", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Two way.
-        /// </summary>
-        public static string TwoWay {
-            get {
-                return ResourceManager.GetString("TwoWay", resourceCulture);
             }
         }
     }

@@ -12,15 +12,15 @@ namespace Chilicki.Commline.UserInterface.Controllers
     {
         readonly LineManager _lineManager;
         readonly StopManager _stopManager;
-        readonly RouteStopManager _routeStopManager;
         readonly DepartureManager _departureManager;
 
-        public EditorController(LineManager lineManager, StopManager stopManager,
-            RouteStopManager routeStopManager, DepartureManager departureManager)
+        public EditorController(
+            LineManager lineManager, 
+            StopManager stopManager,
+            DepartureManager departureManager)
         {
             _lineManager = lineManager;
             _stopManager = stopManager;
-            _routeStopManager = routeStopManager;
             _departureManager = departureManager;
         }
 

@@ -169,6 +169,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line type.
+        /// </summary>
+        public static string LineType {
+            get {
+                return ResourceManager.GetString("LineType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter details of new line.
         /// </summary>
         public static string NewLineCreation {
