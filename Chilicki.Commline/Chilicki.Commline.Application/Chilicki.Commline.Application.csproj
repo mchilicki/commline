@@ -101,6 +101,7 @@
     <Compile Include="Validators\DeparturesValidator.cs" />
     <Compile Include="Validators\Base\IValidator.cs" />
     <Compile Include="Validators\LineValidator.cs" />
+    <Compile Include="Validators\StopValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">

@@ -48,6 +48,7 @@ namespace Chilicki.Commline.UserInterface.App_Start
 
             _kernel.Bind<LineValidator>().ToSelf();
             _kernel.Bind<DeparturesValidator>().ToSelf();
+            _kernel.Bind<StopValidator>().ToSelf();
 
             _kernel.Bind<HomeController>().ToSelf();
             _kernel.Bind<EditorController>().ToSelf();

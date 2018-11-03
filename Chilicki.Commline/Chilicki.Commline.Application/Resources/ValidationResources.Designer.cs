@@ -88,6 +88,15 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid stop coordinates.
+        /// </summary>
+        internal static string InvalidCoordinates {
+            get {
+                return ResourceManager.GetString("InvalidCoordinates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line name is empty.
         /// </summary>
         internal static string LineNameIsEmpty {
@@ -138,6 +147,15 @@ namespace Chilicki.Commline.Application.Resources {
         internal static string StopLineTypesDoNotMatch {
             get {
                 return ResourceManager.GetString("StopLineTypesDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop name is empty.
+        /// </summary>
+        internal static string StopNameEmpty {
+            get {
+                return ResourceManager.GetString("StopNameEmpty", resourceCulture);
             }
         }
         
