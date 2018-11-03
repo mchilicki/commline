@@ -13,7 +13,7 @@ namespace Chilicki.Commline.UserInterface.HtmlExtensions
         public static SelectList ToSelectList(this DayType selectedValueOutput)
         {
             var values = from DayType e in Enum.GetValues(typeof(DayType))
-                         select new { Id = e, Name = e.GetDescription() };
+                         select new { Id = (int)e, Name = e.GetDescription() };
             return new SelectList(values, "Id", "Name", selectedValueOutput);
         }
 

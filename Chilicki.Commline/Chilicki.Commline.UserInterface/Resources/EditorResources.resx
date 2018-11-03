@@ -165,4 +165,7 @@
   <data name="StopName" xml:space="preserve">
     <value>Stop name</value>
   </data>
+  <data name="StopType" xml:space="preserve">
+    <value>Stop type</value>
+  </data>
 </root>

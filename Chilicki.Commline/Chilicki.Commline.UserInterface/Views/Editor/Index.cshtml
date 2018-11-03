@@ -39,7 +39,7 @@
                         <input id="modalStopName" type="text" />
                     </p>
                     <p>
-                        <label>@EditorResources.StopName</label>
+                        <label>@EditorResources.StopType</label>
                         @Html.DropDownList("modalStopType", dropdownStopType.ToSelectList())
                     </p>
                 </div>
@@ -181,14 +181,13 @@
     }
 
     function addStopToContainer() {
-        var stopType = castEnumValueToKey(stopTypes, $("#modalStopType").val());
         var newStop = {
             'Name': $("#modalStopName").val(),
-            'StopType': stopType,
+            'StopType': $("#modalStopType").val(),
             'Longitude': lastCoordinates.lng(),
             'Latitude': lastCoordinates.lat(),
         };
-        drawMarker(MAP, '', $("#modalStopName").val(), lastCoordinates, stopType);
+        drawMarker(MAP, '', $("#modalStopName").val(), lastCoordinates, $("#modalStopType").val());
         allLines.StopsWithoutLines.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');

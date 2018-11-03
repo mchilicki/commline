@@ -55,6 +55,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(IEnumerable<StopDTO> stopDTOs)
         {
+            _stopValidator.Validate(stopDTOs);
             foreach (var stopDTO in stopDTOs)
             {
                 Create(stopDTO);

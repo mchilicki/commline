@@ -14,7 +14,7 @@ namespace Chilicki.Commline.UserInterface.HtmlExtensions
         public static SelectList ToSelectList(this LineType selectedValueOutput)
         {
             var values = from LineType e in Enum.GetValues(typeof(LineType))
-                         select new { Id = e, Name = e.GetDescription() };
+                         select new { Id = (int)e, Name = e.GetDescription() };
             return new SelectList(values, "Id", "Name", selectedValueOutput);
         }
 

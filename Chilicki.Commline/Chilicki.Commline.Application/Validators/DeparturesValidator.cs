@@ -2,6 +2,7 @@
 using Chilicki.Commline.Application.Resources;
 using Chilicki.Commline.Application.Validators.Base;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Chilicki.Commline.Application.Validators
@@ -28,6 +29,15 @@ namespace Chilicki.Commline.Application.Validators
                     }
                 }
             }            
+            return true;
+        }
+
+        public bool Validate(IEnumerable<LineDeparturesDTO> departureList)
+        {
+            foreach (var departure in departureList)
+            {
+                Validate(departure);
+            }
             return true;
         }
     }

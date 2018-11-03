@@ -4,6 +4,7 @@ using Chilicki.Commline.Application.Validators.Base;
 using Chilicki.Commline.Domain.Services.Matching;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Chilicki.Commline.Application.Validators
@@ -46,6 +47,15 @@ namespace Chilicki.Commline.Application.Validators
                     throw new ArgumentException(ValidationResources.LineStopsLessThanTwo);
                 if (_lineRepository.GetCountByLineName(lineDTO.Name) >= 2)
                     throw new ArgumentException(ValidationResources.OnlyTwoOneWaysLinesCanExist);
+            }
+            return true;
+        }
+
+        public bool Validate(IEnumerable<LineDTO> lineList)
+        {
+            foreach (var line in lineList)
+            {
+                Validate(line);
             }
             return true;
         }

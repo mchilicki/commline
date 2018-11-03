@@ -203,5 +203,14 @@ namespace Chilicki.Commline.UserInterface.Resources {
                 return ResourceManager.GetString("StopName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop type.
+        /// </summary>
+        public static string StopType {
+            get {
+                return ResourceManager.GetString("StopType", resourceCulture);
+            }
+        }
     }
 }
