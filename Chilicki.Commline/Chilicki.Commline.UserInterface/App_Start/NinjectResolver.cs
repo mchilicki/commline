@@ -1,6 +1,6 @@
 ﻿using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Validators;
-using Chilicki.Commline.Domain.Services;
+using Chilicki.Commline.Domain.Services.Matching;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.UserInterface.Controllers;

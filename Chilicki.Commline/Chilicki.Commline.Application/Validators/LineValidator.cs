@@ -1,7 +1,7 @@
 ﻿using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Resources;
 using Chilicki.Commline.Application.Validators.Base;
-using Chilicki.Commline.Domain.Services;
+using Chilicki.Commline.Domain.Services.Matching;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System;
 using System.Linq;
