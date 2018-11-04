@@ -79,11 +79,29 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start date is empty.
+        /// </summary>
+        internal static string DateIsEmpty {
+            get {
+                return ResourceManager.GetString("DateIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one of given departures is empty.
         /// </summary>
         internal static string DepartureEmpty {
             get {
                 return ResourceManager.GetString("DepartureEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination stop is empty.
+        /// </summary>
+        internal static string EndStopIsEmpty {
+            get {
+                return ResourceManager.GetString("EndStopIsEmpty", resourceCulture);
             }
         }
         
@@ -142,6 +160,15 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start stop is empty.
+        /// </summary>
+        internal static string StartStopIsEmpty {
+            get {
+                return ResourceManager.GetString("StartStopIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line can be routed on stops of matching type, for example bus line can only go through bus stops.
         /// </summary>
         internal static string StopLineTypesDoNotMatch {
@@ -165,6 +192,24 @@ namespace Chilicki.Commline.Application.Resources {
         internal static string StopsInDeparturesDoNotMatch {
             get {
                 return ResourceManager.GetString("StopsInDeparturesDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop with this id does not exist.
+        /// </summary>
+        internal static string StopWithIdDoesNotExist {
+            get {
+                return ResourceManager.GetString("StopWithIdDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time is empty.
+        /// </summary>
+        internal static string TimeIsEmpty {
+            get {
+                return ResourceManager.GetString("TimeIsEmpty", resourceCulture);
             }
         }
     }

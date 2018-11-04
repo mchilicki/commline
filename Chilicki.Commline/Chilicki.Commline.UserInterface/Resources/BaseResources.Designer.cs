@@ -106,6 +106,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Clear {
+            get {
+                return ResourceManager.GetString("Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -174,6 +183,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string NoDetailsMap {
             get {
                 return ResourceManager.GetString("NoDetailsMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now.
+        /// </summary>
+        public static string Now {
+            get {
+                return ResourceManager.GetString("Now", resourceCulture);
             }
         }
         

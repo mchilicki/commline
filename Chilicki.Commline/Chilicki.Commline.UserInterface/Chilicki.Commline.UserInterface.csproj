@@ -202,6 +202,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditorResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\SearchResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\TimepickerResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TimepickerResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-material-datetimepicker.css" />
@@ -398,6 +408,14 @@
     <EmbeddedResource Include="Resources\EditorResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EditorResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SearchResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\TimepickerResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TimepickerResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

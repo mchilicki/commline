@@ -1,4 +1,5 @@
-﻿using Chilicki.Commline.Application.Managers;
+﻿using Chilicki.Commline.Application.DTOs.Search;
+using Chilicki.Commline.Application.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,20 @@ namespace Chilicki.Commline.UserInterface.Controllers
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             return View("Search");
+        }
+
+        [HttpPost]
+        public JsonResult SearchConnections(SearchInputDTO searchInput)
+        {
+            try
+            {
+                _searchManager.SearchFastestConnections(searchInput);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }            
+            return Json(searchInput);
         }
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()

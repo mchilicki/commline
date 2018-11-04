@@ -87,12 +87,18 @@
     <Compile Include="DTOs\LineDTO.cs" />
     <Compile Include="DTOs\LinesEditionModel.cs" />
     <Compile Include="DTOs\RouteStopDTO.cs" />
+    <Compile Include="DTOs\Search\SearchInputDTO.cs" />
     <Compile Include="DTOs\StopDTO.cs" />
     <Compile Include="DTOs\StopsEditionModel.cs" />
+    <Compile Include="Enums\EditorToolType.cs" />
+    <Compile Include="Enums\CommlineViewType.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
     <Compile Include="Managers\LineManager.cs" />
     <Compile Include="Managers\SearchManager.cs" />
     <Compile Include="Managers\StopManager.cs" />
+    <Compile Include="ManualMappers\Base\IToDomainManualMapper.cs" />
+    <Compile Include="ManualMappers\Base\IToDTOManualMapper.cs" />
+    <Compile Include="ManualMappers\SearchInputManualMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ValidationResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -102,6 +108,7 @@
     <Compile Include="Validators\DeparturesValidator.cs" />
     <Compile Include="Validators\Base\IValidator.cs" />
     <Compile Include="Validators\LineValidator.cs" />
+    <Compile Include="Validators\SearchValidator.cs" />
     <Compile Include="Validators\StopValidator.cs" />
   </ItemGroup>
   <ItemGroup>
