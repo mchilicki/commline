@@ -6,7 +6,7 @@
 
 @model LineDeparturesDTO
 
-@{ 
+@{
     ViewBag.Title = BaseResources.Departures;
     Layout = "~/Views/Shared/_Layout.cshtml";
     int departureRunIndex = 0;
@@ -16,7 +16,7 @@
     int returnAlreadyAddedDepartureRuns = Model.ReturnDepartures != null ? Model.ReturnDepartures.Count() : 0 + 1;
 }
 
-<link rel="stylesheet" href="~/Styles/main.css"/>
+<link rel="stylesheet" href="~/Styles/main.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css" />
@@ -50,7 +50,7 @@
                         <td><input id="time-@departureRunIndex-@tempDepartureIndex" class="timepicker" value="@departure.DepartureTime" style="width: 40px" /></td>
                         tempDepartureIndex++;
                     }
-                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); departureRuns--;"><i class="fa fa-trash"></i></button></td>
+                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button></td>
                 </tr>
                 departureRunIndex++;
             }
@@ -58,21 +58,18 @@
                 @for (int stopIndex = 0; stopIndex < Model.Line.Stops.Count(); stopIndex++)
                 {
                     <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker" style="width: 40px" /></td>
-                    if (stopIndex == Model.Line.Stops.Count() - 1)
-                    {
-                        departureRunIndex++;
-                    }
                 }
-                <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); departureRuns--;"><i class="fa fa-trash"></i></button></td>
+                <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                @{departureRunIndex++;}
             </tr>
-            @for (; departureRunIndex < alreadyAddedDepartureRuns + 100; departureRunIndex++)
+            @for (; departureRunIndex < alreadyAddedDepartureRuns + 50; departureRunIndex++)
             {
                 <tr id="row-time-@departureRunIndex" hidden>
                     @for (int stopIndex = 0; stopIndex < Model.Line.Stops.Count(); stopIndex++)
                     {
                         <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker" style="width: 40px" /></td>
                     }
-                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); departureRuns--;"><i class="fa fa-trash"></i></button></td>
+                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button></td>
                 </tr>
             }
         </tbody>
@@ -81,83 +78,96 @@
         @EditorResources.AddNextDepartureRun
     </button>
 
-@if (Model.ReturnLine != null)
-{
-    <p></p>
-    <table id="returnDepartureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" style="width: auto">
-        <thead>
-            <tr id="return-row-time-@returnDepartureRunIndex">
-                @foreach (var stop in Model.ReturnLine.Stops)
-                {
-                    <th width="auto">@stop.Name</th>
-                }
-                <th width="auto">@BaseResources.Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var departureRun in Model.ReturnDepartures)
-            {
-                int tempDepartureIndex = 0;
+    @if (Model.ReturnLine != null)
+    {
+        <p></p>
+        <table id="returnDepartureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" style="width: auto">
+            <thead>
                 <tr id="return-row-time-@returnDepartureRunIndex">
-                    @foreach (var departure in departureRun)
+                    @foreach (var stop in Model.ReturnLine.Stops)
                     {
-                        <td><input id="return-time-@returnDepartureRunIndex-@tempDepartureIndex" class="timepicker" value="@departure.DepartureTime" style="width: 40px" /></td>
-                        tempDepartureIndex++;
+                        <th width="auto">@stop.Name</th>
                     }
-                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); returnDepartureRuns--;"><i class="fa fa-trash"></i></button></td>
+                    <th width="auto">@BaseResources.Actions</th>
                 </tr>
-                returnDepartureRunIndex++;
-            }
-            <tr id="return-row-time-@returnDepartureRunIndex">
-                @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
+            </thead>
+            <tbody>
+                @foreach (var departureRun in Model.ReturnDepartures)
                 {
-                    <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker" style="width: 40px" /></td>
-                    if (stopIndex == Model.ReturnLine.Stops.Count() - 1)
-                    {
-                        returnDepartureRunIndex++;
-                    }
+                    int tempDepartureIndex = 0;
+                    <tr id="return-row-time-@returnDepartureRunIndex">
+                        @foreach (var departure in departureRun)
+                        {
+                            <td><input id="return-time-@returnDepartureRunIndex-@tempDepartureIndex" class="timepicker" value="@departure.DepartureTime" style="width: 40px" /></td>
+                            tempDepartureIndex++;
+                        }
+                        <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                    returnDepartureRunIndex++;
                 }
-                <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); returnDepartureRuns--;"><i class="fa fa-trash"></i></button></td>
-            </tr>
-            @for (; returnDepartureRunIndex < returnAlreadyAddedDepartureRuns + 100; returnDepartureRunIndex++)
-            {
-                <tr id="return-row-time-@returnDepartureRunIndex" hidden>
+                <tr id="return-row-time-@returnDepartureRunIndex">
                     @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
                     {
                         <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker" style="width: 40px" /></td>
                     }
-                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="$(this).parent().parent().remove(); returnDepartureRuns--;"><i class="fa fa-trash"></i></button></td>
+                    <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                    @{returnDepartureRunIndex++;}
                 </tr>
-            }
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-default" onclick="addNewReturnDepartureRun()">
-        @EditorResources.AddNextReturnDepartureRun
-    </button>
-}
+                @for (; returnDepartureRunIndex < returnAlreadyAddedDepartureRuns + 50; returnDepartureRunIndex++)
+                {
+                    <tr id="return-row-time-@returnDepartureRunIndex" hidden>
+                        @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
+                        {
+                            <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker" style="width: 40px" /></td>
+                        }
+                        <td><button style="margin-top: 0" class="btn btn-default btn-sm" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-default" onclick="addNewReturnDepartureRun()">
+            @EditorResources.AddNextReturnDepartureRun
+        </button>
+    }
 </div>
 
-<section class="scripts">
+
+
+@section Scripts
+{
     <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
     <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap-material-datetimepicker.js"></script>
+    <script type="text/javascript" src="http://malsup.github.io/jquery.blockUI.js"></script>
 
     <script type="text/javascript">
+        blockInterface();
         var lineDepartures = JSON.parse('@Html.Raw(ViewData["LineDepartures"])');
 
-        var departureRuns = @Model.Departures.Count() + 1;
+        var departureRunList = [];
         var departureRunIdToNextUnhidden = @Model.Departures.Count() + 1;
 
-        var returnDepartureRuns = @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1;
+        var returnDepartureRunList = [];
         var returnDepartureRunIdToNextUnhidden = @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1;
 
         $(document).ready(function () {
+            $(document).ajaxStart(blockInterface).ajaxStop($.unblockUI);           
             $("#toolboxButton").hide();
             $("#saveModification").click(saveModification);
+            departureRunList = initializeDepartureRunList(departureRunList, @Model.Departures.Count() + 1);
+            returnDepartureRunList = initializeDepartureRunList(returnDepartureRunList, @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1);
+            $.unblockUI();
         });
+
+        function initializeDepartureRunList(runList, count) {
+            for (var i = 0; i < count; i++) {
+                runList.push(i);
+            }
+            return runList;
+        }
 
         $('.timepicker').bootstrapMaterialDatePicker({
             date: false,
@@ -173,45 +183,53 @@
 
         function addNewDepartureRun() {
             $('#row-time-' + departureRunIdToNextUnhidden).show();
+            departureRunList.push(departureRunIdToNextUnhidden);
             departureRunIdToNextUnhidden++;
-            departureRuns++;
+        }
+
+        function removeDepartureRun(row, rowId) {
+            $(row).parent().parent().remove();
+            departureRunList = departureRunList.filter(e => e !== rowId);
         }
 
         function addNewReturnDepartureRun() {
             $('#return-row-time-' + returnDepartureRunIdToNextUnhidden).show();
+            returnDepartureRunList.push(returnDepartureRunIdToNextUnhidden);
             returnDepartureRunIdToNextUnhidden++;
-            returnDepartureRuns++;
+        }
+
+        function removeReturnDepartureRun(row, rowId) {
+            $(row).parent().parent().remove();
+            returnDepartureRunList = returnDepartureRunList.filter(e => e !== rowId);
         }
 
         function collectDeparturesData() {
             var times = [];
-            for (var currentRunIndex = 0; currentRunIndex < departureRuns; currentRunIndex++) {
+            $.each(departureRunList, function (index, currentRunIndex) {
                 var rowTimes = [];
                 for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
                     rowTimes.push({
-                        'RunIndex': currentRunIndex,
                         'DepartureTime': $("#time-" + currentRunIndex + "-" + currentStopIndex).val(),
                         'DayType': @((int)(DayType.Workday)) // TODO This should be editable
-                });
+                    });
                 }
                 times.push(rowTimes);
-            }
+            });
             return times;
         }
 
         function collectReturnDeparturesData() {
             var returnTimes = [];
-            for (var currentRunIndex = 0; currentRunIndex < returnDepartureRuns; currentRunIndex++) {
+            $.each(returnDepartureRunList, function (index, currentRunIndex) {
                 var rowTimes = [];
                 for (var currentStopIndex = 0; currentStopIndex < @(Model.ReturnLine != null ? Model.ReturnLine.Stops.Count() : 0); currentStopIndex++) {
                     rowTimes.push({
-                        'RunIndex': currentRunIndex,
                         'DepartureTime': $("#return-time-" + currentRunIndex + "-" + currentStopIndex).val(),
                         'DayType': @((int)(DayType.Workday)) // TODO This should be editable
-                });
+                    });
                 }
                 returnTimes.push(rowTimes);
-            }
+            });
             return returnTimes;
         }
 
@@ -233,5 +251,9 @@
                         alert('@BaseResources.ErrorOccured: ' + data);
                 });
         }
+
+        function blockInterface() {
+            $.blockUI({ message: '<h4><img src="/Content/loading.gif"> @BaseResources.Loading</h4>' });
+        }
     </script>
-</section>
+}

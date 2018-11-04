@@ -147,6 +147,9 @@
   <data name="HomePage" xml:space="preserve">
     <value>Home Page</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
