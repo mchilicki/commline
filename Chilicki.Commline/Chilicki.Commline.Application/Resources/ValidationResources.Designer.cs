@@ -61,11 +61,38 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Circular line must start and end in the same stop.
+        /// </summary>
+        internal static string CircularLineMustStartAndEndInTheSameStop {
+            get {
+                return ResourceManager.GetString("CircularLineMustStartAndEndInTheSameStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circular line must have at least three stops.
+        /// </summary>
+        internal static string CircularLineStopsLessThanThree {
+            get {
+                return ResourceManager.GetString("CircularLineStopsLessThanThree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one of given departures is empty.
         /// </summary>
         internal static string DepartureEmpty {
             get {
                 return ResourceManager.GetString("DepartureEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid stop coordinates.
+        /// </summary>
+        internal static string InvalidCoordinates {
+            get {
+                return ResourceManager.GetString("InvalidCoordinates", resourceCulture);
             }
         }
         
@@ -93,6 +120,42 @@ namespace Chilicki.Commline.Application.Resources {
         internal static string NoDepartures {
             get {
                 return ResourceManager.GetString("NoDepartures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only one circular line with the same name can exist.
+        /// </summary>
+        internal static string OnlyOneCircularLineCanExist {
+            get {
+                return ResourceManager.GetString("OnlyOneCircularLineCanExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only two one-ways lines with the same name can exist.
+        /// </summary>
+        internal static string OnlyTwoOneWaysLinesCanExist {
+            get {
+                return ResourceManager.GetString("OnlyTwoOneWaysLinesCanExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line can be routed on stops of matching type, for example bus line can only go through bus stops.
+        /// </summary>
+        internal static string StopLineTypesDoNotMatch {
+            get {
+                return ResourceManager.GetString("StopLineTypesDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop name is empty.
+        /// </summary>
+        internal static string StopNameEmpty {
+            get {
+                return ResourceManager.GetString("StopNameEmpty", resourceCulture);
             }
         }
         

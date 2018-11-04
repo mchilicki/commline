@@ -38,7 +38,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         public void DeleteAllDeparturesForLine(Line line)
         {
             var departuresToRemove = _entities
-                    .Where(e => e.RouteStop.Line.Id == line.Id);
+                .Where(e => e.RouteStop.Line.Id == line.Id);
             if (departuresToRemove != null && departuresToRemove.Count() > 0)
                 _entities.RemoveRange(departuresToRemove);
             _database.SaveChanges();

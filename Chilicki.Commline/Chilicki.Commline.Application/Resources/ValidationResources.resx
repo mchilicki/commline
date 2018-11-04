@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CircularLineMustStartAndEndInTheSameStop" xml:space="preserve">
+    <value>Circular line must start and end in the same stop</value>
+  </data>
+  <data name="CircularLineStopsLessThanThree" xml:space="preserve">
+    <value>Circular line must have at least three stops</value>
+  </data>
   <data name="DepartureEmpty" xml:space="preserve">
     <value>At least one of given departures is empty</value>
+  </data>
+  <data name="InvalidCoordinates" xml:space="preserve">
+    <value>Invalid stop coordinates</value>
   </data>
   <data name="LineNameIsEmpty" xml:space="preserve">
     <value>Line name is empty</value>
@@ -128,6 +137,18 @@
   </data>
   <data name="NoDepartures" xml:space="preserve">
     <value>No departures</value>
+  </data>
+  <data name="OnlyOneCircularLineCanExist" xml:space="preserve">
+    <value>Only one circular line with the same name can exist</value>
+  </data>
+  <data name="OnlyTwoOneWaysLinesCanExist" xml:space="preserve">
+    <value>Only two one-ways lines with the same name can exist</value>
+  </data>
+  <data name="StopLineTypesDoNotMatch" xml:space="preserve">
+    <value>Line can be routed on stops of matching type, for example bus line can only go through bus stops</value>
+  </data>
+  <data name="StopNameEmpty" xml:space="preserve">
+    <value>Stop name is empty</value>
   </data>
   <data name="StopsInDeparturesDoNotMatch" xml:space="preserve">
     <value>Stops in departures do not match with line stops</value>

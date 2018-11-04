@@ -12,15 +12,15 @@ namespace Chilicki.Commline.UserInterface.Controllers
     {
         readonly LineManager _lineManager;
         readonly StopManager _stopManager;
-        readonly RouteStopManager _routeStopManager;
         readonly DepartureManager _departureManager;
 
-        public EditorController(LineManager lineManager, StopManager stopManager,
-            RouteStopManager routeStopManager, DepartureManager departureManager)
+        public EditorController(
+            LineManager lineManager, 
+            StopManager stopManager,
+            DepartureManager departureManager)
         {
             _lineManager = lineManager;
             _stopManager = stopManager;
-            _routeStopManager = routeStopManager;
             _departureManager = departureManager;
         }
 
@@ -35,13 +35,8 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return Index();
         }
 
-        [HttpPost]
-        public ActionResult Departures()
+        public ActionResult Departures(long lineId)
         {
-            var choosenLine = Request.Form["lineDropdown"];
-            if (choosenLine == null)
-                return RedirectToAction("Index", "Home");
-            long lineId = long.Parse(choosenLine);
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
             ViewData["LineDepartures"] = JsonConvert.SerializeObject(lineDepartures);
@@ -60,8 +55,8 @@ namespace Chilicki.Commline.UserInterface.Controllers
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()
         {
-            return _lineManager.GetAll()
-                .OrderBy(p => p.Name)
+            return _lineManager 
+                .GetAllWithoutReturnLines()
                 .Select(p => new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
         }
 

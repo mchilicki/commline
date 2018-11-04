@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Chilicki.Commline.Application.DTOs;
+using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System.Collections.Generic;
@@ -10,11 +11,16 @@ namespace Chilicki.Commline.Application.Managers
     {
         readonly StopRepository _stopRepository;
         readonly MixedRepository _mixedRepository;
+        readonly StopValidator _stopValidator;
 
-        public StopManager(StopRepository stopRepository, MixedRepository mixedRepository)
+        public StopManager(
+            StopRepository stopRepository, 
+            MixedRepository mixedRepository,
+            StopValidator stopValidator)
         {
             _stopRepository = stopRepository;
             _mixedRepository = mixedRepository;
+            _stopValidator = stopValidator;
         }
 
         public StopDTO GetById(long id)
@@ -49,6 +55,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(IEnumerable<StopDTO> stopDTOs)
         {
+            _stopValidator.Validate(stopDTOs);
             foreach (var stopDTO in stopDTOs)
             {
                 Create(stopDTO);
@@ -57,6 +64,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(StopDTO stopDTO)
         {
+            _stopValidator.Validate(stopDTO);
             Stop stop = Mapper.Map<StopDTO, Stop>(stopDTO);
             stop.StopNumber = _stopRepository.GetStopNumberForStopName(stopDTO.Name);
             _stopRepository.Insert(stop);
@@ -64,6 +72,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Edit(StopDTO stopDTO)
         {
+            _stopValidator.Validate(stopDTO);
             Stop stop = Mapper.Map<StopDTO, Stop>(stopDTO);
             _stopRepository.Update(stop);
         }

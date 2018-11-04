@@ -70,6 +70,15 @@ namespace Chilicki.Commline.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bus stop.
+        /// </summary>
+        public static string Shared_BusStop {
+            get {
+                return ResourceManager.GetString("Shared_BusStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Free day.
         /// </summary>
         public static string Shared_Free {
@@ -84,6 +93,15 @@ namespace Chilicki.Commline.Domain.Resources {
         public static string Shared_Tram {
             get {
                 return ResourceManager.GetString("Shared_Tram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tram stop.
+        /// </summary>
+        public static string Shared_TramStop {
+            get {
+                return ResourceManager.GetString("Shared_TramStop", resourceCulture);
             }
         }
         

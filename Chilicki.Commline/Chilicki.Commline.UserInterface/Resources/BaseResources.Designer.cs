@@ -97,6 +97,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Circular.
+        /// </summary>
+        public static string Circular {
+            get {
+                return ResourceManager.GetString("Circular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -142,6 +151,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menu.
         /// </summary>
         public static string Menu {
@@ -156,6 +174,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string NoDetailsMap {
             get {
                 return ResourceManager.GetString("NoDetailsMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One way.
+        /// </summary>
+        public static string OneWay {
+            get {
+                return ResourceManager.GetString("OneWay", resourceCulture);
             }
         }
         

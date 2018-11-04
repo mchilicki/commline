@@ -70,11 +70,11 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bus Stop Tool.
+        ///   Looks up a localized string similar to Add next return departure run.
         /// </summary>
-        public static string BusStopTool {
+        public static string AddNextReturnDepartureRun {
             get {
-                return ResourceManager.GetString("BusStopTool", resourceCulture);
+                return ResourceManager.GetString("AddNextReturnDepartureRun", resourceCulture);
             }
         }
         
@@ -84,6 +84,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string BusStopToolDescription {
             get {
                 return ResourceManager.GetString("BusStopToolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Stop Tool.
+        /// </summary>
+        public static string CreateStopTool {
+            get {
+                return ResourceManager.GetString("CreateStopTool", resourceCulture);
             }
         }
         
@@ -151,11 +160,29 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line route type.
+        /// </summary>
+        public static string LineRouteType {
+            get {
+                return ResourceManager.GetString("LineRouteType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line Tool.
         /// </summary>
         public static string LineTool {
             get {
                 return ResourceManager.GetString("LineTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line type.
+        /// </summary>
+        public static string LineType {
+            get {
+                return ResourceManager.GetString("LineType", resourceCulture);
             }
         }
         
@@ -183,6 +210,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string StopName {
             get {
                 return ResourceManager.GetString("StopName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop type.
+        /// </summary>
+        public static string StopType {
+            get {
+                return ResourceManager.GetString("StopType", resourceCulture);
             }
         }
     }

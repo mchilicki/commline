@@ -6,5 +6,8 @@ namespace Chilicki.Commline.Application.DTOs
     {
         public LineDTO Line { get; set; }
         public IEnumerable<IEnumerable<DepartureDTO>> Departures { get; set; }
+
+        public LineDTO ReturnLine { get; set; }
+        public IEnumerable<IEnumerable<DepartureDTO>> ReturnDepartures { get; set; }
     }
 }

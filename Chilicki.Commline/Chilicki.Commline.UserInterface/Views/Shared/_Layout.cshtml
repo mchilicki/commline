@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commline</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/shared.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/main.css")" />
@@ -17,9 +16,10 @@
     <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui-timepicker-addon.css" />
 
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @RenderSection("Styles", false)
+    @RenderSection("Styles", false)    
 </head>
 
 <body class="w3-light-grey">
@@ -33,12 +33,12 @@
     <div id="mainMenuSidenav" class="sidenav primary-element">
         @Html.ActionLink(BaseResources.HomePage, "Index", "Home")
         @Html.ActionLink(BaseResources.Editor, "Index", "Editor")
-        <a href="#" onclick='$("#enterDeparturesModal").modal()'>@BaseResources.Departures</a>
+        <a href="#" onclick='$("#enterDeparturesModal").modal();'>@BaseResources.Departures</a>
     </div>
 
     <div id="enterDeparturesModal" class="modal fade primary-element" role="dialog">
-        <div class="modal-dialog">
-            @using (Html.BeginForm("Departures", "Editor", FormMethod.Post, new { name = "departuresForm", id = "departuresForm" }))
+        <div class="modal-dialog">            
+            @using (Html.BeginForm("Departures", "Editor", FormMethod.Get))
             {
                 <div class="modal-content">
                     <div class="modal-header">
@@ -47,7 +47,7 @@
                     <div class="modal-body">
                         <p>
                             <label>@EditorResources.LineName</label>
-                            @Html.DropDownList("lineDropdown", new SelectList(ViewBag.LinesIdsNames, "Value", "Text"))
+                            @Html.DropDownList("lineId", new SelectList(ViewBag.LinesIdsNames, "Value", "Text"))
                         </p>
                     </div>
                     <div class="modal-footer">

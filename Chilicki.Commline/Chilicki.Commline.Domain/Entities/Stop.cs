@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chilicki.Commline.Domain.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Chilicki.Commline.Domain.Entities
@@ -11,6 +12,7 @@ namespace Chilicki.Commline.Domain.Entities
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public int StopNumber { get; set; }
+        public StopType StopType { get; set; }
         public virtual ICollection<RouteStop> RouteStops { get; set; }
     }
 }

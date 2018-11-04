@@ -117,52 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions" xml:space="preserve">
-    <value>Actions</value>
+  <data name="Target" xml:space="preserve">
+    <value>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</value>
   </data>
-  <data name="Affirm" xml:space="preserve">
-    <value>Affirm</value>
-  </data>
-  <data name="AppName" xml:space="preserve">
-    <value>Commline</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="Circular" xml:space="preserve">
-    <value>Circular</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="Departures" xml:space="preserve">
-    <value>Departures</value>
-  </data>
-  <data name="Editor" xml:space="preserve">
-    <value>Editor</value>
-  </data>
-  <data name="ErrorOccured" xml:space="preserve">
-    <value>Error occured</value>
-  </data>
-  <data name="HomePage" xml:space="preserve">
-    <value>Home Page</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="Menu" xml:space="preserve">
-    <value>Menu</value>
-  </data>
-  <data name="NoDetailsMap" xml:space="preserve">
-    <value>No details map</value>
-  </data>
-  <data name="OneWay" xml:space="preserve">
-    <value>One way</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="Toolbox" xml:space="preserve">
-    <value>Toolbox</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>

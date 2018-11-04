@@ -91,7 +91,6 @@
     <Compile Include="DTOs\StopsEditionModel.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
     <Compile Include="Managers\LineManager.cs" />
-    <Compile Include="Managers\RouteStopManager.cs" />
     <Compile Include="Managers\StopManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ValidationResources.Designer.cs">
@@ -100,8 +99,9 @@
       <DependentUpon>ValidationResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Validators\DeparturesValidator.cs" />
-    <Compile Include="Validators\IValidator.cs" />
+    <Compile Include="Validators\Base\IValidator.cs" />
     <Compile Include="Validators\LineValidator.cs" />
+    <Compile Include="Validators\StopValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">

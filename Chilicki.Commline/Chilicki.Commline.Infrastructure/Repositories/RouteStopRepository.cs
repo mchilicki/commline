@@ -2,7 +2,6 @@
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Chilicki.Commline.Infrastructure.Repositories
 {
@@ -16,19 +15,6 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         {
             _lineRepository = lineRepository;
             _stopRepository = stopRepository;
-        }
-
-        public IEnumerable<RouteStop> GetAllForLine(long lineId)
-        {
-            return GetAll()
-                .Where(r => r.Line != null & r.Line.Id == lineId)
-                .OrderBy(r => r.StopIndex)
-                .ToList();
-        }
-
-        public IEnumerable<RouteStop> GetAllForLine(Line line)
-        {
-            return GetAllForLine(line.Id);
         }
 
         public void InsertForLineAndStops(Line line, IEnumerable<Stop> stops)
