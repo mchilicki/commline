@@ -110,6 +110,7 @@
         $("#toolboxButton").click(switchToolboxSidenav);
         $("#saveModification").show();
         $("#saveModification").click(saveEverything);
+        $("#searchButton").hide();
     });
 
     function saveEverything() {
@@ -206,14 +207,6 @@
         if (currentTool == '@EditorToolType.CreateLine') {
             $("#newLineModal").modal();
         }
-    }
-
-
-    function castEnumValueToKey(enumTable, value) {
-        for (var i = 0; i < Object.keys(enumTable).length; i++)
-            if (enumTable[i] === value)
-                return i;
-        return false;
     }
 
     function switchToolboxSidenav() {

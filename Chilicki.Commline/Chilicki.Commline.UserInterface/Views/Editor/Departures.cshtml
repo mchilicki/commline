@@ -152,6 +152,7 @@
             $(document).ajaxStart(blockInterface).ajaxStop($.unblockUI);           
             $("#toolboxButton").hide();
             $("#saveModification").click(saveModification);
+            $("#searchButton").hide();
             departureRunList = initializeDepartureRunList(departureRunList, @Model.Departures.Count() + 1);
             returnDepartureRunList = initializeDepartureRunList(returnDepartureRunList, @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1);
             $.unblockUI();

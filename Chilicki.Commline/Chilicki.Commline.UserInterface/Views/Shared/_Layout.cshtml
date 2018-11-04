@@ -28,12 +28,14 @@
         <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="switchMainMenuSidenav()"><i class="fa fa-bars"></i>  @BaseResources.Menu</button>
         <button id="toolboxButton" class="w3-bar-item w3-button w3-right w3-hover-none w3-hover-text-light-grey" hidden><i class="fa fa-bars"></i>  @BaseResources.Toolbox</button>
         <button id="saveModification" class="w3-bar-item w3-button w3-right w3-hover-none w3-hover-text-light-grey" hidden><i class="fa fa-save"></i>  @BaseResources.Save</button>
+        <button id="searchButton" class="w3-bar-item w3-button w3-right w3-hover-none w3-hover-text-light-grey" hidden><i class="fa fa-search"></i>  @BaseResources.SearchAsAction</button>
     </div>
 
     <div id="mainMenuSidenav" class="sidenav primary-element">
         @Html.ActionLink(BaseResources.HomePage, "Index", "Home")
         @Html.ActionLink(BaseResources.Editor, "Index", "Editor")
         <a href="#" onclick='$("#enterDeparturesModal").modal();'>@BaseResources.Departures</a>
+        @Html.ActionLink(BaseResources.Search, "Index", "Search")
     </div>
 
     <div id="enterDeparturesModal" class="modal fade primary-element" role="dialog">

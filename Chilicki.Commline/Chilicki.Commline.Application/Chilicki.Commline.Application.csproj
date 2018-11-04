@@ -91,6 +91,7 @@
     <Compile Include="DTOs\StopsEditionModel.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
     <Compile Include="Managers\LineManager.cs" />
+    <Compile Include="Managers\SearchManager.cs" />
     <Compile Include="Managers\StopManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ValidationResources.Designer.cs">

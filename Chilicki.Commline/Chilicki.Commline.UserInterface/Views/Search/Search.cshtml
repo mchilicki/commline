@@ -1,0 +1,32 @@
+﻿@using Chilicki.Commline.UserInterface.Resources
+
+<div>
+    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Search } })
+</div>
+
+<div id="searchSidenav" class="sidenav-toolbox">
+    
+    
+</div>
+
+<script>
+    var searchOpened = false;
+
+    $(document).ready(function () {
+        $("#toolboxButton").hide();
+        $("#saveModification").hide();
+        $("#searchButton").show();
+        $("#searchButton").click(switchSearchSidenav);
+    });
+
+    function switchSearchSidenav() {
+        if (searchOpened == false) {
+            document.getElementById("searchSidenav").style.width = "250px";
+            searchOpened = true;
+        }
+        else {
+            document.getElementById("searchSidenav").style.width = "0";
+            searchOpened = false;
+        }
+    }
+</script>

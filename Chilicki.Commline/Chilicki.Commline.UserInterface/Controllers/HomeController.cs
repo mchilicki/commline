@@ -24,7 +24,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
         public ActionResult Index()
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
-            return View();
+            return View("Home");
         }
 
         public JsonResult GetAllLines()
