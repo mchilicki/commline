@@ -35,13 +35,8 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return Index();
         }
 
-        [HttpPost]
-        public ActionResult Departures()
+        public ActionResult Departures(long lineId)
         {
-            var choosenLine = Request.Form["lineDropdown"];
-            if (choosenLine == null)
-                return RedirectToAction("Index", "Home");
-            long lineId = long.Parse(choosenLine);
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
             ViewData["LineDepartures"] = JsonConvert.SerializeObject(lineDepartures);
