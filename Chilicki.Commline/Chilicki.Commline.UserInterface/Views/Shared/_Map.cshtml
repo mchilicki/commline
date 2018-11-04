@@ -1,5 +1,6 @@
-﻿@using Chilicki.Commline.Domain.Enums
+﻿@using Chilicki.Commline.Application.Enums
 @using Chilicki.Commline.UserInterface.HtmlExtensions
+@using Chilicki.Commline.UserInterface.Resources
 
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBWGMUQJXHJ6E0oOLMs-4Ps1hNCPo3zcno&sensor=true" type="text/javascript"></script>
 
@@ -16,6 +17,7 @@
         var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
         var stopMarkerList = [];
         var currentTool = '@EditorToolType.None';
+        var currentView = '@CommlineViewType.Other';
         var lineTypes = @(Html.LineTypeToString());
         var stopTypes = @(Html.StopTypeToString());
 
@@ -141,14 +143,26 @@
             });
 
             var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h2>" + stopTypes[stopType] + " " + stopName + "</div></div>"
+                content: "<div class='infoDiv'><h4>" + stopTypes[stopType] + " " + stopName + "</h4></div>"
+            });
+            
+            var searchWindow = new google.maps.InfoWindow({
+                content: '<div class="infoDiv"><h4>' + stopTypes[stopType] + ' ' + stopName + '</h4>' +
+                    '<button type="button" class="btn btn-default" onclick="setStopAsStart(' + stopMarker.id + ', &quot;' + stopMarker.title + '&quot;)">@SearchResources.SetAsStartStop</button><br />' +
+                    '<button type="button" class="btn btn-default" onclick="setStopAsEnd(' + stopMarker.id + ', &quot;' + stopMarker.title + '&quot;)">@SearchResources.SetAsEndStop</button>' +
+                            '</div >'
             });
 
             google.maps.event.addListener(stopMarker, 'click', function () {
-                if (currentTool == '@EditorToolType.None')
-                    infowindow.open(map, stopMarker);
-                if (currentTool == '@EditorToolType.CreateLine')
-                    addStopToLine(stopMarker);
+                if (currentView == '@CommlineViewType.Search') {
+                    searchWindow.open(map, stopMarker);
+                }
+                else {
+                    if (currentTool == '@EditorToolType.None')
+                        infowindow.open(map, stopMarker);
+                    if (currentTool == '@EditorToolType.CreateLine')
+                        addStopToLine(stopMarker);
+                }              
             });
             stopMarkerList.push(stopMarker);
             return stopMarker;
@@ -178,7 +192,7 @@
                 strokeWeight: 6
             });
             var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h2>" + lineTypes[lineType] + " " + lineName + "</div></div>"
+                content: "<div class='infoDiv'><h4>" + lineTypes[lineType] + " " + lineName + "</h4></div>"
             });
             google.maps.event.addListener(stopPath, 'click', function (event) {
                 infowindow.setPosition(event.latLng);

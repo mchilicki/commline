@@ -25,5 +25,12 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                 .Where(e => e.Name == stopName)
                 .Count() + 1;
         }
+
+        public bool DoesStopWithIdExist(long id)
+        {
+            return _entities
+                .Where(p => p.Id == id)
+                .Count() == 1;
+        }
     }
 }

@@ -27,12 +27,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
         public ActionResult Index()
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
-            return View();
-        }
-
-        public ActionResult Editor()
-        {
-            return Index();
+            return View("Editor");
         }
 
         public ActionResult Departures(long lineId)

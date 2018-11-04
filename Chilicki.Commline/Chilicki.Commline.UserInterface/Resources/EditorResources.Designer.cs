@@ -88,6 +88,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Line Tool.
+        /// </summary>
+        public static string CreateLineTool {
+            get {
+                return ResourceManager.GetString("CreateLineTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Stop Tool.
         /// </summary>
         public static string CreateStopTool {
@@ -115,7 +124,7 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Give line.
+        ///   Looks up a localized string similar to Please, choose line to edit its departures.
         /// </summary>
         public static string GiveLine {
             get {
@@ -124,7 +133,7 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter details of new stop.
+        ///   Looks up a localized string similar to Please enter details for new stop.
         /// </summary>
         public static string GiveStopDetails {
             get {
@@ -169,15 +178,6 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Line Tool.
-        /// </summary>
-        public static string LineTool {
-            get {
-                return ResourceManager.GetString("LineTool", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Line type.
         /// </summary>
         public static string LineType {
@@ -187,7 +187,7 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter details of new line.
+        ///   Looks up a localized string similar to Please enter details for new line.
         /// </summary>
         public static string NewLineCreation {
             get {

@@ -132,6 +132,9 @@
   <data name="Circular" xml:space="preserve">
     <value>Circular</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -156,11 +159,20 @@
   <data name="NoDetailsMap" xml:space="preserve">
     <value>No details map</value>
   </data>
+  <data name="Now" xml:space="preserve">
+    <value>Now</value>
+  </data>
   <data name="OneWay" xml:space="preserve">
     <value>One way</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchAsAction" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="Toolbox" xml:space="preserve">
     <value>Toolbox</value>

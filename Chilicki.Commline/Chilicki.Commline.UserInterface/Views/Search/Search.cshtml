@@ -1,0 +1,110 @@
+﻿@using Chilicki.Commline.UserInterface.Resources
+@using Chilicki.Commline.Application.Enums
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css" />
+<link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div>
+    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Search } })
+</div>
+
+<div id="searchSidenav" class="sidenav-toolbox">
+    <div style="margin-left: 10px; margin-right: 10px">
+        <label class="w3-text-light-grey" for="startStopInput">@SearchResources.StartStop</label>
+        <input id="startStopInput" class="form-control" type="text" readonly placeholder="@SearchResources.StartStop">
+        <label class="w3-text-light-grey" for="endStopInput">@SearchResources.EndStop</label>
+        <input id="endStopInput" class="form-control" type="text" readonly placeholder="@SearchResources.EndStop">
+        <label class="w3-text-light-grey" for="startTime">@SearchResources.StartTime</label><br />
+        <input id="startTimeInput" class="timepicker form-control" style="width: 62px" />
+        <label class="w3-text-light-grey" for="startDate">@SearchResources.StartDate</label><br />
+        <input id="startDateInput" class="datepicker form-control" style="width: 100px" /><br />
+        <button type="button" class="btn btn-primary" onclick="search()">
+            @SearchResources.SearchAsAction
+        </button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
+<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-material-datetimepicker.js"></script>
+<script type="text/javascript" src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script>
+    var currentStartStopId = -1;
+    var currentEndStopId = -1;
+
+    var searchOpened = false;
+
+    $(document).ready(function () {
+        $("#toolboxButton").hide();
+        $("#saveModification").hide();
+        $("#searchButton").show();
+        $("#searchButton").click(switchSearchSidenav);
+        currentView = '@CommlineViewType.Search';
+        switchSearchSidenav();
+    });
+
+    $('.timepicker').bootstrapMaterialDatePicker({
+        date: false,
+        shortTime: false,
+        format: 'HH:mm',
+        currentDate: '@DateTime.Now.ToString("HH:mm")',
+        nowButton: true,
+        nowText: '@TimepickerResources.Now',
+        cancelText: '@TimepickerResources.Cancel',
+    });
+
+    $('.datepicker').bootstrapMaterialDatePicker({        
+        weekStart: 1,
+        date: true,
+        time: false,
+        shortTime: false,
+        nowButton: true,
+        currentDate: '@DateTime.Now.ToString("yyyy-MM-dd")',
+        nowText: '@TimepickerResources.Now',
+        cancelText: '@TimepickerResources.Cancel',
+        //TODO datepicker langugage, use -> lang: 'fr', 
+    });
+
+    function setStopAsStart(stopId, stopName) {
+        currentStartStopId = stopId;
+        $("#startStopInput").val(stopName);
+    }
+
+    function setStopAsEnd(stopId, stopName) {
+        currentEndStopId = stopId;
+        $("#endStopInput").val(stopName);
+    }
+
+    function search() {
+        var sendData = {
+            'searchInput': {
+                'StartStopId': currentStartStopId,
+                'DestinationStopId': currentEndStopId,
+                'StartTime': $("#startTimeInput").val(),
+                'StartDate': $("#startDateInput").val(),
+            }
+        }        
+        $.post("Search/SearchConnections",
+            sendData,
+            function (data, status) {                
+                if (data === "") 
+                    alert('PUSTO :(');
+                else
+                    alert('Cos przyszlo: ' + data);
+            });
+    }
+
+    function switchSearchSidenav() {
+        if (searchOpened == false) {
+            document.getElementById("searchSidenav").style.width = "250px";
+            searchOpened = true;
+        }
+        else {
+            document.getElementById("searchSidenav").style.width = "0";
+            searchOpened = false;
+        }
+    }
+</script>

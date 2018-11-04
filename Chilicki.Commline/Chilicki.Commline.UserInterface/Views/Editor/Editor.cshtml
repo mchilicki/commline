@@ -19,10 +19,10 @@
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
     <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="stopToolButton" onclick="setCurrentTool(this, '@EditorToolType.CreateStop')">@EditorResources.CreateStopTool</a>
+        <a id="stopToolButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateStop')">@EditorResources.CreateStopTool</a>
     </abbr>
     <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="lineToolButton" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.LineTool</a>
+        <a id="lineToolButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
     </abbr>
 </div>
 
@@ -35,12 +35,12 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        <label>@EditorResources.StopName</label>
-                        <input id="modalStopName" type="text" />
+                        <label for="modalStopName">@EditorResources.StopName</label>
+                        <input id="modalStopName" type="text" class="form-control"/>
                     </p>
                     <p>
-                        <label>@EditorResources.StopType</label>
-                        @Html.DropDownList("modalStopType", dropdownStopType.ToSelectList())
+                        <label for="modalStopType">@EditorResources.StopType</label>
+                        @Html.DropDownList("modalStopType", dropdownStopType.ToSelectList(), new { @class = "form-control" })
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -65,20 +65,20 @@
             </div>
             <div class="modal-body">
                 <p>
-                    <label>@EditorResources.LineName</label>
-                    <input id="modalLineName" type="text" />
+                    <label for="modalLineName">@EditorResources.LineName</label>
+                    <input id="modalLineName" type="text" class="form-control"/>
                 </p>
                 <p>
-                    <label>@EditorResources.LineType</label>
-                    @Html.DropDownList("modalLineType", dropdownSelectedLineType.ToSelectList())
+                    <label for="modalLineType">@EditorResources.LineType</label>
+                    @Html.DropDownList("modalLineType", dropdownSelectedLineType.ToSelectList(), new { @class = "form-control" })
                 </p>
                 <p>
-                    <label>@EditorResources.LineColor</label>
-                    <input id="modalLineColor" type="color" />
+                    <label for="modalLineColor">@EditorResources.LineColor</label>
+                    <input id="modalLineColor" type="color" class="form-control"/>
                 </p>
                 <p>
-                    <label>@EditorResources.LineRouteType</label>
-                    @Html.DropDownList("modalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"))
+                    <label for="modalLineRouteType">@EditorResources.LineRouteType</label>
+                    @Html.DropDownList("modalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"), new { @class = "form-control" })
                 </p>
             </div>
             <div class="modal-footer">
@@ -110,6 +110,8 @@
         $("#toolboxButton").click(switchToolboxSidenav);
         $("#saveModification").show();
         $("#saveModification").click(saveEverything);
+        $("#searchButton").hide();
+        switchToolboxSidenav();
     });
 
     function saveEverything() {
@@ -194,6 +196,7 @@
     }
 
     function setCurrentTool(toolButton, newTool) {
+        $(".toolbox-tool-button").css('color', '#818181')
         if (newTool != '@EditorToolType.None' && currentTool != newTool) {
             currentTool = newTool;
             $(toolButton).css('color', '#ffffff');
@@ -206,14 +209,6 @@
         if (currentTool == '@EditorToolType.CreateLine') {
             $("#newLineModal").modal();
         }
-    }
-
-
-    function castEnumValueToKey(enumTable, value) {
-        for (var i = 0; i < Object.keys(enumTable).length; i++)
-            if (enumTable[i] === value)
-                return i;
-        return false;
     }
 
     function switchToolboxSidenav() {
