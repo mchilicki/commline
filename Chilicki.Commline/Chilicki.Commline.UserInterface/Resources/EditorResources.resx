@@ -126,6 +126,9 @@
   <data name="BusStopToolDescription" xml:space="preserve">
     <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
   </data>
+  <data name="CreateLineTool" xml:space="preserve">
+    <value>Create Line Tool</value>
+  </data>
   <data name="CreateStopTool" xml:space="preserve">
     <value>Create Stop Tool</value>
   </data>
@@ -136,10 +139,10 @@
     <value>Departures for</value>
   </data>
   <data name="GiveLine" xml:space="preserve">
-    <value>Give line</value>
+    <value>Please, choose line to edit its departures</value>
   </data>
   <data name="GiveStopDetails" xml:space="preserve">
-    <value>Please enter details of new stop</value>
+    <value>Please enter details for new stop</value>
   </data>
   <data name="LineColor" xml:space="preserve">
     <value>Line color</value>
@@ -153,14 +156,11 @@
   <data name="LineRouteType" xml:space="preserve">
     <value>Line route type</value>
   </data>
-  <data name="LineTool" xml:space="preserve">
-    <value>Line Tool</value>
-  </data>
   <data name="LineType" xml:space="preserve">
     <value>Line type</value>
   </data>
   <data name="NewLineCreation" xml:space="preserve">
-    <value>Please enter details of new line</value>
+    <value>Please enter details for new line</value>
   </data>
   <data name="StationNumber" xml:space="preserve">
     <value>Station number</value>

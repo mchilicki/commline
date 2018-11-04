@@ -49,8 +49,8 @@
                     </div>
                     <div class="modal-body">
                         <p>
-                            <label>@EditorResources.LineName</label>
-                            @Html.DropDownList("lineId", new SelectList(ViewBag.LinesIdsNames, "Value", "Text"))
+                            <label for="lineId">@EditorResources.LineName</label>
+                            @Html.DropDownList("lineId", new SelectList(ViewBag.LinesIdsNames, "Value", "Text"), new { @class = "form-control"})
                         </p>
                     </div>
                     <div class="modal-footer">
