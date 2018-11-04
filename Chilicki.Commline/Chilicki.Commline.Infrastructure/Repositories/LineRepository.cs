@@ -1,6 +1,7 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Chilicki.Commline.Infrastructure.Repositories
@@ -28,6 +29,25 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             if (returnLines != null && returnLines.Count() > 0)
                 return returnLines.First();
             return null;
+        }
+
+        public IEnumerable<Line> GetAllWithoutReturnLines()
+        {
+            IList<Line> linesWithoutReturns = new List<Line>();
+            foreach (var line in _entities)
+            {
+                if (line.IsCircular || GetReturnLine(line) == null)
+                {
+                    linesWithoutReturns.Add(line);
+                }                    
+                else
+                {
+                    if (!linesWithoutReturns.Contains(GetReturnLine(line)))
+                        linesWithoutReturns.Add(line);
+                }
+            }
+            return linesWithoutReturns
+                .OrderBy(p => p.Name);
         }
     }
 }

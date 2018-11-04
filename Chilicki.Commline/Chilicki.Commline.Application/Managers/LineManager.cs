@@ -87,6 +87,12 @@ namespace Chilicki.Commline.Application.Managers
             };
         }
 
+        public IEnumerable<LineDTO> GetAllWithoutReturnLines()
+        {
+            return Mapper.Map<IEnumerable<Line>, IEnumerable<LineDTO>>
+                (_lineRepository.GetAllWithoutReturnLines());
+        }
+
         public void Create(IEnumerable<LineDTO> lineDTOs)
         {
             foreach (var lineDTO in lineDTOs)

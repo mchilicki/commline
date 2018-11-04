@@ -60,9 +60,8 @@ namespace Chilicki.Commline.UserInterface.Controllers
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()
         {
-            return _lineManager.GetAll()
-                .Distinct()
-                .OrderBy(p => p.Name)
+            return _lineManager 
+                .GetAllWithoutReturnLines()
                 .Select(p => new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
         }
 
