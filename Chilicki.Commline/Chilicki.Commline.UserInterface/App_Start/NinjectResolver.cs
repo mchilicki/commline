@@ -3,8 +3,11 @@ using Chilicki.Commline.Application.Search.Managers;
 using Chilicki.Commline.Application.Search.ManualMappers;
 using Chilicki.Commline.Application.Search.Validators;
 using Chilicki.Commline.Application.Validators;
+using Chilicki.Commline.Domain.Search.Aggregates.Graph;
 using Chilicki.Commline.Domain.Search.Services;
 using Chilicki.Commline.Domain.Search.Services.Base;
+using Chilicki.Commline.Domain.Search.Services.GraphGenerator;
+using Chilicki.Commline.Domain.Search.Services.GraphGenerator.Base;
 using Chilicki.Commline.Domain.Services.Matching;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories;
@@ -48,6 +51,7 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<StopLineTypesMatchCheckingService>().ToSelf();
 
             _kernel.Bind<IConnectionSearchEngine>().To<DijkstraConnectionSearchEngine>();
+            _kernel.Bind<IGraphGenerator<StopGraph>>().To<StopGraphGenerator>();
 
             _kernel.Bind<SearchManager>().ToSelf();
             _kernel.Bind<StopManager>().ToSelf();

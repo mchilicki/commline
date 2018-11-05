@@ -79,7 +79,7 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set as end stop.
+        ///   Looks up a localized string similar to Set as destination stop.
         /// </summary>
         public static string SetAsEndStop {
             get {

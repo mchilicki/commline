@@ -124,7 +124,7 @@
     <value>Search</value>
   </data>
   <data name="SetAsEndStop" xml:space="preserve">
-    <value>Set as end stop</value>
+    <value>Set as destination stop</value>
   </data>
   <data name="SetAsStartStop" xml:space="preserve">
     <value>Set as start stop</value>
