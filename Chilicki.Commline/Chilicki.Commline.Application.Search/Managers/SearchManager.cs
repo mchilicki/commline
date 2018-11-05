@@ -1,10 +1,9 @@
-﻿using Chilicki.Commline.Application.DTOs.Search;
-using Chilicki.Commline.Application.Validators;
-using Chilicki.Commline.Application.ManualMappers;
-using Chilicki.Commline.Domain.Aggregates.Search;
-using Chilicki.Commline.Domain.Services.Search.Base;
+﻿using Chilicki.Commline.Domain.Search.Services.Base;
+using Chilicki.Commline.Application.Search.Validators;
+using Chilicki.Commline.Application.Search.DTOs;
+using Chilicki.Commline.Application.Search.ManualMappers;
 
-namespace Chilicki.Commline.Application.Managers
+namespace Chilicki.Commline.Application.Search.Managers
 {
     public class SearchManager
     {

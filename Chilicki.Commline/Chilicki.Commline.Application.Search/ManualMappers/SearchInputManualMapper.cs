@@ -1,16 +1,10 @@
-﻿using Chilicki.Commline.Application.DTOs.Search;
-using Chilicki.Commline.Application.ManualMappers.Base;
-using Chilicki.Commline.Application.Validators;
-using Chilicki.Commline.Domain.Aggregates.Search;
-using Chilicki.Commline.Domain.Services.Search.Base;
+﻿using Chilicki.Commline.Application.ManualMappers.Search.Base;
+using Chilicki.Commline.Application.Search.DTOs;
+using Chilicki.Commline.Application.Search.Validators;
+using Chilicki.Commline.Domain.Search.Aggregates;
 using Chilicki.Commline.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Chilicki.Commline.Application.ManualMappers
+namespace Chilicki.Commline.Application.Search.ManualMappers
 {
     public class SearchInputManualMapper : IToDomainManualMapper<SearchInputDTO, SearchInput>
     {

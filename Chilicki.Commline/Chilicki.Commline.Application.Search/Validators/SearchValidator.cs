@@ -1,14 +1,11 @@
-﻿using Chilicki.Commline.Application.DTOs.Search;
-using Chilicki.Commline.Application.Resources;
+﻿using Chilicki.Commline.Application.Search.DTOs;
+using Chilicki.Commline.Application.Search.Resources;
 using Chilicki.Commline.Application.Validators.Base;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Chilicki.Commline.Application.Validators
+namespace Chilicki.Commline.Application.Search.Validators
 {
     public class SearchValidator : IValidator<SearchInputDTO>
     {
@@ -24,15 +21,15 @@ namespace Chilicki.Commline.Application.Validators
             if (search == null)
                 throw new ArgumentNullException(nameof(search));
             if (search.StartStopId == -1)
-                throw new ArgumentException(ValidationResources.StartStopIsEmpty);
+                throw new ArgumentException(SearchValidationResources.StartStopIsEmpty);
             if (search.DestinationStopId == -1)
-                throw new ArgumentException(ValidationResources.EndStopIsEmpty);
+                throw new ArgumentException(SearchValidationResources.EndStopIsEmpty);
             if (!_stopRepository.DoesStopWithIdExist(search.StartStopId))
-                throw new ArgumentException($"{ValidationResources.StopWithIdDoesNotExist} {search.StartStopId}");
+                throw new ArgumentException($"{SearchValidationResources.StopWithIdDoesNotExist} {search.StartStopId}");
             if (!_stopRepository.DoesStopWithIdExist(search.DestinationStopId))
-                throw new ArgumentException($"{ValidationResources.StopWithIdDoesNotExist} {search.DestinationStopId}");
+                throw new ArgumentException($"{SearchValidationResources.StopWithIdDoesNotExist} {search.DestinationStopId}");
             if (search.StartDate.Equals(DateTime.MinValue))
-                throw new ArgumentException(ValidationResources.DateIsEmpty);
+                throw new ArgumentException(SearchValidationResources.DateIsEmpty);
             return true;
         }
 

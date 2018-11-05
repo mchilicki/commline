@@ -74,7 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregates\Search\SearchInput.cs" />
     <Compile Include="Enums\DayType.cs" />
     <Compile Include="Entities\Departure.cs" />
     <Compile Include="Entities\Line.cs" />
@@ -97,8 +96,6 @@
       <DependentUpon>CommlineResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Matching\StopLineTypesMatchCheckingService.cs" />
-    <Compile Include="Services\Search\Base\IConnectionSearchEngine.cs" />
-    <Compile Include="Services\Search\DijkstraConnectionSearchEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">

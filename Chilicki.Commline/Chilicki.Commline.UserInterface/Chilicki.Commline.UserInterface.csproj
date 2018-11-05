@@ -383,6 +383,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Chilicki.Commline.Application.Search\Chilicki.Commline.Application.Search.csproj">
+      <Project>{0EFEC52B-DCA4-4316-A254-D4497CF10878}</Project>
+      <Name>Chilicki.Commline.Application.Search</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chilicki.Commline.Application\Chilicki.Commline.Application.csproj">
       <Project>{284e7ae0-18a2-4abd-a3e4-5789bc340377}</Project>
       <Name>Chilicki.Commline.Application</Name>
@@ -390,6 +394,10 @@
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">
       <Project>{1069762b-8af8-4e2c-885c-10926622f757}</Project>
       <Name>Chilicki.Commline.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chilicki.Commline.Domain.Search\Chilicki.Commline.Domain.Search.csproj">
+      <Project>{2102F47B-AAB2-4CAB-9D35-888875896426}</Project>
+      <Name>Chilicki.Commline.Domain.Search</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chilicki.Commline.Domain\Chilicki.Commline.Domain.csproj">
       <Project>{f45c4c47-cbe7-455b-9bae-3b6906a5187e}</Project>

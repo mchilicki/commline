@@ -1,9 +1,9 @@
-﻿using Chilicki.Commline.Application.DTOs.Search;
-using Chilicki.Commline.Application.Managers;
+﻿using Chilicki.Commline.Application.Managers;
+using Chilicki.Commline.Application.Search.DTOs;
+using Chilicki.Commline.Application.Search.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers

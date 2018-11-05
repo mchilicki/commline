@@ -1,9 +1,11 @@
 ﻿using Chilicki.Commline.Application.Managers;
-using Chilicki.Commline.Application.ManualMappers;
+using Chilicki.Commline.Application.Search.Managers;
+using Chilicki.Commline.Application.Search.ManualMappers;
+using Chilicki.Commline.Application.Search.Validators;
 using Chilicki.Commline.Application.Validators;
+using Chilicki.Commline.Domain.Search.Services;
+using Chilicki.Commline.Domain.Search.Services.Base;
 using Chilicki.Commline.Domain.Services.Matching;
-using Chilicki.Commline.Domain.Services.Search;
-using Chilicki.Commline.Domain.Services.Search.Base;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.UserInterface.Controllers;
