@@ -39,13 +39,13 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                     var nextRouteStop = _routeService.GetNextRouteStop(routeStop);
                     if (nextRouteStop != null)
                     {
+                        var nextVertex = stopVertices
+                                    .Where(p => p.Stop.Id == nextRouteStop.Stop.Id)
+                                    .First();
                         foreach (var departure in routeStop.Departures)
                         {
                             stopConnections.Add(_stopConnectionFactory.Create(
-                                routeStop, departure, vertex, nextRouteStop, 
-                                stopVertices
-                                    .Where(p => p.Stop.Id == nextRouteStop.Stop.Id)
-                                    .First()));                            
+                                routeStop, departure, vertex, nextRouteStop, nextVertex));                            
                         }
                     }                                       
                 }
