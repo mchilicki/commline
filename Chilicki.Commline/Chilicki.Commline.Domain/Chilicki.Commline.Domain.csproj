@@ -95,7 +95,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommlineResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Matching\StopLineTypesMatchCheckingService.cs" />
+    <Compile Include="Services\Matching\StopLineTypesMatchChecker.cs" />
+    <Compile Include="Services\Routes\RouteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">

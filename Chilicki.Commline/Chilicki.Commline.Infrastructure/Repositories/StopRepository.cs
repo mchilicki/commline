@@ -12,6 +12,13 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         {
         }
 
+        public IEnumerable<Stop> GetAllConnectedToAnyLine()
+        {
+            return _entities
+                .Where(e => e.RouteStops.Any())
+                .ToList();
+        }
+
         public IEnumerable<Stop> GetAllNotConnectedToAnyLine()
         {
             return _entities

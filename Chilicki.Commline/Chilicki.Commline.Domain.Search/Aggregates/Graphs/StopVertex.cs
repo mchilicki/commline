@@ -1,7 +1,7 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using System.Collections.Generic;
 
-namespace Chilicki.Commline.Domain.Search.Aggregates.Graph
+namespace Chilicki.Commline.Domain.Search.Aggregates.Graphs
 {
     public class StopVertex
     {
