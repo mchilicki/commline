@@ -11,6 +11,7 @@ namespace Chilicki.Commline.Application.Validators
     {
         public bool Validate(LineDeparturesDTO dto)
         {
+            // TODO Validation route times
             if (dto == null || dto.Line == null)
                 throw new ArgumentNullException(nameof(dto));
             if (dto.Departures != null)

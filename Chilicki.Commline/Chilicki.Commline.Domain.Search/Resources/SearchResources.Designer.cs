@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chilicki.Commline.UserInterface.Resources {
+namespace Chilicki.Commline.Domain.Search.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chilicki.Commline.UserInterface.Resources.SearchResources", typeof(SearchResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chilicki.Commline.Domain.Search.Resources.SearchResources", typeof(SearchResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,69 +57,6 @@ namespace Chilicki.Commline.UserInterface.Resources {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Destination stop.
-        /// </summary>
-        public static string EndStop {
-            get {
-                return ResourceManager.GetString("EndStop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string SearchAsAction {
-            get {
-                return ResourceManager.GetString("SearchAsAction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set as destination stop.
-        /// </summary>
-        public static string SetAsEndStop {
-            get {
-                return ResourceManager.GetString("SetAsEndStop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set as start stop.
-        /// </summary>
-        public static string SetAsStartStop {
-            get {
-                return ResourceManager.GetString("SetAsStartStop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start date.
-        /// </summary>
-        public static string StartDate {
-            get {
-                return ResourceManager.GetString("StartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start stop.
-        /// </summary>
-        public static string StartStop {
-            get {
-                return ResourceManager.GetString("StartStop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start time.
-        /// </summary>
-        public static string StartTime {
-            get {
-                return ResourceManager.GetString("StartTime", resourceCulture);
             }
         }
     }

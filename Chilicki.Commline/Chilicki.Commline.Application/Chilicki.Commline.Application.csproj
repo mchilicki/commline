@@ -87,18 +87,13 @@
     <Compile Include="DTOs\LineDTO.cs" />
     <Compile Include="DTOs\LinesEditionModel.cs" />
     <Compile Include="DTOs\RouteStopDTO.cs" />
-    <Compile Include="DTOs\Search\SearchInputDTO.cs" />
     <Compile Include="DTOs\StopDTO.cs" />
     <Compile Include="DTOs\StopsEditionModel.cs" />
     <Compile Include="Enums\EditorToolType.cs" />
     <Compile Include="Enums\CommlineViewType.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
     <Compile Include="Managers\LineManager.cs" />
-    <Compile Include="Managers\SearchManager.cs" />
     <Compile Include="Managers\StopManager.cs" />
-    <Compile Include="ManualMappers\Base\IToDomainManualMapper.cs" />
-    <Compile Include="ManualMappers\Base\IToDTOManualMapper.cs" />
-    <Compile Include="ManualMappers\SearchInputManualMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ValidationResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -108,13 +103,16 @@
     <Compile Include="Validators\DeparturesValidator.cs" />
     <Compile Include="Validators\Base\IValidator.cs" />
     <Compile Include="Validators\LineValidator.cs" />
-    <Compile Include="Validators\SearchValidator.cs" />
     <Compile Include="Validators\StopValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">
       <Project>{1069762b-8af8-4e2c-885c-10926622f757}</Project>
       <Name>Chilicki.Commline.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chilicki.Commline.Domain.Search\Chilicki.Commline.Domain.Search.csproj">
+      <Project>{2102F47B-AAB2-4CAB-9D35-888875896426}</Project>
+      <Name>Chilicki.Commline.Domain.Search</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chilicki.Commline.Domain\Chilicki.Commline.Domain.csproj">
       <Project>{f45c4c47-cbe7-455b-9bae-3b6906a5187e}</Project>

@@ -117,25 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EndStop" xml:space="preserve">
-    <value>Destination stop</value>
+  <data name="DateIsEmpty" xml:space="preserve">
+    <value>Start date is empty</value>
   </data>
-  <data name="SearchAsAction" xml:space="preserve">
-    <value>Search</value>
+  <data name="EndStopIsEmpty" xml:space="preserve">
+    <value>Destination stop is empty</value>
   </data>
-  <data name="SetAsEndStop" xml:space="preserve">
-    <value>Set as destination stop</value>
+  <data name="StartStopIsEmpty" xml:space="preserve">
+    <value>Start stop is empty</value>
   </data>
-  <data name="SetAsStartStop" xml:space="preserve">
-    <value>Set as start stop</value>
+  <data name="StopWithIdDoesNotExist" xml:space="preserve">
+    <value>Stop with this id does not exist</value>
   </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>Start date</value>
-  </data>
-  <data name="StartStop" xml:space="preserve">
-    <value>Start stop</value>
-  </data>
-  <data name="StartTime" xml:space="preserve">
-    <value>Start time</value>
+  <data name="TimeIsEmpty" xml:space="preserve">
+    <value>Start time is empty</value>
   </data>
 </root>

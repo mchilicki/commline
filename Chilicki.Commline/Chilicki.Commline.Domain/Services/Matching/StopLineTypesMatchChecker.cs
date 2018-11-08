@@ -4,7 +4,7 @@ using System;
 
 namespace Chilicki.Commline.Domain.Services.Matching
 {
-    public class StopLineTypesMatchCheckingService
+    public class StopLineTypesMatchChecker
     {
         public bool AreStopAndLineTypesMatching(StopType stopType, LineType lineType)
         {

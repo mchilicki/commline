@@ -12,11 +12,11 @@ namespace Chilicki.Commline.Application.Validators
     public class LineValidator : IValidator<LineDTO>
     {
         readonly LineRepository _lineRepository;
-        readonly StopLineTypesMatchCheckingService _stopLineTypesMatchCheckingService;
+        readonly StopLineTypesMatchChecker _stopLineTypesMatchCheckingService;
 
         public LineValidator(
             LineRepository lineRepository,
-            StopLineTypesMatchCheckingService stopLineTypesMatchCheckingService)
+            StopLineTypesMatchChecker stopLineTypesMatchCheckingService)
         {
             _lineRepository = lineRepository;
             _stopLineTypesMatchCheckingService = stopLineTypesMatchCheckingService;

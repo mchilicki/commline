@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chilicki.Commline.UserInterface.Resources {
+namespace Chilicki.Commline.Application.Search.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Chilicki.Commline.UserInterface.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SearchResources {
+    public class SearchValidationResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SearchResources() {
+        internal SearchValidationResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chilicki.Commline.UserInterface.Resources.SearchResources", typeof(SearchResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chilicki.Commline.Application.Search.Resources.SearchValidationResources", typeof(SearchValidationResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,47 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Destination stop.
+        ///   Looks up a localized string similar to Start date is empty.
         /// </summary>
-        public static string EndStop {
+        public static string DateIsEmpty {
             get {
-                return ResourceManager.GetString("EndStop", resourceCulture);
+                return ResourceManager.GetString("DateIsEmpty", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search.
+        ///   Looks up a localized string similar to Destination stop is empty.
         /// </summary>
-        public static string SearchAsAction {
+        public static string EndStopIsEmpty {
             get {
-                return ResourceManager.GetString("SearchAsAction", resourceCulture);
+                return ResourceManager.GetString("EndStopIsEmpty", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set as destination stop.
+        ///   Looks up a localized string similar to Start stop is empty.
         /// </summary>
-        public static string SetAsEndStop {
+        public static string StartStopIsEmpty {
             get {
-                return ResourceManager.GetString("SetAsEndStop", resourceCulture);
+                return ResourceManager.GetString("StartStopIsEmpty", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set as start stop.
+        ///   Looks up a localized string similar to Stop with this id does not exist.
         /// </summary>
-        public static string SetAsStartStop {
+        public static string StopWithIdDoesNotExist {
             get {
-                return ResourceManager.GetString("SetAsStartStop", resourceCulture);
+                return ResourceManager.GetString("StopWithIdDoesNotExist", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start date.
+        ///   Looks up a localized string similar to Start time is empty.
         /// </summary>
-        public static string StartDate {
+        public static string TimeIsEmpty {
             get {
-                return ResourceManager.GetString("StartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start stop.
-        /// </summary>
-        public static string StartStop {
-            get {
-                return ResourceManager.GetString("StartStop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start time.
-        /// </summary>
-        public static string StartTime {
-            get {
-                return ResourceManager.GetString("StartTime", resourceCulture);
+                return ResourceManager.GetString("TimeIsEmpty", resourceCulture);
             }
         }
     }
