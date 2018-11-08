@@ -29,6 +29,7 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                 {
                     Stop = stop,
                     StopConnections = new List<StopConnection>(),
+                    IsVisited = false,
                 });
             }
             foreach (var vertex in stopVertices)

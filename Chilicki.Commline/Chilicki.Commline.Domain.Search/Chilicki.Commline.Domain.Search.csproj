@@ -46,6 +46,7 @@
     <Compile Include="Aggregates\Graphs\StopGraph.cs" />
     <Compile Include="Aggregates\Graphs\StopVertex.cs" />
     <Compile Include="Aggregates\SearchInput.cs" />
+    <Compile Include="Factories\Dijkstra\DijkstraEmptyFastestConnectionsArrayFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SearchResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -54,6 +55,8 @@
     </Compile>
     <Compile Include="Services\Base\IConnectionSearchEngine.cs" />
     <Compile Include="Services\DijkstraConnectionSearchEngine.cs" />
+    <Compile Include="Services\Dijkstra\DijkstraNextVertexResolver.cs" />
+    <Compile Include="Services\Dijkstra\DijkstraVisitedVertexMarkingService.cs" />
     <Compile Include="Services\GraphFactories\Base\IGraphFactory.cs" />
     <Compile Include="Services\GraphFactories\StopConnectionFactory.cs" />
     <Compile Include="Services\GraphFactories\StopGraphFactory.cs" />
