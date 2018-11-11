@@ -59,6 +59,8 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<DijkstraNextVertexResolver>().ToSelf();
             _kernel.Bind<DijkstraVisitedVertexMarkingService>().ToSelf();
             _kernel.Bind<DijkstraEmptyFastestConnectionsArrayFactory>().ToSelf();
+            _kernel.Bind<DijkstraShouldConnectionReplaceCurrentFastestConnectionService>().ToSelf();
+            _kernel.Bind<DijkstraReplaceFastestConnectionService>().ToSelf();
 
             _kernel.Bind<SearchManager>().ToSelf();
             _kernel.Bind<StopManager>().ToSelf();

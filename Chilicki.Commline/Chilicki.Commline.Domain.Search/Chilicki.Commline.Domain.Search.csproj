@@ -55,7 +55,11 @@
     </Compile>
     <Compile Include="Services\Base\IConnectionSearchEngine.cs" />
     <Compile Include="Services\DijkstraConnectionSearchEngine.cs" />
+    <Compile Include="Services\Dijkstra\DijkstraIsCurrentFastestConnectionEmptyService.cs" />
     <Compile Include="Services\Dijkstra\DijkstraNextVertexResolver.cs" />
+    <Compile Include="Services\Dijkstra\DijkstraReplaceFastestConnectionService.cs" />
+    <Compile Include="Services\Dijkstra\DijkstraShouldConnectionReplaceCurrentFastestConnectionService.cs" />
+    <Compile Include="Services\Dijkstra\DijkstraStopGraphService.cs" />
     <Compile Include="Services\Dijkstra\DijkstraVisitedVertexMarkingService.cs" />
     <Compile Include="Services\GraphFactories\Base\IGraphFactory.cs" />
     <Compile Include="Services\GraphFactories\StopConnectionFactory.cs" />
