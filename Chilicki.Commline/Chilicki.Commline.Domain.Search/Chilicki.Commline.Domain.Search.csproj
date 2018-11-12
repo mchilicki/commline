@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregates\FastestPath.cs" />
     <Compile Include="Aggregates\Graphs\StopConnection.cs" />
     <Compile Include="Aggregates\Graphs\StopGraph.cs" />
     <Compile Include="Aggregates\Graphs\StopVertex.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="Services\GraphFactories\Base\IGraphFactory.cs" />
     <Compile Include="Services\GraphFactories\StopConnectionFactory.cs" />
     <Compile Include="Services\GraphFactories\StopGraphFactory.cs" />
+    <Compile Include="Services\Path\FastestPathResolver.cs" />
+    <Compile Include="Services\Path\FastestPathTransferService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">

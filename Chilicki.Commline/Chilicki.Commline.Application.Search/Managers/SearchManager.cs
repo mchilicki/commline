@@ -5,6 +5,7 @@ using Chilicki.Commline.Application.Search.ManualMappers;
 using Chilicki.Commline.Domain.Search.Services.GraphFactories.Base;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using Chilicki.Commline.Infrastructure.Repositories;
+using Chilicki.Commline.Domain.Search.Services.Path;
 
 namespace Chilicki.Commline.Application.Search.Managers
 {
@@ -12,6 +13,7 @@ namespace Chilicki.Commline.Application.Search.Managers
     {
         readonly IConnectionSearchEngine _connectionSearchEngine;
         readonly IGraphFactory<StopGraph> _graphGenerator;
+        readonly FastestPathResolver _fastestPathResolver;
         readonly SearchValidator _searchValidator;
         readonly SearchInputManualMapper _searchInputManualMapper;
         readonly LineRepository _lineRepository;
@@ -20,6 +22,7 @@ namespace Chilicki.Commline.Application.Search.Managers
         public SearchManager(
             IConnectionSearchEngine connectionSearchEngine,
             IGraphFactory<StopGraph> graphGenerator,
+            FastestPathResolver fastestPathResolver,
             SearchValidator searchValidator,
             SearchInputManualMapper searchInputManualMapper,
             LineRepository lineRepository,
@@ -31,6 +34,7 @@ namespace Chilicki.Commline.Application.Search.Managers
             _searchInputManualMapper = searchInputManualMapper;
             _lineRepository = lineRepository;
             _stopRepository = stopRepository;
+            _fastestPathResolver = fastestPathResolver;
         }
 
         public void SearchFastestConnections(SearchInputDTO searchInputDTO)
@@ -39,7 +43,8 @@ namespace Chilicki.Commline.Application.Search.Managers
             var searchInput = _searchInputManualMapper.ToDomain(searchInputDTO);
             var stops = _stopRepository.GetAllConnectedToAnyLine();
             var stopGraph = _graphGenerator.CreateGraph(stops);
-            _connectionSearchEngine.SearchConnections(searchInput, stopGraph);
+            var fastestConnections = _connectionSearchEngine.SearchConnections(searchInput, stopGraph);
+            var fastestPath = _fastestPathResolver.ResolveFastestPath(searchInput, fastestConnections);
         }
     }
 }

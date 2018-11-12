@@ -10,5 +10,6 @@ namespace Chilicki.Commline.Domain.Search.Aggregates.Graphs
         public Line Line { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
+        public bool IsTransfer { get; set; }
     }
 }
