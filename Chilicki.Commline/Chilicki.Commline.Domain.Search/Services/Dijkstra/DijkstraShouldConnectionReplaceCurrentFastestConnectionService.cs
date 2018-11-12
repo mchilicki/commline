@@ -20,13 +20,28 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
 
         public bool Return(
             SearchInput searchInput,
+            StopConnection stopConnectionFromPreviousVertex,
             StopConnection destinationStopCurrentFastestConnection,
-            StopConnection currentStopConnection)
+            StopConnection maybeNewFastestConnection)
         {
-            return (_dijkstraIsCurrentFastestConnectionEmptyService
-                    .IsEmpty(destinationStopCurrentFastestConnection) ||
-                (searchInput.StartTime < destinationStopCurrentFastestConnection.StartTime &&
-                currentStopConnection.EndTime < destinationStopCurrentFastestConnection.EndTime));
+            bool isCurrentFastestConnectionEmpty = _dijkstraIsCurrentFastestConnectionEmptyService
+                    .IsEmpty(destinationStopCurrentFastestConnection);
+            bool isPreviousVertexFastestConnectionEmpty = _dijkstraIsCurrentFastestConnectionEmptyService
+                    .IsEmpty(stopConnectionFromPreviousVertex);
+            bool canMaybeNewFastestConnectionExist =
+                    isPreviousVertexFastestConnectionEmpty ||
+                    (searchInput.StartTime < maybeNewFastestConnection.StartTime &&
+                    stopConnectionFromPreviousVertex.EndTime < maybeNewFastestConnection.EndTime);
+            //if (isCurrentFastestConnectionEmpty)
+            //    canMaybeNewFastestConnectionExist =
+            //        isPreviousVertexFastestConnectionEmpty ||
+            //        stopConnectionFromPreviousVertex.EndTime < maybeNewFastestConnection.EndTime;
+            //else
+            bool isMaybeNewFastestConnectionFaster = 
+                maybeNewFastestConnection.EndTime < destinationStopCurrentFastestConnection.EndTime;
+            return canMaybeNewFastestConnectionExist &&
+                (isCurrentFastestConnectionEmpty ||
+                isMaybeNewFastestConnectionFaster);
         }
     }
 }

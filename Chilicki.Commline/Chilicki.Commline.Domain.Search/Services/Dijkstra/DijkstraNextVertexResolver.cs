@@ -46,6 +46,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
                     }
                 }
             }
+            if (fastestConnection == null)
+                return null;
             return fastestConnection.DestinationStop;
         }
     }

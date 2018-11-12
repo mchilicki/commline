@@ -11,7 +11,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
     {
         public bool IsEmpty(StopConnection destinationStopCurrentFastestConnection)
         {
-            return destinationStopCurrentFastestConnection.SourceStop == null;
+            return destinationStopCurrentFastestConnection == null ||
+                destinationStopCurrentFastestConnection.SourceStop == null;
         }
     }
 }

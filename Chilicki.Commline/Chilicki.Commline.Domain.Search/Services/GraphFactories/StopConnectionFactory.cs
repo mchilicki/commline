@@ -20,10 +20,10 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                 StartTime = departure.DepartureTime,
                 SourceStop = currentVertex,
                 EndTime = nextRouteStop
-                                    .Departures
-                                    .Where(p => p.RunIndex == departure.RunIndex)
-                                    .First()
-                                    .DepartureTime,
+                            .Departures
+                            .Where(p => p.RunIndex == departure.RunIndex)
+                            .First()
+                            .DepartureTime,
                 DestinationStop = nextVertex,
             };
         }

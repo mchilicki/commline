@@ -17,6 +17,7 @@ namespace Chilicki.Commline.Domain.Search.Services
         readonly DijkstraShouldConnectionReplaceCurrentFastestConnectionService 
             _dijkstraShouldConnectionReplaceCurrentFastestConnection;
         readonly DijkstraReplaceFastestConnectionService _dijkstraReplaceFastestConnectionService;
+        readonly DijkstraStopConnectionsService _dijkstraStopConnectionsService;
 
         public DijkstraConnectionSearchEngine(
             DijkstraEmptyFastestConnectionsArrayFactory dijkstraEmptyFastestConnectionsArrayFactory,
@@ -24,7 +25,8 @@ namespace Chilicki.Commline.Domain.Search.Services
             DijkstraVisitedVertexMarkingService dijkstraVisitedVertexMarkingService,
             DijkstraShouldConnectionReplaceCurrentFastestConnectionService
                 dijkstraShouldConnectionReplaceCurrentFastestConnection,
-            DijkstraReplaceFastestConnectionService dijkstraReplaceFastestConnectionService)
+            DijkstraReplaceFastestConnectionService dijkstraReplaceFastestConnectionService,
+            DijkstraStopConnectionsService dijkstraStopConnectionsService)
         {
             _dijkstraEmptyFastestConnectionsArrayFactory = dijkstraEmptyFastestConnectionsArrayFactory;
             _dijkstraNextVertexResolver = dijkstraNextVertexResolver;
@@ -32,6 +34,7 @@ namespace Chilicki.Commline.Domain.Search.Services
             _dijkstraShouldConnectionReplaceCurrentFastestConnection = 
                 dijkstraShouldConnectionReplaceCurrentFastestConnection;
             _dijkstraReplaceFastestConnectionService = dijkstraReplaceFastestConnectionService;
+            _dijkstraStopConnectionsService = dijkstraStopConnectionsService;
         }
 
         public IEnumerable<StopConnection> SearchConnections(SearchInput search, StopGraph graph)
@@ -39,15 +42,17 @@ namespace Chilicki.Commline.Domain.Search.Services
             var vertexFastestConnections = _dijkstraEmptyFastestConnectionsArrayFactory
                 .Create(graph, search.StartStop, search.StartTime);
             var currentVertex = _dijkstraNextVertexResolver.GetFirstVertex(graph, search.StartStop);            
-            while (currentVertex != null)
+            while (currentVertex != null && currentVertex.Stop.Id != search.DestinationStop.Id)
             {
-                // TODO WSIADANIE DO AUTOBUSU KTORY JUZ ODJECHAL
                 foreach (var stopConnection in currentVertex.StopConnections)
                 {
-                    var destinationStopFastestConnection = vertexFastestConnections
-                        .First(p => p.DestinationStop.Stop.Id == stopConnection.DestinationStop.Stop.Id);
+                    var destinationStopFastestConnection = _dijkstraStopConnectionsService
+                        .GetDestinationStopFastestConnection(vertexFastestConnections, stopConnection);
+                    var stopConnectionFromPreviousVertex = _dijkstraStopConnectionsService
+                        .GetStopConnectionFromPreviousVertex(vertexFastestConnections, stopConnection);
                     if (_dijkstraShouldConnectionReplaceCurrentFastestConnection
-                        .Return(search, destinationStopFastestConnection, stopConnection))
+                        .Return(search, stopConnectionFromPreviousVertex, 
+                            destinationStopFastestConnection, stopConnection))
                     {
                         _dijkstraReplaceFastestConnectionService
                             .Replace(destinationStopFastestConnection, stopConnection);
