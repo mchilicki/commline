@@ -6,7 +6,6 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
 {
     public class StopConnectionFactory
     {
-
         public StopConnection Create(
             RouteStop routeStop, 
             Departure departure,
@@ -20,10 +19,10 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                 StartTime = departure.DepartureTime,
                 SourceStop = currentVertex,
                 EndTime = nextRouteStop
-                                    .Departures
-                                    .Where(p => p.RunIndex == departure.RunIndex)
-                                    .First()
-                                    .DepartureTime,
+                            .Departures
+                            .Where(p => p.RunIndex == departure.RunIndex)
+                            .First()
+                            .DepartureTime,
                 DestinationStop = nextVertex,
             };
         }
