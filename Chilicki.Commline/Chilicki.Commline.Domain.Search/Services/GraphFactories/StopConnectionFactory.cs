@@ -1,6 +1,5 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
