@@ -6,6 +6,8 @@ using Chilicki.Commline.Domain.Search.Services.GraphFactories.Base;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.Domain.Search.Services.Path;
+using AutoMapper;
+using Chilicki.Commline.Domain.Search.Aggregates;
 
 namespace Chilicki.Commline.Application.Search.Managers
 {
@@ -37,7 +39,7 @@ namespace Chilicki.Commline.Application.Search.Managers
             _fastestPathResolver = fastestPathResolver;
         }
 
-        public void SearchFastestConnections(SearchInputDTO searchInputDTO)
+        public FastestPathDTO SearchFastestConnections(SearchInputDTO searchInputDTO)
         {
             _searchValidator.Validate(searchInputDTO);
             var searchInput = _searchInputManualMapper.ToDomain(searchInputDTO);
@@ -45,6 +47,8 @@ namespace Chilicki.Commline.Application.Search.Managers
             var stopGraph = _graphGenerator.CreateGraph(stops);
             var fastestConnections = _connectionSearchEngine.SearchConnections(searchInput, stopGraph);
             var fastestPath = _fastestPathResolver.ResolveFastestPath(searchInput, fastestConnections);
+            var fastestPathDTO = Mapper.Map<FastestPath, FastestPathDTO>(fastestPath);
+            return fastestPathDTO;
         }
     }
 }

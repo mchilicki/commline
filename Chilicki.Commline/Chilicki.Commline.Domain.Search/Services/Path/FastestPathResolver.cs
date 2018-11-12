@@ -19,7 +19,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
         {
             var fastestPath = new List<StopConnection>();
             var currentConnection = vertexFastestConnection
-                .First(p => p.DestinationStop.Stop.Id == search.DestinationStop.Id);
+                .First(p => p.DestinationStop.Stop.Id == search.DestinationStop.Id);            
             fastestPath.Add(currentConnection);
             while (currentConnection.SourceStop.Stop.Id != search.StartStop.Id)
             {
@@ -34,6 +34,12 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
                     fastestPath.Add(transferBeetweenVertices);
                 }
                 fastestPath.Add(currentConnection);
+            }
+            if (_fastestPathTransferService.ShouldBeWaitingOnFirstStop(search, currentConnection))
+            {
+                var waitingOnFirstStop = _fastestPathTransferService
+                    .GenerateWaitingAsStopConnection(search, currentConnection);
+                fastestPath.Add(waitingOnFirstStop);
             }
             fastestPath.Reverse();
             return new FastestPath()

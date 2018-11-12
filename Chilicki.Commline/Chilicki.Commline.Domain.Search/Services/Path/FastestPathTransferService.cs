@@ -1,4 +1,5 @@
-﻿using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
+﻿using Chilicki.Commline.Domain.Search.Aggregates;
+using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 
 namespace Chilicki.Commline.Domain.Search.Services.Path
 {
@@ -19,6 +20,26 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
                 DestinationStop = sourceConnection.DestinationStop,
                 StartTime = sourceConnection.StartTime,
                 EndTime = nextConnection.EndTime,
+                Line = null,
+                IsTransfer = true,
+            };
+        }
+
+        public bool ShouldBeWaitingOnFirstStop
+            (SearchInput search, StopConnection firstConnection)
+        {
+            return search.StartTime != firstConnection.StartTime;
+        }
+
+        public StopConnection GenerateWaitingAsStopConnection
+            (SearchInput search, StopConnection firstConnection)
+        {
+            return new StopConnection()
+            {
+                SourceStop = firstConnection.SourceStop,
+                DestinationStop = firstConnection.SourceStop,
+                StartTime = search.StartTime,
+                EndTime = firstConnection.StartTime,
                 Line = null,
                 IsTransfer = true,
             };
