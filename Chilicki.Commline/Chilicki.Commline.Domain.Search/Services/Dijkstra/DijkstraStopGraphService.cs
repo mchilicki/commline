@@ -12,5 +12,11 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
                 .StopVertices
                 .First(p => p.Stop.Id == stop.Id);
         }
+
+        public StopVertex MarkVertexAsVisited(StopVertex stopVertex)
+        {
+            stopVertex.IsVisited = true;
+            return stopVertex;
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Chilicki.Commline.Domain.Services.Routes
 {
-    public class RouteService
+    public class NextRouteStopResolver
     {
         public RouteStop GetNextRouteStop(RouteStop routeStop)
         {

@@ -52,15 +52,13 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<MixedRepository>().ToSelf().InRequestScope();
 
             _kernel.Bind<StopLineTypesMatchChecker>().ToSelf();
-            _kernel.Bind<RouteService>().ToSelf();
+            _kernel.Bind<NextRouteStopResolver>().ToSelf();
 
             _kernel.Bind<IConnectionSearchEngine>().To<DijkstraConnectionSearchEngine>();
             _kernel.Bind<IGraphFactory<StopGraph>>().To<StopGraphFactory>();
             _kernel.Bind<DijkstraNextVertexResolver>().ToSelf();
-            _kernel.Bind<DijkstraVisitedVertexMarkingService>().ToSelf();
-            _kernel.Bind<DijkstraEmptyFastestConnectionsArrayFactory>().ToSelf();
-            _kernel.Bind<DijkstraShouldConnectionReplaceCurrentFastestConnectionService>().ToSelf();
-            _kernel.Bind<DijkstraReplaceFastestConnectionService>().ToSelf();
+            _kernel.Bind<DijkstraEmptyFastestConnectionsFactory>().ToSelf();
+            _kernel.Bind<DijkstraFastestConnectionReplacer>().ToSelf();
 
             _kernel.Bind<SearchManager>().ToSelf();
             _kernel.Bind<StopManager>().ToSelf();

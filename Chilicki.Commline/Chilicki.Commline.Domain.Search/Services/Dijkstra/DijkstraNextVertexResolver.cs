@@ -1,28 +1,26 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
 {
     public class DijkstraNextVertexResolver
     {
-        readonly DijkstraIsCurrentFastestConnectionEmptyService _dijkstraIsCurrentFastestConnectionEmptyService;
+        readonly DijkstraStopConnectionsService _dijkstraStopConnectionsService;
         readonly DijkstraStopGraphService _dijkstraStopGraphService; 
 
         public DijkstraNextVertexResolver(
-            DijkstraIsCurrentFastestConnectionEmptyService dijkstraIsCurrentFastestConnectionEmptyService,
+            DijkstraStopConnectionsService dijkstraStopConnectionsService,
             DijkstraStopGraphService dijkstraStopGraphService)
         {
-            _dijkstraIsCurrentFastestConnectionEmptyService = dijkstraIsCurrentFastestConnectionEmptyService;
+            _dijkstraStopConnectionsService = dijkstraStopConnectionsService;
             _dijkstraStopGraphService = dijkstraStopGraphService;
         }
 
         public StopVertex GetFirstVertex(StopGraph graph, Stop startingStop)
         {
-            return graph
-                .StopVertices
-                .First(p => p.Stop.Id == startingStop.Id);         
+            return _dijkstraStopGraphService
+                .GetStopVertexByStop(graph, startingStop);         
         }
 
         public StopVertex GetNextVertex(StopGraph graph, 
@@ -31,7 +29,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
             StopConnection fastestConnection = null;
             foreach (var maybeNewFastestConnection in vertexFastestConnections)
             {
-                if (!_dijkstraIsCurrentFastestConnectionEmptyService.IsEmpty(maybeNewFastestConnection))
+                if (!_dijkstraStopConnectionsService.IsConnectionEmpty(maybeNewFastestConnection))
                 {
                     if (!maybeNewFastestConnection.DestinationStop.IsVisited)
                     {

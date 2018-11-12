@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Chilicki.Commline.Domain.Search.Factories.Dijkstra
 {
-    public class DijkstraEmptyFastestConnectionsArrayFactory
+    public class DijkstraEmptyFastestConnectionsFactory
     {
         public IEnumerable<StopConnection> Create(StopGraph graph, Stop startingStop, TimeSpan startTime)
         {

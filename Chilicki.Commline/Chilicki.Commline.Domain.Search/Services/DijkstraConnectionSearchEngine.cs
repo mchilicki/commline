@@ -9,35 +9,29 @@ namespace Chilicki.Commline.Domain.Search.Services
 {
     public class DijkstraConnectionSearchEngine : IConnectionSearchEngine
     {
-        readonly DijkstraEmptyFastestConnectionsArrayFactory _dijkstraEmptyFastestConnectionsArrayFactory;
+        readonly DijkstraEmptyFastestConnectionsFactory _dijkstraEmptyFastestConnectionsFactory;
         readonly DijkstraNextVertexResolver _dijkstraNextVertexResolver;
-        readonly DijkstraVisitedVertexMarkingService _dijkstraVisitedVertexMarkingService;
-        readonly DijkstraShouldConnectionReplaceCurrentFastestConnectionService 
-            _dijkstraShouldConnectionReplaceCurrentFastestConnection;
-        readonly DijkstraReplaceFastestConnectionService _dijkstraReplaceFastestConnectionService;
+        readonly DijkstraFastestConnectionReplacer _dijkstraFastestConnectionReplacer;
         readonly DijkstraStopConnectionsService _dijkstraStopConnectionsService;
+        readonly DijkstraStopGraphService _dijkstraStopGraphService;
 
         public DijkstraConnectionSearchEngine(
-            DijkstraEmptyFastestConnectionsArrayFactory dijkstraEmptyFastestConnectionsArrayFactory,
+            DijkstraEmptyFastestConnectionsFactory dijkstraEmptyFastestConnectionsArrayFactory,
             DijkstraNextVertexResolver dijkstraNextVertexResolver,
-            DijkstraVisitedVertexMarkingService dijkstraVisitedVertexMarkingService,
-            DijkstraShouldConnectionReplaceCurrentFastestConnectionService
-                dijkstraShouldConnectionReplaceCurrentFastestConnection,
-            DijkstraReplaceFastestConnectionService dijkstraReplaceFastestConnectionService,
-            DijkstraStopConnectionsService dijkstraStopConnectionsService)
+            DijkstraFastestConnectionReplacer dijkstraReplaceFastestConnectionService,
+            DijkstraStopConnectionsService dijkstraStopConnectionsService,
+            DijkstraStopGraphService dijkstraStopGraphService)
         {
-            _dijkstraEmptyFastestConnectionsArrayFactory = dijkstraEmptyFastestConnectionsArrayFactory;
+            _dijkstraEmptyFastestConnectionsFactory = dijkstraEmptyFastestConnectionsArrayFactory;
             _dijkstraNextVertexResolver = dijkstraNextVertexResolver;
-            _dijkstraVisitedVertexMarkingService = dijkstraVisitedVertexMarkingService;
-            _dijkstraShouldConnectionReplaceCurrentFastestConnection = 
-                dijkstraShouldConnectionReplaceCurrentFastestConnection;
-            _dijkstraReplaceFastestConnectionService = dijkstraReplaceFastestConnectionService;
+            _dijkstraFastestConnectionReplacer = dijkstraReplaceFastestConnectionService;
             _dijkstraStopConnectionsService = dijkstraStopConnectionsService;
+            _dijkstraStopGraphService = dijkstraStopGraphService;
         }
 
         public IEnumerable<StopConnection> SearchConnections(SearchInput search, StopGraph graph)
         {
-            var vertexFastestConnections = _dijkstraEmptyFastestConnectionsArrayFactory
+            var vertexFastestConnections = _dijkstraEmptyFastestConnectionsFactory
                 .Create(graph, search.StartStop, search.StartTime);
             var currentVertex = _dijkstraNextVertexResolver.GetFirstVertex(graph, search.StartStop);            
             while (currentVertex != null && currentVertex.Stop.Id != search.DestinationStop.Id)
@@ -48,15 +42,15 @@ namespace Chilicki.Commline.Domain.Search.Services
                         .GetDestinationStopFastestConnection(vertexFastestConnections, stopConnection);
                     var stopConnectionFromPreviousVertex = _dijkstraStopConnectionsService
                         .GetStopConnectionFromPreviousVertex(vertexFastestConnections, stopConnection);
-                    if (_dijkstraShouldConnectionReplaceCurrentFastestConnection
-                        .Return(search, stopConnectionFromPreviousVertex, 
+                    if (_dijkstraFastestConnectionReplacer
+                        .ShouldConnectionBeReplaced(search, stopConnectionFromPreviousVertex, 
                             destinationStopFastestConnection, stopConnection))
                     {
-                        _dijkstraReplaceFastestConnectionService
-                            .Replace(destinationStopFastestConnection, stopConnection);
+                        _dijkstraFastestConnectionReplacer
+                            .ReplaceWithNewFastestConnection(destinationStopFastestConnection, stopConnection);
                     }
                 }
-                _dijkstraVisitedVertexMarkingService.MarkAsVisited(currentVertex);
+                _dijkstraStopGraphService.MarkVertexAsVisited(currentVertex);
                 currentVertex = _dijkstraNextVertexResolver.GetNextVertex(graph, vertexFastestConnections);
             }            
             return vertexFastestConnections;

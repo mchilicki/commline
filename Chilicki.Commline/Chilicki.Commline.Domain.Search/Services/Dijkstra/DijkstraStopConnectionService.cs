@@ -26,5 +26,11 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
                     .FirstOrNull(p => p.SourceStop != null &&
                         p.SourceStop.Stop.Id == stopConnection.SourceStop.Stop.Id);
         }
+
+        public bool IsConnectionEmpty(StopConnection stopConnection)
+        {
+            return stopConnection == null ||
+                stopConnection.SourceStop == null;
+        }
     }
 }
