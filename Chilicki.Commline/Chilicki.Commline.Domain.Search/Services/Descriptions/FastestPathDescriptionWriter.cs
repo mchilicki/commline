@@ -16,6 +16,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
         readonly FastestPathTimeCalculator _timeCalculator;
         readonly LineDirectionService _lineDirectionService;
 
+        const string HOUR_FILTER = @"hh\:mm";
+
         public FastestPathDescriptionWriter(
             FastestPathTimeCalculator timeCalculator,
             LineDirectionService lineDirectionService)
@@ -43,6 +45,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
                     description.DescriptionRows.Add(WriteWaiting(connection));                    
                 }                
             }
+            description.DescriptionRows = description.DescriptionRows.Reverse().ToList();
             return description;
         }
 
@@ -51,8 +54,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
         {
             var header = new DescriptionRow
             {
-                First = sourceStop.Name,
-                Second = destinationStop.Name,
+                First = $"{DescriptionResources.From} {sourceStop.Name}",
+                Second = $"{DescriptionResources.To} {destinationStop.Name}",
                 Third = $"{travelTimeInMinutes.ToString()} {DescriptionResources.Minutes}",
             };
             return header;
@@ -63,19 +66,19 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             var descriptionRows = new List<DescriptionRow>();
             var departureRow = new DescriptionRow
             {
-                First = connection.StartTime.ToString(),
+                First = connection.StartTime.ToString(HOUR_FILTER),
                 Second = connection.SourceStop.Stop.Name
             };
             var lineRow = new DescriptionRow
             {
                 First = $"{connection.Line.LineType} {connection.Line.Name}",
-                Second = _lineDirectionService.GetDirectionStop(connection.Line).Name,
+                Second = $"{DescriptionResources.Direction}: {_lineDirectionService.GetDirectionStop(connection.Line).Name}",
                 Third = $"{_timeCalculator.CalculateConnectionTime(connection).ToString()} " +
                     $"{DescriptionResources.Minutes}"
             };
             var arrivalRow = new DescriptionRow
             {
-                First = connection.EndTime.ToString(),
+                First = connection.EndTime.ToString(HOUR_FILTER),
                 Second = connection.DestinationStop.Stop.Name
             };
             descriptionRows.Add(departureRow);
@@ -89,7 +92,6 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             return new DescriptionRow
             {
                 First = DescriptionResources.Waiting,
-                Second = connection.SourceStop.Stop.Name,
                 Third = $"{_timeCalculator.CalculateConnectionTime(connection).ToString()} " +
                                 $"{ DescriptionResources.Minutes}"
             };

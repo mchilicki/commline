@@ -18,8 +18,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
             {
                 SourceStop = sourceConnection.DestinationStop,
                 DestinationStop = sourceConnection.DestinationStop,
-                StartTime = sourceConnection.StartTime,
-                EndTime = nextConnection.EndTime,
+                StartTime = sourceConnection.EndTime,
+                EndTime = nextConnection.StartTime,
                 Line = null,
                 IsTransfer = true,
             };

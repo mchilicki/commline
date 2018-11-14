@@ -32,14 +32,14 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
             fastestPath.Add(currentConnection);
             while (currentConnection.SourceStop.Stop.Id != search.StartStop.Id)
             {
-                var previousConnection = currentConnection;
+                var nextConnection = currentConnection;
                 var sourceVertex = currentConnection.SourceStop;
                 currentConnection = vertexFastestConnection
                     .First(p => p.DestinationStop.Stop.Id == sourceVertex.Stop.Id);
-                if (_fastestPathTransferService.ShouldBeTransfer(previousConnection, currentConnection))
+                if (_fastestPathTransferService.ShouldBeTransfer(currentConnection, nextConnection))
                 {
                     var transferBeetweenVertices = _fastestPathTransferService
-                        .GenerateTransferAsStopConnection(previousConnection, currentConnection);
+                        .GenerateTransferAsStopConnection(currentConnection, nextConnection);
                     fastestPath.Add(transferBeetweenVertices);
                 }
                 fastestPath.Add(currentConnection);
@@ -48,11 +48,11 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
             return new FastestPath()
             {
                 Path = fastestPath,
-                FlattenPath = FlattenFastestPathForDescriptionWriter(fastestPath),
+                FlattenPath = FlattenFastestPath(fastestPath),
             };
         } 
 
-        private IEnumerable<StopConnection> FlattenFastestPathForDescriptionWriter
+        private IEnumerable<StopConnection> FlattenFastestPath
             (IList<StopConnection> fastestPath)
         {
             var flattenPath = new List<StopConnection>();

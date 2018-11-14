@@ -61,6 +61,24 @@ namespace Chilicki.Commline.Domain.Search.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        internal static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        internal static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to minute.
         /// </summary>
         internal static string Minute {
@@ -75,6 +93,15 @@ namespace Chilicki.Commline.Domain.Search.Resources {
         internal static string Minutes {
             get {
                 return ResourceManager.GetString("Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        internal static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
             }
         }
         
