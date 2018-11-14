@@ -6,6 +6,13 @@
 <link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+<style>
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+
 <div>
     @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Search } })
 </div>
@@ -23,6 +30,9 @@
         <button type="button" class="btn btn-primary" onclick="search()">
             @SearchResources.SearchAsAction
         </button>
+        <div>
+            <table id="searchResult" class="searchResultTable w3-text-light-grey"></table>
+        </div>
     </div>
 </div>
 
@@ -37,6 +47,8 @@
 
     var searchOpened = false;
 
+    var searchDescriptionRowsNumber = 0;
+
     $(document).ready(function () {
         $("#toolboxButton").hide();
         $("#saveModification").hide();
@@ -44,6 +56,10 @@
         $("#searchButton").click(switchSearchSidenav);
         currentView = '@CommlineViewType.Search';
         switchSearchSidenav();
+        if (currentView === '@CommlineViewType.Search')
+            loadAllStops();
+        else 
+            loadAllLines();
     });
 
     $('.timepicker').bootstrapMaterialDatePicker({
@@ -90,16 +106,58 @@
         $.post("Search/SearchConnections",
             sendData,
             function (data, status) {                
-                if (data === "") 
+                if (data === "") {
                     alert('PUSTO :(');
-                else
-                    alert('Cos przyszlo: ' + data);
+                }
+                else {
+                    drawFastestPath(data);
+                    writeFastestPathDescription(data.PathDescription.DescriptionRows);
+                }                    
             });
     }
 
+    function drawFastestPath(path) {
+        removeAllPolylines(MAP);
+        $.each(path.Path, function (i, connection) {
+            if (!connection.IsTransfer) {
+                var pathToDraw = [];
+                pathToDraw.push(connection.SourceStop);
+                pathToDraw.push(connection.DestinationStop);
+                drawLine(MAP, connection.Line.Name, connection.Line.LineType, pathToDraw, connection.Line.Color);
+            }
+        });
+    }
+
+    function writeFastestPathDescription(descriptions) {
+        removeFastestPathDescription();
+        $.each(descriptions, function (index, descriptionRow) {
+            writeFastestPathDescriptionRow(descriptionRow);
+        });
+    }
+
+    function writeFastestPathDescriptionRow(descriptionRow) {
+        var table = document.getElementById("searchResult");
+        var row = table.insertRow(0);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        cell1.innerHTML = descriptionRow.First;
+        cell2.innerHTML = descriptionRow.Second;
+        cell3.innerHTML = descriptionRow.Third;
+        searchDescriptionRowsNumber++;
+    }
+
+    function removeFastestPathDescription() {
+        for (var i = 0; i < searchDescriptionRowsNumber; i++) {
+            document.getElementById("searchResult").deleteRow(0);
+        }
+        searchDescriptionRowsNumber = 0;
+    }
+
+
     function switchSearchSidenav() {
         if (searchOpened == false) {
-            document.getElementById("searchSidenav").style.width = "250px";
+            document.getElementById("searchSidenav").style.width = "350px";
             searchOpened = true;
         }
         else {

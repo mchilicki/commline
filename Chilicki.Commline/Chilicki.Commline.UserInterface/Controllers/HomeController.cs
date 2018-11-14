@@ -32,9 +32,9 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return Json(_lineManager.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAllStops()
+        public JsonResult GetAllStopsConnectedToAnyLine()
         {
-            return Json(_stopManager.GetAll(), JsonRequestBehavior.AllowGet);
+            return Json(_stopManager.GetAllConnectedToAnyLine(), JsonRequestBehavior.AllowGet);
         }
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()

@@ -10,6 +10,7 @@ using Chilicki.Commline.Domain.Search.Services.Base;
 using Chilicki.Commline.Domain.Search.Services.Dijkstra;
 using Chilicki.Commline.Domain.Search.Services.GraphFactories;
 using Chilicki.Commline.Domain.Search.Services.GraphFactories.Base;
+using Chilicki.Commline.Domain.Search.Services.Path;
 using Chilicki.Commline.Domain.Services.Matching;
 using Chilicki.Commline.Domain.Services.Routes;
 using Chilicki.Commline.Infrastructure.Databases;
@@ -59,6 +60,9 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<DijkstraNextVertexResolver>().ToSelf();
             _kernel.Bind<DijkstraEmptyFastestConnectionsFactory>().ToSelf();
             _kernel.Bind<DijkstraFastestConnectionReplacer>().ToSelf();
+
+            _kernel.Bind<FastestPathResolver>().ToSelf();
+            _kernel.Bind<FastestPathTransferService>().ToSelf();
 
             _kernel.Bind<SearchManager>().ToSelf();
             _kernel.Bind<StopManager>().ToSelf();

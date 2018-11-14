@@ -1,4 +1,5 @@
 ﻿@using Chilicki.Commline.UserInterface.Resources
+@using Chilicki.Commline.Application.Enums
 
 <div>
     @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.HomePage } })
@@ -9,5 +10,9 @@
         $("#toolboxButton").hide();
         $("#saveModification").hide();
         $("#searchButton").hide();
+        if (currentView === '@CommlineViewType.Search')
+            loadAllStops();
+        else 
+            loadAllLines();
     });
 </script>

@@ -30,15 +30,16 @@ namespace Chilicki.Commline.UserInterface.Controllers
         [HttpPost]
         public JsonResult SearchConnections(SearchInputDTO searchInput)
         {
+            FastestPathDTO fastestPath = null;
             try
             {
-                _searchManager.SearchFastestConnections(searchInput);
+                fastestPath = _searchManager.SearchFastestConnections(searchInput);
             }
             catch (Exception ex)
             {
                 return Json(ex.Message);
             }            
-            return Json(searchInput);
+            return Json(fastestPath);
         }
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()

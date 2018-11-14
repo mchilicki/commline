@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Chilicki.Commline.Application.DTOs;
+using Chilicki.Commline.Application.Search.DTOs;
 using Chilicki.Commline.Domain.Entities;
+using Chilicki.Commline.Domain.Search.Aggregates;
+using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 
 namespace Chilicki.Commline.UserInterface.App_Start
 {
@@ -25,6 +28,12 @@ namespace Chilicki.Commline.UserInterface.App_Start
 
                 config.CreateMap<RouteStop, RouteStopDTO>();
                 config.CreateMap<RouteStopDTO, RouteStop>();
+
+                config.CreateMap<StopConnection, StopConnectionDTO>();
+                config.CreateMap<StopVertex, StopDTO>()
+                    .ConvertUsing(source => Mapper.Map<Stop, StopDTO>(source.Stop));
+                config.CreateMap<FastestPath, FastestPathDTO>()
+                    .ForMember(dest => dest.PathDescription, opt => opt.Ignore());
             });
         }
     }

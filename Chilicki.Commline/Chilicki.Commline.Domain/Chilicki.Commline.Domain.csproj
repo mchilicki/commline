@@ -77,7 +77,6 @@
     <Compile Include="Enums\DayType.cs" />
     <Compile Include="Entities\Departure.cs" />
     <Compile Include="Entities\Line.cs" />
-    <Compile Include="Enums\EditorToolType.cs" />
     <Compile Include="Enums\Extensions\EnumExtensions.cs" />
     <Compile Include="Enums\Extensions\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Enums\LineType.cs" />
@@ -95,6 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommlineResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Lines\LineDirectionService.cs" />
     <Compile Include="Services\Matching\StopLineTypesMatchChecker.cs" />
     <Compile Include="Services\Routes\NextRouteStopResolver.cs" />
   </ItemGroup>

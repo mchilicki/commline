@@ -5,6 +5,10 @@ using Chilicki.Commline.Application.Search.ManualMappers;
 using Chilicki.Commline.Domain.Search.Services.GraphFactories.Base;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using Chilicki.Commline.Infrastructure.Repositories;
+using Chilicki.Commline.Domain.Search.Services.Path;
+using AutoMapper;
+using Chilicki.Commline.Domain.Search.Aggregates;
+using Chilicki.Commline.Domain.Search.Services.Descriptions;
 
 namespace Chilicki.Commline.Application.Search.Managers
 {
@@ -12,6 +16,8 @@ namespace Chilicki.Commline.Application.Search.Managers
     {
         readonly IConnectionSearchEngine _connectionSearchEngine;
         readonly IGraphFactory<StopGraph> _graphGenerator;
+        readonly FastestPathResolver _fastestPathResolver;
+        readonly FastestPathDescriptionWriter _fastestPathDescriptionWriter;
         readonly SearchValidator _searchValidator;
         readonly SearchInputManualMapper _searchInputManualMapper;
         readonly LineRepository _lineRepository;
@@ -20,6 +26,8 @@ namespace Chilicki.Commline.Application.Search.Managers
         public SearchManager(
             IConnectionSearchEngine connectionSearchEngine,
             IGraphFactory<StopGraph> graphGenerator,
+            FastestPathResolver fastestPathResolver,
+            FastestPathDescriptionWriter fastestPathDescriptionWriter,
             SearchValidator searchValidator,
             SearchInputManualMapper searchInputManualMapper,
             LineRepository lineRepository,
@@ -27,19 +35,25 @@ namespace Chilicki.Commline.Application.Search.Managers
         {
             _connectionSearchEngine = connectionSearchEngine;
             _graphGenerator = graphGenerator;
+            _fastestPathDescriptionWriter = fastestPathDescriptionWriter;
             _searchValidator = searchValidator;
             _searchInputManualMapper = searchInputManualMapper;
             _lineRepository = lineRepository;
             _stopRepository = stopRepository;
+            _fastestPathResolver = fastestPathResolver;
         }
 
-        public void SearchFastestConnections(SearchInputDTO searchInputDTO)
+        public FastestPathDTO SearchFastestConnections(SearchInputDTO searchInputDTO)
         {
             _searchValidator.Validate(searchInputDTO);
             var searchInput = _searchInputManualMapper.ToDomain(searchInputDTO);
             var stops = _stopRepository.GetAllConnectedToAnyLine();
             var stopGraph = _graphGenerator.CreateGraph(stops);
-            _connectionSearchEngine.SearchConnections(searchInput, stopGraph);
+            var fastestConnections = _connectionSearchEngine.SearchConnections(searchInput, stopGraph);
+            var fastestPath = _fastestPathResolver.ResolveFastestPath(searchInput, fastestConnections);
+            var fastestPathDTO = Mapper.Map<FastestPath, FastestPathDTO>(fastestPath);
+            fastestPathDTO.PathDescription = _fastestPathDescriptionWriter.WriteDescription(searchInput, fastestPath);
+            return fastestPathDTO;
         }
     }
 }
