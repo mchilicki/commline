@@ -17,6 +17,7 @@
         var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
         var searchStops = { 'Stops': [] };
         var stopMarkerList = [];
+        var polylineList = [];
         var currentTool = '@EditorToolType.None';
         var currentView = '@CommlineViewType.Other';
         var lineTypes = @(Html.LineTypeToString());
@@ -198,12 +199,19 @@
                 infowindow.setPosition(event.latLng);
                 infowindow.open(map);
             });
+            polylineList.push(stopPath);
             stopPath.setMap(map);
         }
 
         function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
                 drawLine(map, line.Name, line.LineType, line.Stops, line.Color);
+            });
+        }
+
+        function removeAllPolylines(map) {
+            $.each(polylineList, function (i, polyline) {
+                polyline.setMap(null);
             });
         }
 

@@ -101,7 +101,8 @@
             });
     }
 
-    function drawFastestPath(path) {        
+    function drawFastestPath(path) {
+        removeAllPolylines(MAP);
         $.each(path.Path, function (i, connection) {
             if (!connection.IsTransfer) {
                 var pathToDraw = [];
