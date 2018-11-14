@@ -101,8 +101,15 @@
             });
     }
 
-    function drawFastestPath(path) {
-
+    function drawFastestPath(path) {        
+        $.each(path.Path, function (i, connection) {
+            if (!connection.IsTransfer) {
+                var pathToDraw = [];
+                pathToDraw.push(connection.SourceStop);
+                pathToDraw.push(connection.DestinationStop);
+                drawLine(MAP, connection.Line.Name, connection.Line.LineType, pathToDraw, connection.Line.Color);
+            }
+        });
     }
 
     function switchSearchSidenav() {

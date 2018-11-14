@@ -175,7 +175,7 @@
         }
 
         function drawLine(map, lineName, lineType, stopList, color) {
-            var stopLocations = []
+            var stopLocations = [];
             $.each(stopList, function (i, stop) {
                 var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
                 stopLocations.push(coordinates);
