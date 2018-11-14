@@ -32,7 +32,8 @@ namespace Chilicki.Commline.UserInterface.App_Start
                 config.CreateMap<StopConnection, StopConnectionDTO>();
                 config.CreateMap<StopVertex, StopDTO>()
                     .ConvertUsing(source => Mapper.Map<Stop, StopDTO>(source.Stop));
-                config.CreateMap<FastestPathDTO, FastestPath>();
+                config.CreateMap<FastestPath, FastestPathDTO>()
+                    .ForMember(dest => dest.PathDescription, opt => opt.Ignore());
             });
         }
     }
