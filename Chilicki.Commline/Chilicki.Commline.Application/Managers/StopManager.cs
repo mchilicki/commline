@@ -42,6 +42,13 @@ namespace Chilicki.Commline.Application.Managers
             return stopsDTOs;
         }
 
+        public IEnumerable<StopDTO> GetAllConnectedToAnyLine()
+        {
+            var stopsDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>
+                (_stopRepository.GetAllConnectedToAnyLine());
+            return stopsDTOs;
+        }
+
         public IEnumerable<StopDTO> GetAllForLine(long id)
         {
             var stopDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_mixedRepository.GetAllStopsForLineId(id));

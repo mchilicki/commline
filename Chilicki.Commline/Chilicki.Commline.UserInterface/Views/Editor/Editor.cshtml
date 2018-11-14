@@ -1,6 +1,7 @@
 ﻿@using Chilicki.Commline.UserInterface.Resources
 @using Chilicki.Commline.Domain.Enums
 @using Chilicki.Commline.UserInterface.HtmlExtensions
+@using Chilicki.Commline.Application.Enums
 
 @{
     var lineRouteTypes = new List<SelectListItem> {
@@ -112,6 +113,10 @@
         $("#saveModification").click(saveEverything);
         $("#searchButton").hide();
         switchToolboxSidenav();
+        if (currentView === '@CommlineViewType.Search')
+            loadAllStops();
+        else 
+            loadAllLines();
     });
 
     function saveEverything() {

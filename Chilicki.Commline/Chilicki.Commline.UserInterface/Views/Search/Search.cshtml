@@ -44,6 +44,10 @@
         $("#searchButton").click(switchSearchSidenav);
         currentView = '@CommlineViewType.Search';
         switchSearchSidenav();
+        if (currentView === '@CommlineViewType.Search')
+            loadAllStops();
+        else 
+            loadAllLines();
     });
 
     $('.timepicker').bootstrapMaterialDatePicker({
@@ -90,11 +94,15 @@
         $.post("Search/SearchConnections",
             sendData,
             function (data, status) {                
-                if (data === "") 
+                if (data === "")
                     alert('PUSTO :(');
                 else
-                    alert('Cos przyszlo: ' + data);
+                    drawFastestPath(data);
             });
+    }
+
+    function drawFastestPath(path) {
+
     }
 
     function switchSearchSidenav() {

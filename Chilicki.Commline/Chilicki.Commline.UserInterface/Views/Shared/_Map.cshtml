@@ -15,6 +15,7 @@
         var stopIconSize = 18;
         var MAP;
         var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
+        var searchStops = { 'Stops': [] };
         var stopMarkerList = [];
         var currentTool = '@EditorToolType.None';
         var currentView = '@CommlineViewType.Other';
@@ -37,8 +38,7 @@
             ) ];
 
         $(document).ready(function () {
-            initializeMap();
-            loadAllLines();
+            initializeMap();            
         });
 
         function initializeMap() {
@@ -204,6 +204,19 @@
         function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
                 drawLine(map, line.Name, line.LineType, line.Stops, line.Color);
+            });
+        }
+
+        function loadAllStops() {
+            $.ajax({
+                type: "GET",
+                url: 'Home/GetAllStopsConnectedToAnyLine',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    searchStops = result;
+                    drawAllStopsWithoutLines(MAP, searchStops);
+                }
             });
         }
 
