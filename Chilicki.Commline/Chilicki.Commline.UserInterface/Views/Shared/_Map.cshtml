@@ -203,6 +203,32 @@
             stopPath.setMap(map);
         }
 
+        function drawDashedLine(map, stopList) {
+            var stopLocations = [];
+            $.each(stopList, function (i, stop) {
+                var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
+                stopLocations.push(coordinates);
+            })
+
+            var dashedLineSymbol = {
+                path: 'M 0,-1 0,1',
+                strokeOpacity: 1,
+                scale: 4
+            };
+
+            var stopPath = new google.maps.Polyline({
+                path: stopLocations,
+                strokeOpacity: 0,
+                icons: [{
+                    icon: dashedLineSymbol,
+                    offset: '0',
+                    repeat: '20px'
+                }]
+            });
+            polylineList.push(stopPath);
+            stopPath.setMap(map);
+        }
+
         function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
                 drawLine(map, line.Name, line.LineType, line.Stops, line.Color);

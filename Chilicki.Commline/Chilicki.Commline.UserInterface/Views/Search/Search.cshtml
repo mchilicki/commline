@@ -119,12 +119,16 @@
     function drawFastestPath(path) {
         removeAllPolylines(MAP);
         $.each(path.Path, function (i, connection) {
-            if (!connection.IsTransfer) {
+            if (connection.SourceStop.Id !== connection.DestinationStop.Id) {
                 var pathToDraw = [];
                 pathToDraw.push(connection.SourceStop);
                 pathToDraw.push(connection.DestinationStop);
-                drawLine(MAP, connection.Line.Name, connection.Line.LineType, pathToDraw, connection.Line.Color);
-            }
+                if (!connection.IsTransfer) {
+                    drawLine(MAP, connection.Line.Name, connection.Line.LineType, pathToDraw, connection.Line.Color);
+                } else {
+                    drawDashedLine(MAP, pathToDraw);
+                }
+            }            
         });
     }
 
