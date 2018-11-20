@@ -23,8 +23,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
             if (stopConnection.SourceStop == null)
                 return null;
             return vertexFastestConnections
-                    .FirstOrNull(p => p.SourceStop != null &&
-                        p.SourceStop.Stop.Id == stopConnection.SourceStop.Stop.Id);
+                    .FirstOrNull(p => p.DestinationStop != null &&
+                        p.DestinationStop.Stop.Id == stopConnection.SourceStop.Stop.Id);
         }
 
         public bool IsConnectionEmpty(StopConnection stopConnection)

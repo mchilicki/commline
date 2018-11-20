@@ -103,9 +103,11 @@
                 'StartDate': $("#startDateInput").val(),
             }
         }
+        removeAllPolylines(MAP);
+        removeFastestPathDescription();
         $.post("Search/SearchConnections",
             sendData,
-            function (data, status) {    
+            function (data, status) {                
                 if (data.error === undefined) {
                     drawFastestPath(data);
                     writeFastestPathDescription(data.PathDescription.DescriptionRows);                    
@@ -116,8 +118,7 @@
             });
     }
 
-    function drawFastestPath(path) {
-        removeAllPolylines(MAP);
+    function drawFastestPath(path) {        
         $.each(path.Path, function (i, connection) {
             if (connection.SourceStop.Id !== connection.DestinationStop.Id) {
                 var pathToDraw = [];

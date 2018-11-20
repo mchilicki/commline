@@ -57,10 +57,10 @@ namespace Chilicki.Commline.Domain.Search.Services
                 }
                 _dijkstraStopGraphService.MarkVertexAsVisited(currentVertex);
                 currentVertex = _dijkstraNextVertexResolver.GetNextVertex(graph, vertexFastestConnections);
-                vertexFastestConnections = _dijkstraStopGraphService.SetTransferConnectionsToSimilarVertices(
-                    vertexFastestConnections, currentVertex, currentVertex.SimilarStopVertices);
                 if (currentVertex == null)
                     throw new DijkstraNoFastestPathExistsException();
+                vertexFastestConnections = _dijkstraStopGraphService.SetTransferConnectionsToSimilarVertices(
+                    vertexFastestConnections, currentVertex, currentVertex.SimilarStopVertices);                
             }            
             return vertexFastestConnections;
         }
