@@ -59,5 +59,14 @@ namespace Chilicki.Commline.Domain.Search.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No such path exists that connects these two stops.
+        /// </summary>
+        public static string NoFastestPathExists {
+            get {
+                return ResourceManager.GetString("NoFastestPathExists", resourceCulture);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Domain.Search.Aggregates;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
+using Chilicki.Commline.Domain.Search.Exceptions;
 using Chilicki.Commline.Domain.Search.Factories.Dijkstra;
 using Chilicki.Commline.Domain.Search.Services.Base;
 using Chilicki.Commline.Domain.Search.Services.Dijkstra;
@@ -33,8 +34,10 @@ namespace Chilicki.Commline.Domain.Search.Services
         {
             var vertexFastestConnections = _dijkstraEmptyFastestConnectionsFactory
                 .Create(graph, search.StartStop, search.StartTime);
-            var currentVertex = _dijkstraNextVertexResolver.GetFirstVertex(graph, search.StartStop);            
-            while (currentVertex != null && currentVertex.Stop.Id != search.DestinationStop.Id)
+            var currentVertex = _dijkstraNextVertexResolver.GetFirstVertex(graph, search.StartStop);
+            vertexFastestConnections = _dijkstraStopGraphService.SetTransferConnectionsToSimilarVertices(
+                    vertexFastestConnections, currentVertex, currentVertex.SimilarStopVertices);
+            while (ShouldSearchingContinue(search, currentVertex))
             {
                 var allStopConnections = _dijkstraStopGraphService.GetConnectionsFromSimilarVertices
                     (currentVertex, currentVertex.SimilarStopVertices);
@@ -52,12 +55,28 @@ namespace Chilicki.Commline.Domain.Search.Services
                             .ReplaceWithNewFastestConnection(destinationStopFastestConnection, stopConnection);
                     }
                 }
-                vertexFastestConnections = _dijkstraStopGraphService.SetTransferConnectionsToSimilarVertices(
-                    vertexFastestConnections, currentVertex, currentVertex.SimilarStopVertices);
                 _dijkstraStopGraphService.MarkVertexAsVisited(currentVertex);
                 currentVertex = _dijkstraNextVertexResolver.GetNextVertex(graph, vertexFastestConnections);
+                vertexFastestConnections = _dijkstraStopGraphService.SetTransferConnectionsToSimilarVertices(
+                    vertexFastestConnections, currentVertex, currentVertex.SimilarStopVertices);
+                if (currentVertex == null)
+                    throw new DijkstraNoFastestPathExistsException();
             }            
             return vertexFastestConnections;
+        }
+
+        private bool ShouldSearchingContinue(SearchInput search, StopVertex currentVertex)
+        {
+            bool isCurrentVertexDestinationStop = currentVertex != null &&
+                currentVertex.Stop.Id == search.DestinationStop.Id;
+            if (isCurrentVertexDestinationStop == true)
+                return false;
+            foreach (var similarVertex in currentVertex.SimilarStopVertices)
+            {
+                if (similarVertex.Stop.Id == search.DestinationStop.Id)
+                    return false;
+            }
+            return true;
         }
     }
 }
