@@ -102,16 +102,16 @@
                 'StartTime': $("#startTimeInput").val(),
                 'StartDate': $("#startDateInput").val(),
             }
-        }        
+        }
         $.post("Search/SearchConnections",
             sendData,
-            function (data, status) {                
-                if (data === "") {
-                    alert('PUSTO :(');
-                }
-                else {
+            function (data, status) {    
+                if (data.error === undefined) {
                     drawFastestPath(data);
-                    writeFastestPathDescription(data.PathDescription.DescriptionRows);
+                    writeFastestPathDescription(data.PathDescription.DescriptionRows);                    
+                }
+                else  {
+                    alert(data.error);
                 }                    
             });
     }

@@ -171,4 +171,13 @@
   <data name="StopType" xml:space="preserve">
     <value>Stop type</value>
   </data>
+  <data name="SuccessfullySavedDepartures" xml:space="preserve">
+    <value>Successfully saved departures</value>
+  </data>
+  <data name="SuccessfullySavedLines" xml:space="preserve">
+    <value>Successfully saved lines</value>
+  </data>
+  <data name="SuccessfullySavedStops" xml:space="preserve">
+    <value>Successfully saved stops</value>
+  </data>
 </root>

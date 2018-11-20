@@ -19,6 +19,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
             StopConnection destinationStopCurrentFastestConnection,
             StopConnection maybeNewFastestConnection)
         {
+            bool isDestinationVertexMarkedAsVisited = destinationStopCurrentFastestConnection
+                .DestinationStop.IsVisited;
             bool isCurrentFastestConnectionEmpty = _dijkstraStopConnectionsService
                     .IsConnectionEmpty(destinationStopCurrentFastestConnection);
             bool isPreviousVertexFastestConnectionEmpty = _dijkstraStopConnectionsService
@@ -29,6 +31,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
                     stopConnectionFromPreviousVertex.EndTime < maybeNewFastestConnection.EndTime);
             bool isMaybeNewFastestConnectionFaster =
                 maybeNewFastestConnection.EndTime < destinationStopCurrentFastestConnection.EndTime;
+            if (isDestinationVertexMarkedAsVisited)
+                return false;
             return canMaybeNewFastestConnectionExist &&
                 (isCurrentFastestConnectionEmpty ||
                 isMaybeNewFastestConnectionFaster);

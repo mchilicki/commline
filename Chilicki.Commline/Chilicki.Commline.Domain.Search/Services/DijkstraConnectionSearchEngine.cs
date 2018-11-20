@@ -36,7 +36,9 @@ namespace Chilicki.Commline.Domain.Search.Services
             var currentVertex = _dijkstraNextVertexResolver.GetFirstVertex(graph, search.StartStop);            
             while (currentVertex != null && currentVertex.Stop.Id != search.DestinationStop.Id)
             {
-                foreach (var stopConnection in currentVertex.StopConnections)
+                var allStopConnections = _dijkstraStopGraphService.GetConnectionsFromSimilarVertices
+                    (currentVertex, currentVertex.SimilarStopVertices);
+                foreach (var stopConnection in allStopConnections)
                 {
                     var destinationStopFastestConnection = _dijkstraStopConnectionsService
                         .GetDestinationStopFastestConnection(vertexFastestConnections, stopConnection);
@@ -50,6 +52,8 @@ namespace Chilicki.Commline.Domain.Search.Services
                             .ReplaceWithNewFastestConnection(destinationStopFastestConnection, stopConnection);
                     }
                 }
+                vertexFastestConnections = _dijkstraStopGraphService.SetTransferConnectionsToSimilarVertices(
+                    vertexFastestConnections, currentVertex, currentVertex.SimilarStopVertices);
                 _dijkstraStopGraphService.MarkVertexAsVisited(currentVertex);
                 currentVertex = _dijkstraNextVertexResolver.GetNextVertex(graph, vertexFastestConnections);
             }            

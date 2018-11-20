@@ -26,7 +26,6 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             _lineDirectionService = lineDirectionService;
         }
 
-
         public FastestPathDescription WriteDescription
             (SearchInput search, FastestPath fastestPath)
         {

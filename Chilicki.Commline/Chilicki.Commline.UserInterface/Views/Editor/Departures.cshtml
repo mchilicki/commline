@@ -240,10 +240,12 @@
             $.post("SaveDepartures",
                 sendData,
                 function (data, status) {
-                    if (data === "")
+                    if (data.success !== undefined) {
                         location.reload();
-                    else
-                        alert('@BaseResources.ErrorOccured: ' + data);
+                    }
+                    else if (data.error !== undefined) {
+                        alert('@BaseResources.ErrorOccured: ' + data.error);
+                    }                        
                 });
         }
 
