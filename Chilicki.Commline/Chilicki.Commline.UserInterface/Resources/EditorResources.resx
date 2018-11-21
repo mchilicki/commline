@@ -123,20 +123,35 @@
   <data name="AddNextReturnDepartureRun" xml:space="preserve">
     <value>Add next return departure run</value>
   </data>
-  <data name="BusStopToolDescription" xml:space="preserve">
-    <value>Use Bus Stop Tool to add, edit or delete bus stops</value>
-  </data>
   <data name="CreateLineTool" xml:space="preserve">
     <value>Create Line Tool</value>
   </data>
+  <data name="CreateLineToolDescription" xml:space="preserve">
+    <value>Use Create Line Tool to create new line</value>
+  </data>
   <data name="CreateStopTool" xml:space="preserve">
     <value>Create Stop Tool</value>
+  </data>
+  <data name="CreateStopToolDescription" xml:space="preserve">
+    <value>Use Add Stop Tool to add bus stops</value>
   </data>
   <data name="DeparturesDescription" xml:space="preserve">
     <value>Use Departures Tool to establish departures times for lines</value>
   </data>
   <data name="DeparturesFor" xml:space="preserve">
     <value>Departures for</value>
+  </data>
+  <data name="EditLineTool" xml:space="preserve">
+    <value>Edit Line Tool</value>
+  </data>
+  <data name="EditLineToolDescription" xml:space="preserve">
+    <value>Use Edit Line Tool to change line name, type, color and path</value>
+  </data>
+  <data name="EditStopTool" xml:space="preserve">
+    <value>Edit Stop Tool</value>
+  </data>
+  <data name="EditStopToolDescription" xml:space="preserve">
+    <value>Use Edit Stop Tool to change stop name and type</value>
   </data>
   <data name="GiveLine" xml:space="preserve">
     <value>Please, choose line to edit its departures</value>
@@ -161,6 +176,18 @@
   </data>
   <data name="NewLineCreation" xml:space="preserve">
     <value>Please enter details for new line</value>
+  </data>
+  <data name="RemoveLineTool" xml:space="preserve">
+    <value>Remove Line Tool</value>
+  </data>
+  <data name="RemoveLineToolDescription" xml:space="preserve">
+    <value>Use Remove Line Tool to remove line from the map</value>
+  </data>
+  <data name="RemoveStopTool" xml:space="preserve">
+    <value>Remove Stop Tool</value>
+  </data>
+  <data name="RemoveStopToolDescription" xml:space="preserve">
+    <value>Use Remove Stop Tool to remove unused stops from the map</value>
   </data>
   <data name="StationNumber" xml:space="preserve">
     <value>Station number</value>

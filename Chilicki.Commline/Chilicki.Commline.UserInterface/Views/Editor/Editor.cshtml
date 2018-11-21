@@ -19,11 +19,23 @@
 </div>
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
-    <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="stopToolButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateStop')">@EditorResources.CreateStopTool</a>
+    <abbr title="@EditorResources.CreateStopToolDescription">
+        <a id="createStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateStop')">@EditorResources.CreateStopTool</a>
     </abbr>
-    <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="lineToolButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
+    <abbr title="@EditorResources.EditStopToolDescription">
+        <a id="editStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.EditStop')">@EditorResources.EditStopTool</a>
+    </abbr>
+    <abbr title="@EditorResources.RemoveStopToolDescription">
+        <a id="removeStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveStop')">@EditorResources.RemoveStopTool</a>
+    </abbr>
+    <abbr title="@EditorResources.CreateLineToolDescription">
+        <a id="createLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
+    </abbr>
+    <abbr title="@EditorResources.EditLineToolDescription">
+        <a id="editLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.EditLine')">@EditorResources.EditLineTool</a>
+    </abbr>
+    <abbr title="@EditorResources.RemoveLineToolDescription">
+        <a id="removeLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveLine')">@EditorResources.RemoveLineTool</a>
     </abbr>
 </div>
 
@@ -184,7 +196,7 @@
 
     function cancelNewLineCreation() {
         currentEditedLine = {};
-        setCurrentTool("#lineToolButton", '@EditorToolType.None');
+        setCurrentTool("#createLineButton", '@EditorToolType.None');
     }
 
     function addStopToContainer() {

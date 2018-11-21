@@ -4,6 +4,10 @@
     {
         None,
         CreateStop,
+        EditStop,
+        RemoveStop,
         CreateLine,
+        EditLine,
+        RemoveLine
     }
 }
