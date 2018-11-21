@@ -237,6 +237,7 @@
             $('#return-row-time-' + returnDepartureRunIdToNextUnhidden).show();
             returnDepartureRunList.push(returnDepartureRunIdToNextUnhidden);
             returnDepartureRunIdToNextUnhidden++;
+            window.scrollTo(0, document.body.scrollHeight);
         }
 
         function removeReturnDepartureRun(row, rowId) {
@@ -246,26 +247,30 @@
 
         function copyDepartureRun(rowId, minutesDifference) {
             var previousRowIndex = departureRunList.indexOf(rowId) - 1;
-            var previousRowId = departureRunList[previousRowIndex];
-            for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
-                var copiedTime = $("#time-" + previousRowId + "-" + currentStopIndex).val();
-                if (copiedTime !== '') {
-                    var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
-                    $("#time-" + rowId + "-" + currentStopIndex).val(increasedTime);
-                }               
-            }
+            if (previousRowIndex >= 0) {
+                var previousRowId = departureRunList[previousRowIndex];
+                for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
+                    var copiedTime = $("#time-" + previousRowId + "-" + currentStopIndex).val();
+                    if (copiedTime !== '') {
+                        var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
+                        $("#time-" + rowId + "-" + currentStopIndex).val(increasedTime);
+                    }               
+                }
+            }            
         }
 
         function copyReturnDepartureRun(rowId, minutesDifference) {
             var previousRowIndex = returnDepartureRunList.indexOf(rowId) - 1;
-            var previousRowId = returnDepartureRunList[previousRowIndex];
-            for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
-                var copiedTime = $("#return-time-" + previousRowId + "-" + currentStopIndex).val();
-                if (copiedTime !== '') {
-                    var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
-                    $("#return-time-" + rowId + "-" + currentStopIndex).val(increasedTime);
-                }               
-            }
+            if (previousRowIndex >= 0) {
+                var previousRowId = returnDepartureRunList[previousRowIndex];
+                for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
+                    var copiedTime = $("#return-time-" + previousRowId + "-" + currentStopIndex).val();
+                    if (copiedTime !== '') {
+                        var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
+                        $("#return-time-" + rowId + "-" + currentStopIndex).val(increasedTime);
+                    }               
+                }
+            }            
         }
 
         function collectDeparturesData() {
