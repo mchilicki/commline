@@ -16,11 +16,11 @@ namespace Chilicki.Commline.Application.Validators
             if (dto.Departures != null)
             {
                 ValidateDeparturesStructure(dto.Line, dto.Departures);
-                ValidateDepartureTimes(dto.Departures);
+                ValidateDeparturesTimes(dto.Departures);
                 if (dto.ReturnLine != null)
                 {
                     ValidateDeparturesStructure(dto.Line, dto.ReturnDepartures);
-                    ValidateDepartureTimes(dto.ReturnDepartures);
+                    ValidateDeparturesTimes(dto.ReturnDepartures);
                 }
             }            
             return true;
@@ -53,7 +53,7 @@ namespace Chilicki.Commline.Application.Validators
             return true;
         }
 
-        private bool ValidateDepartureTimes(IEnumerable<IEnumerable<DepartureDTO>> departureRuns)
+        private bool ValidateDeparturesTimes(IEnumerable<IEnumerable<DepartureDTO>> departureRuns)
         {
             foreach (var departureRun in departureRuns)
             {
