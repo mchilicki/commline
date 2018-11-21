@@ -36,7 +36,9 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
                 var sourceVertex = currentConnection.SourceStop;
                 currentConnection = vertexFastestConnection
                     .First(p => p.DestinationStop.Stop.Id == sourceVertex.Stop.Id);
-                if (_fastestPathTransferService.ShouldBeTransfer(currentConnection, nextConnection))
+                if (!_fastestPathTransferService.IsAlreadyTransfer(currentConnection) &&
+                    !_fastestPathTransferService.IsAlreadyTransfer(nextConnection) &&
+                    _fastestPathTransferService.ShouldBeTransfer(currentConnection, nextConnection))
                 {
                     var transferBeetweenVertices = _fastestPathTransferService
                         .GenerateTransferAsStopConnection(currentConnection, nextConnection);

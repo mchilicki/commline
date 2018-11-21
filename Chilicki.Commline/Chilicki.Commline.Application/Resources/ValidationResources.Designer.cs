@@ -97,6 +97,15 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Departure time can&apos;t be less than than the previous departure in the same run.
+        /// </summary>
+        internal static string DeparturesTimesNotCorrect {
+            get {
+                return ResourceManager.GetString("DeparturesTimesNotCorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destination stop is empty.
         /// </summary>
         internal static string EndStopIsEmpty {

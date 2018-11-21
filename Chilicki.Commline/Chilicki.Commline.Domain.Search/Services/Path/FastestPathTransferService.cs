@@ -4,7 +4,12 @@ using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 namespace Chilicki.Commline.Domain.Search.Services.Path
 {
     public class FastestPathTransferService
-    {
+    { 
+        public bool IsAlreadyTransfer(StopConnection currentConnection)
+        {
+            return currentConnection.IsTransfer;
+        }
+
         public bool ShouldBeTransfer
             (StopConnection sourceConnection, StopConnection nextConnection)
         {

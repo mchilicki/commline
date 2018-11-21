@@ -26,7 +26,6 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             _lineDirectionService = lineDirectionService;
         }
 
-
         public FastestPathDescription WriteDescription
             (SearchInput search, FastestPath fastestPath)
         {
@@ -42,7 +41,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
                 }
                 else
                 {
-                    description.DescriptionRows.Add(WriteWaiting(connection));                    
+                    description.DescriptionRows.Add(WriteTransfer(connection));                    
                 }                
             }
             description.DescriptionRows = description.DescriptionRows.Reverse().ToList();
@@ -87,11 +86,11 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             return descriptionRows;
         }
 
-        private DescriptionRow WriteWaiting(StopConnection connection)
+        private DescriptionRow WriteTransfer(StopConnection connection)
         {
             return new DescriptionRow
             {
-                First = DescriptionResources.Waiting,
+                First = DescriptionResources.Transfer,
                 Third = $"{_timeCalculator.CalculateConnectionTime(connection).ToString()} " +
                                 $"{ DescriptionResources.Minutes}"
             };

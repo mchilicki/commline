@@ -1,4 +1,16 @@
-﻿.dtp {
+﻿:root {
+    --color-primary: #3f51b5;
+    --color-secondary: #697adb;
+    --color-black: #fff;
+    --color-year: #c6c1f2;
+    --color-dark-gray: #212121;
+    --color-light-gray: #BDBDBD;
+    --color-gray: #757575;
+    --color-light-white: #eee;
+}
+
+
+.dtp {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,7 +26,7 @@
 }
 
     .dtp > .dtp-content {
-        background: #fff;
+        background: var(--color-black);
         max-width: 300px;
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
         max-height: 520px;
@@ -23,16 +35,16 @@
     }
 
         .dtp > .dtp-content > .dtp-date-view > header.dtp-header {
-            background: #689F38;
-            color: #fff;
+            background: var(--color-primary);
+            color: var(--color-black);
             text-align: center;
             padding: 0.3em;
         }
 
     .dtp div.dtp-date, .dtp div.dtp-time {
-        background: #8BC34A;
+        background: var(--color-secondary);
         text-align: center;
-        color: #fff;
+        color: var(--color-black);
         padding: 10px;
     }
 
@@ -57,7 +69,7 @@
 
     .dtp div.dtp-actual-year {
         font-size: 1.5em;
-        color: #DCEDC8;
+        color: var(--color-year);
     }
 
     .dtp div.dtp-picker {
@@ -82,7 +94,7 @@
     }
 
         .dtp .dtp-close > a {
-            color: #fff;
+            color: var(--color-black);
         }
 
             .dtp .dtp-close > a > i {
@@ -106,31 +118,31 @@
             }
 
                 .dtp table.dtp-picker-days tr > td > span.dtp-select-day {
-                    color: #BDBDBD !important;
+                    color: var(--color-light-gray) !important;
                     padding: 0.4em 0.5em 0.5em 0.6em;
                 }
 
                 .dtp table.dtp-picker-days tr > td > a, .dtp .dtp-picker-time > a {
-                    color: #212121;
+                    color: var(--color-dark-gray);
                     text-decoration: none;
                     padding: 0.4em 0.5em 0.5em 0.6em;
                     border-radius: 50% !important;
                 }
 
                     .dtp table.dtp-picker-days tr > td > a.selected {
-                        background: #8BC34A;
-                        color: #fff;
+                        background: var(--color-secondary);
+                        color: var(--color-black);
                     }
 
             .dtp table.dtp-picker-days tr > th {
-                color: #757575;
+                color: var(--color-gray);
                 text-align: center;
                 font-weight: 700;
                 padding: 0.4em 0.3em;
             }
 
     .dtp .p10 > a {
-        color: #689F38;
+        color: var(--color-primary);
         text-decoration: none;
     }
 
@@ -157,18 +169,18 @@
     .dtp a.dtp-meridien-am, .dtp a.dtp-meridien-pm {
         position: relative;
         top: 10px;
-        color: #212121;
+        color: var(--color-dark-gray);
         font-weight: 500;
         padding: 0.7em 0.5em;
         border-radius: 50% !important;
         text-decoration: none;
-        background: #eee;
+        background: var(--color-light-white);
         font-size: 1em;
     }
 
     .dtp .dtp-actual-meridien a.selected {
-        background: #689F38;
-        color: #fff;
+        background: var(--color-primary);
+        color: var(--color-black);
     }
 
     .dtp .dtp-picker-time > .dtp-select-hour {
@@ -229,11 +241,11 @@
 }
 
 .year-picker-item:hover {
-    color: #689F38;
+    color: var(--color-primary);
 }
 
 .year-picker-item.active {
-    color: #689F38;
+    color: var(--color-primary);
     font-weight: bold;
 }
 

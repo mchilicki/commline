@@ -14,6 +14,10 @@
 
     int returnDepartureRunIndex = 0;
     int returnAlreadyAddedDepartureRuns = Model.ReturnDepartures != null ? Model.ReturnDepartures.Count() : 0 + 1;
+
+    int copyTimesOption1 = 15;
+    int copyTimesOption2 = 30;
+    int copyTimesOption3 = 60;
 }
 
 <link rel="stylesheet" href="~/Styles/main.css" />
@@ -45,7 +49,15 @@
                         <td><input id="time-@departureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
                         tempDepartureIndex++;
                     }
-                    <td><button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                        <td>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
+                            @if (departureRunIndex != 0)
+                            {
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                            }
+                        </td>
                 </tr>
                 departureRunIndex++;
             }
@@ -54,7 +66,15 @@
                 {
                     <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                 }
-                <td><button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                <td>
+                    <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
+                    @if (departureRunIndex != 0)
+                    {
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                    }
+                </td>
                 @{departureRunIndex++;}
             </tr>
             @for (; departureRunIndex < alreadyAddedDepartureRuns + 50; departureRunIndex++)
@@ -64,12 +84,17 @@
                     {
                         <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                     }
-                    <td><button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                    <td>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-    <button type="button" class="btn btn-default" onclick="addNewDepartureRun()">
+    <button id="addNewDepartureRunButton" type="button" class="btn btn-default" onclick="addNewDepartureRun()">
         @EditorResources.AddNextDepartureRun
     </button>
 
@@ -96,7 +121,15 @@
                             <td><input id="return-time-@returnDepartureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
                             tempDepartureIndex++;
                         }
-                        <td><button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                        <td>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
+                            @if (returnDepartureRunIndex != 0)
+                            {
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                            }
+                        </td>
                     </tr>
                     returnDepartureRunIndex++;
                 }
@@ -105,18 +138,31 @@
                     {
                         <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                     }
-                    <td><button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button></td>
+                    <td>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
+                        @if (returnDepartureRunIndex != 0)
+                        {
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                        }
+                    </td>
                     @{returnDepartureRunIndex++;}
                 </tr>
                 @for (; returnDepartureRunIndex < returnAlreadyAddedDepartureRuns + 50; returnDepartureRunIndex++)
                 {
-                    <tr id="return-row-time-@returnDepartureRunIndex" hidden>
-                        @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
-                        {
-                            <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
-                        }
-                        <td><button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button></td>
-                    </tr>
+                <tr id="return-row-time-@returnDepartureRunIndex" hidden>
+                    @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
+                    {
+                        <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
+                    }
+                        <td>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                        </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -180,6 +226,7 @@
             $('#row-time-' + departureRunIdToNextUnhidden).show();
             departureRunList.push(departureRunIdToNextUnhidden);
             departureRunIdToNextUnhidden++;
+            $('#addNewDepartureRunButton')[0].scrollIntoView(false);
         }
 
         function removeDepartureRun(row, rowId) {
@@ -191,11 +238,40 @@
             $('#return-row-time-' + returnDepartureRunIdToNextUnhidden).show();
             returnDepartureRunList.push(returnDepartureRunIdToNextUnhidden);
             returnDepartureRunIdToNextUnhidden++;
+            window.scrollTo(0, document.body.scrollHeight);
         }
 
         function removeReturnDepartureRun(row, rowId) {
             $(row).parent().parent().remove();
             returnDepartureRunList = returnDepartureRunList.filter(e => e !== rowId);
+        }
+
+        function copyDepartureRun(rowId, minutesDifference) {
+            var previousRowIndex = departureRunList.indexOf(rowId) - 1;
+            if (previousRowIndex >= 0) {
+                var previousRowId = departureRunList[previousRowIndex];
+                for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
+                    var copiedTime = $("#time-" + previousRowId + "-" + currentStopIndex).val();
+                    if (copiedTime !== '') {
+                        var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
+                        $("#time-" + rowId + "-" + currentStopIndex).val(increasedTime);
+                    }               
+                }
+            }            
+        }
+
+        function copyReturnDepartureRun(rowId, minutesDifference) {
+            var previousRowIndex = returnDepartureRunList.indexOf(rowId) - 1;
+            if (previousRowIndex >= 0) {
+                var previousRowId = returnDepartureRunList[previousRowIndex];
+                for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
+                    var copiedTime = $("#return-time-" + previousRowId + "-" + currentStopIndex).val();
+                    if (copiedTime !== '') {
+                        var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
+                        $("#return-time-" + rowId + "-" + currentStopIndex).val(increasedTime);
+                    }               
+                }
+            }            
         }
 
         function collectDeparturesData() {
@@ -240,10 +316,12 @@
             $.post("SaveDepartures",
                 sendData,
                 function (data, status) {
-                    if (data === "")
+                    if (data.success !== undefined) {
                         location.reload();
-                    else
-                        alert('@BaseResources.ErrorOccured: ' + data);
+                    }
+                    else if (data.error !== undefined) {
+                        alert('@BaseResources.ErrorOccured: ' + data.error);
+                    }                        
                 });
         }
 

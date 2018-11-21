@@ -221,5 +221,32 @@ namespace Chilicki.Commline.UserInterface.Resources {
                 return ResourceManager.GetString("StopType", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully saved departures.
+        /// </summary>
+        public static string SuccessfullySavedDepartures {
+            get {
+                return ResourceManager.GetString("SuccessfullySavedDepartures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully saved lines.
+        /// </summary>
+        public static string SuccessfullySavedLines {
+            get {
+                return ResourceManager.GetString("SuccessfullySavedLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully saved stops.
+        /// </summary>
+        public static string SuccessfullySavedStops {
+            get {
+                return ResourceManager.GetString("SuccessfullySavedStops", resourceCulture);
+            }
+        }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Aggregates\Graphs\StopGraph.cs" />
     <Compile Include="Aggregates\Graphs\StopVertex.cs" />
     <Compile Include="Aggregates\SearchInput.cs" />
+    <Compile Include="Exceptions\DijkstraNoFastestPathExistsException.cs" />
     <Compile Include="Factories\Dijkstra\DijkstraEmptyFastestConnectionsFactory.cs" />
     <Compile Include="Factories\StopConnections\StopConnectionCloner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

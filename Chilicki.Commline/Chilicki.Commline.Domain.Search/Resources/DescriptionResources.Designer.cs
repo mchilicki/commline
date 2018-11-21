@@ -106,11 +106,11 @@ namespace Chilicki.Commline.Domain.Search.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting.
+        ///   Looks up a localized string similar to Transfer.
         /// </summary>
-        internal static string Waiting {
+        internal static string Transfer {
             get {
-                return ResourceManager.GetString("Waiting", resourceCulture);
+                return ResourceManager.GetString("Transfer", resourceCulture);
             }
         }
     }

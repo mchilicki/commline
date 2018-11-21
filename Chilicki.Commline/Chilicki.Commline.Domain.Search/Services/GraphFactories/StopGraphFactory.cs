@@ -1,4 +1,5 @@
-﻿using Chilicki.Commline.Domain.Entities;
+﻿using Chilicki.Commline.Common.Extensions;
+using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using Chilicki.Commline.Domain.Search.Services.GraphFactories.Base;
 using Chilicki.Commline.Domain.Services.Routes;
@@ -23,7 +24,8 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
         public StopGraph CreateGraph(IEnumerable<Stop> stops)
         {
             var stopVertices = GenerateEmptyStopVertices(stops);
-            stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops);
+            stopVertices = FillStopVerticesWithSimilarStopVertices(stopVertices, stops);
+            stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops);            
             return new StopGraph()
             {
                 StopVertices = stopVertices,
@@ -67,6 +69,29 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                     }
                 }
                 vertex.StopConnections = stopConnections;
+            }
+            return allStopVertices;
+        }
+
+        private IEnumerable<StopVertex> FillStopVerticesWithSimilarStopVertices
+            (IEnumerable<StopVertex> allStopVertices, IEnumerable<Stop> stops)
+        {
+            foreach(var vertex in allStopVertices)
+            {
+                var similarVertices = new List<StopVertex>();
+                var sameStops = stops
+                    .Where(p => p.Name == vertex.Stop.Name &&
+                        p.Id != vertex.Stop.Id);
+                foreach (var sameStop in sameStops)
+                {
+                    var similarVertex = allStopVertices
+                        .FirstOrNull(p => p.Stop.Id == sameStop.Id);
+                    if (similarVertex != null)
+                    {
+                        similarVertices.Add(similarVertex);
+                    }
+                }
+                vertex.SimilarStopVertices = similarVertices;
             }
             return allStopVertices;
         }

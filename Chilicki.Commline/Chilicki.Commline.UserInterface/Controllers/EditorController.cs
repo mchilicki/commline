@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Managers;
+using Chilicki.Commline.UserInterface.Resources;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,6 @@ namespace Chilicki.Commline.UserInterface.Controllers
         [HttpPost]
         public JsonResult SaveStops(StopsEditionModel stopsEditionModel)
         {
-            string errorMessage = "";
             try
             {
                 if (stopsEditionModel.Added != null)
@@ -70,15 +70,14 @@ namespace Chilicki.Commline.UserInterface.Controllers
             }
             catch (Exception ex)
             {
-                errorMessage = ex.Message;
+                return Json(new { error = ex.Message });
             }
-            return Json(errorMessage);
+            return Json(new { success = EditorResources.SuccessfullySavedStops } );
         }
 
         [HttpPost]
         public JsonResult SaveLines(LinesEditionModel linesEditionModel)
         {
-            string errorMessage = "";
             try
             {
                 if (linesEditionModel.Added != null)
@@ -90,24 +89,23 @@ namespace Chilicki.Commline.UserInterface.Controllers
             }
             catch (Exception ex)
             {
-                errorMessage = ex.Message;
+                return Json(new { error = ex.Message });
             }
-            return Json(errorMessage);
+            return Json(new { success = EditorResources.SuccessfullySavedLines });
         }
 
         [HttpPost]
         public JsonResult SaveDepartures(LineDeparturesDTO lineDepartures)
         {
-            string errorMessage = "";
             try
             {
                 _departureManager.ChangeLineDepartures(lineDepartures);
             }
             catch (Exception ex)
             {
-                errorMessage = ex.Message;
+                return Json(new { error = ex.Message });
             }
-            return Json(errorMessage);
+            return Json(new { success = EditorResources.SuccessfullySavedDepartures });
         }
 
         [HttpPost]

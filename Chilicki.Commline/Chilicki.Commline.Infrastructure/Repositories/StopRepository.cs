@@ -38,6 +38,6 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             return _entities
                 .Where(p => p.Id == id)
                 .Count() == 1;
-        }
+        }                
     }
 }

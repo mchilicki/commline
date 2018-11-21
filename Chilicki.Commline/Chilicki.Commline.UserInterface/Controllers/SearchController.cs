@@ -37,7 +37,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
             }
             catch (Exception ex)
             {
-                return Json(ex.Message);
+                return Json(new { error = ex.Message });
             }            
             return Json(fastestPath);
         }
