@@ -168,4 +168,7 @@
   <data name="StartStopIsEmpty" xml:space="preserve">
     <value>Start stop is empty</value>
   </data>
+  <data name="DeparturesTimesNotCorrect" xml:space="preserve">
+    <value>Departure time can't be less than than the previous departure in the same run</value>
+  </data>
 </root>
