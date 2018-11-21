@@ -151,6 +151,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter edited details for this stop.
+        /// </summary>
+        public static string EditStopDetails {
+            get {
+                return ResourceManager.GetString("EditStopDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Stop Tool.
         /// </summary>
         public static string EditStopTool {

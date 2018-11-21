@@ -58,6 +58,37 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                            onclick="addStopToAddedContainer()">
+                        @BaseResources.Save
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        @BaseResources.Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="editStopModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <form id="editStopForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@EditorResources.EditStopDetails</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <label for="editModalStopName">@EditorResources.StopName</label>
+                        <input id="editModalStopName" type="text" class="form-control" />
+                    </p>
+                    <p>
+                        <label for="editModalStopType">@EditorResources.StopType</label>
+                        @Html.DropDownList("modalStopType", dropdownStopType.ToSelectList(), new { @class = "form-control" })
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal"
                             onclick="addStopToContainer()">
                         @BaseResources.Save
                     </button>
@@ -199,7 +230,7 @@
         setCurrentTool("#createLineButton", '@EditorToolType.None');
     }
 
-    function addStopToContainer() {
+    function addStopToAddedContainer() {
         var newStop = {
             'Name': $("#modalStopName").val(),
             'StopType': $("#modalStopType").val(),
@@ -210,6 +241,28 @@
         allLines.StopsWithoutLines.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
+    }
+
+    function addStopToEditedContainer() {
+        var editedStop = {
+            'Name': $("#editModalStopName").val(),
+            'StopType': $("#editModalStopType").val(),
+            //'Longitude': lastCoordinates.lng(),
+            //'Latitude': lastCoordinates.lat(),
+        };
+        editedStops.Modified.push(editedStop);
+        $("#editModalStopName").val('');
+    }
+
+    function editStopAction(marker) {
+        lastCoordinates = marker.position;
+        $("#editModalStopName").val(marker.title);
+        $("#editModalStopType").val(marker.stopType);
+        $("#editStopModal").modal({ backdrop: "static" }); 
+    }
+
+    function removeStopAction(marker) {
+
     }
 
     function setCurrentTool(toolButton, newTool) {

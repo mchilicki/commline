@@ -147,6 +147,9 @@
   <data name="EditLineToolDescription" xml:space="preserve">
     <value>Use Edit Line Tool to change line name, type, color and path</value>
   </data>
+  <data name="EditStopDetails" xml:space="preserve">
+    <value>Please enter edited details for this stop</value>
+  </data>
   <data name="EditStopTool" xml:space="preserve">
     <value>Edit Stop Tool</value>
   </data>

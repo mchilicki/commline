@@ -141,6 +141,7 @@
                 'title': stopName,
                 'icon': stopIcon,
                 'id': id,
+                'stopType': stopType,
             });
 
             var infowindow = new google.maps.InfoWindow({
@@ -163,6 +164,10 @@
                         infowindow.open(map, stopMarker);
                     if (currentTool == '@EditorToolType.CreateLine')
                         addStopToLine(stopMarker);
+                    if (currentTool == '@EditorToolType.EditStop')
+                        editStopAction(stopMarker);
+                    if (currentTool == '@EditorToolType.RemoveStop')
+                        removeStopAction(stopMarker);
                 }              
             });
             stopMarkerList.push(stopMarker);
