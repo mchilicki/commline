@@ -94,7 +94,7 @@
             }
         </tbody>
     </table>
-    <button type="button" class="btn btn-default" onclick="addNewDepartureRun()">
+    <button id="addNewDepartureRunButton" type="button" class="btn btn-default" onclick="addNewDepartureRun()">
         @EditorResources.AddNextDepartureRun
     </button>
 
@@ -226,6 +226,7 @@
             $('#row-time-' + departureRunIdToNextUnhidden).show();
             departureRunList.push(departureRunIdToNextUnhidden);
             departureRunIdToNextUnhidden++;
+            $('#addNewDepartureRunButton')[0].scrollIntoView(false);
         }
 
         function removeDepartureRun(row, rowId) {
