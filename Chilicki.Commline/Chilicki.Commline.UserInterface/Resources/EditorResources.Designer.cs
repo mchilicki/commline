@@ -79,6 +79,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove this stop?.
+        /// </summary>
+        public static string AreYouSureRemoveStop {
+            get {
+                return ResourceManager.GetString("AreYouSureRemoveStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Line Tool.
         /// </summary>
         public static string CreateLineTool {

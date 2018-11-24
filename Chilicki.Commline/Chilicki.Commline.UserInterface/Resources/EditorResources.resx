@@ -123,6 +123,9 @@
   <data name="AddNextReturnDepartureRun" xml:space="preserve">
     <value>Add next return departure run</value>
   </data>
+  <data name="AreYouSureRemoveStop" xml:space="preserve">
+    <value>Are you sure you want to remove this stop?</value>
+  </data>
   <data name="CreateLineTool" xml:space="preserve">
     <value>Create Line Tool</value>
   </data>
