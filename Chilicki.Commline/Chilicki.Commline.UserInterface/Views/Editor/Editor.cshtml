@@ -19,11 +19,23 @@
 </div>
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
-    <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="stopToolButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateStop')">@EditorResources.CreateStopTool</a>
+    <abbr title="@EditorResources.CreateStopToolDescription">
+        <a id="createStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateStop')">@EditorResources.CreateStopTool</a>
     </abbr>
-    <abbr title="@EditorResources.BusStopToolDescription">
-        <a id="lineToolButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
+    <abbr title="@EditorResources.EditStopToolDescription">
+        <a id="editStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.EditStop')">@EditorResources.EditStopTool</a>
+    </abbr>
+    <abbr title="@EditorResources.RemoveStopToolDescription">
+        <a id="removeStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveStop')">@EditorResources.RemoveStopTool</a>
+    </abbr>
+    <abbr title="@EditorResources.CreateLineToolDescription">
+        <a id="createLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
+    </abbr>
+    <abbr title="@EditorResources.EditLineToolDescription">
+        <a id="editLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.EditLine')">@EditorResources.EditLineTool</a>
+    </abbr>
+    <abbr title="@EditorResources.RemoveLineToolDescription">
+        <a id="removeLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveLine')">@EditorResources.RemoveLineTool</a>
     </abbr>
 </div>
 
@@ -46,8 +58,61 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" data-dismiss="modal"
-                            onclick="addStopToContainer()">
+                            onclick="addStopToAddedContainer()">
                         @BaseResources.Save
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        @BaseResources.Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="editStopModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <form id="editStopForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@EditorResources.EditStopDetails</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <label for="editModalStopName">@EditorResources.StopName</label>
+                        <input id="editModalStopName" type="text" class="form-control" />
+                    </p>
+                    <p>
+                        <label for="editModalStopType">@EditorResources.StopType</label>
+                        @Html.DropDownList("editModalStopType", dropdownStopType.ToSelectList(), new { @class = "form-control" })
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                            onclick="addStopToEditedContainer()">
+                        @BaseResources.Save
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        @BaseResources.Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="removeStopModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <form id="removeStopForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@EditorResources.AreYouSureRemoveStop</h4>
+                </div>
+                <div class="modal-body" hidden></div>
+                <div class="modal-footer">                    
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                            onclick="removeStopAndAddToRemovedContainer()">
+                        @BaseResources.Affirm
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         @BaseResources.Cancel
@@ -100,11 +165,12 @@
 
     var toolboxOpened = false;
 
-    var editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
-    var editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
+    var editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
+    var editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
     var currentEditedLine = {};
 
     var lastCoordinates;
+    var lastEditedStopMarker;
 
     $(document).ready(function () {
         $("#toolboxButton").show();
@@ -128,11 +194,13 @@
         var sendData = { 'stopsEditionModel': editedStops };
         $.post("Editor/SaveStops",
             sendData,
-            function (data, status) {                
-                if (data === "") 
-                    editedStops = { 'Added': [], 'Modified': [], 'Deleted': [] };
-                else
-                    alert('@BaseResources.ErrorOccured: ' + data);
+            function (data, status) {   
+                if (data.success !== undefined) {
+                    editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
+                }
+                else if (data.error !== undefined) {
+                    alert('@BaseResources.ErrorOccured: ' + data.error);
+                }    
             });
     }
 
@@ -140,21 +208,20 @@
         var sendData = { 'linesEditionModel': editedLines };
         $.post("Editor/SaveLines",
             sendData,
-            function (data, status) {                
-                if (data === "") {
-                    editedLines = { 'Added': [], 'Modified': [], 'Deleted': [] };
+            function (data, status) {   
+                if (data.success !== undefined) {
+                    editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
                     location.reload();
                 }
-                else {
-                    alert('@BaseResources.ErrorOccured: ' + data);
-                }                    
+                else if (data.error !== undefined) {
+                    alert('@BaseResources.ErrorOccured: ' + data.error);
+                }                   
             });
     }
 
     function onMapClick(coordinates) {
         if (currentTool == '@EditorToolType.CreateStop') {
-            lastCoordinates = coordinates;
-            $("#newStopModal").modal({ backdrop: "static" });            
+            addStopAction(coordinates);                       
         }
     }
 
@@ -184,10 +251,10 @@
 
     function cancelNewLineCreation() {
         currentEditedLine = {};
-        setCurrentTool("#lineToolButton", '@EditorToolType.None');
+        setCurrentTool("#createLineButton", '@EditorToolType.None');
     }
 
-    function addStopToContainer() {
+    function addStopToAddedContainer() {
         var newStop = {
             'Name': $("#modalStopName").val(),
             'StopType': $("#modalStopType").val(),
@@ -198,6 +265,58 @@
         allLines.StopsWithoutLines.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
+    }
+
+    function addStopToEditedContainer() {
+        var editedStop = {
+            'Id': lastEditedStopMarker.id,
+            'Name': $("#editModalStopName").val(),
+            'StopType': $("#editModalStopType").val(),
+            'Longitude': lastEditedStopMarker.position.lng(),
+            'Latitude': lastEditedStopMarker.position.lat(),
+        };
+        editedStops.Modified.push(editedStop);
+        $("#editModalStopName").val('');
+    }
+
+    function removeStopAndAddToRemovedContainer() {
+        var removedStop = {
+            'Id': lastEditedStopMarker.id,
+        };
+        lastEditedStopMarker.setMap(null);
+        removeStopFromAllContainers(lastEditedStopMarker.id, lastEditedStopMarker.position)
+        if (removedStop.Id !== "") {
+            editedStops.Removed.push(removedStop);
+        }        
+    }
+
+    function removeStopFromAllContainers(stopId, coordinates) {
+        editedStops.Added = editedStops.Added.filter(function (stop) {
+            return stop.Latitude != coordinates.lat() && stop.Longitude != coordinates.lng();
+        });
+        editedStops.Modified = editedStops.Modified.filter(function (stop) {
+            return stop.Id != stopId;
+        });
+        editedStops.Removed = editedStops.Removed.filter(function (stop) {
+            return stop.Id != stopId;
+        });
+    }
+
+    function addStopAction(coordinates) {
+        lastCoordinates = coordinates;
+        $("#newStopModal").modal({ backdrop: "static" }); 
+    }
+
+    function editStopAction(marker) {
+        lastEditedStopMarker = marker;
+        $("#editModalStopName").val(marker.title);
+        $("#editModalStopType").val(marker.stopType);
+        $("#editStopModal").modal({ backdrop: "static" }); 
+    }
+
+    function removeStopAction(marker) {
+        lastEditedStopMarker = marker;
+        $("#removeStopModal").modal({ backdrop: "static" }); 
     }
 
     function setCurrentTool(toolButton, newTool) {

@@ -129,6 +129,9 @@
   <data name="Minutes" xml:space="preserve">
     <value>minutes</value>
   </data>
+  <data name="SameStops" xml:space="preserve">
+    <value>By foot :)</value>
+  </data>
   <data name="To" xml:space="preserve">
     <value>To</value>
   </data>

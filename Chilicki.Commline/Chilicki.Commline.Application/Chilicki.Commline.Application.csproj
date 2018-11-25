@@ -92,6 +92,7 @@
     <Compile Include="Enums\EditorToolType.cs" />
     <Compile Include="Enums\CommlineViewType.cs" />
     <Compile Include="Managers\DepartureManager.cs" />
+    <Compile Include="Managers\EditorManager.cs" />
     <Compile Include="Managers\LineManager.cs" />
     <Compile Include="Managers\StopManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,6 +101,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Validators\Base\IEditValidator.cs" />
+    <Compile Include="Validators\Base\IRemoveValidator.cs" />
     <Compile Include="Validators\DeparturesValidator.cs" />
     <Compile Include="Validators\Base\IValidator.cs" />
     <Compile Include="Validators\LineValidator.cs" />

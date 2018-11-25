@@ -6,6 +6,6 @@ namespace Chilicki.Commline.Application.DTOs
     {
         public IEnumerable<StopDTO> Added { get; set; }
         public IEnumerable<StopDTO> Modified { get; set; }
-        public IEnumerable<StopDTO> Deleted { get; set; }
+        public IEnumerable<StopDTO> Removed { get; set; }
     }
 }

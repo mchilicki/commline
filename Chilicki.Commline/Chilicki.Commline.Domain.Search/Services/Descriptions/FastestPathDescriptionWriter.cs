@@ -29,7 +29,12 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
         public FastestPathDescription WriteDescription
             (SearchInput search, FastestPath fastestPath)
         {
-            var description = new FastestPathDescription();
+            var description = new FastestPathDescription();            
+            if (IsTheFastestPathByFoot(fastestPath))                
+            {
+                description.DescriptionRows.Add(WriteTheSameStopsCommunicate());
+                return description;
+            }
             int travelTime = _timeCalculator.CalculateTravelTime(fastestPath);
             description.DescriptionRows.Add(
                 WriteHeader(search.StartStop, search.DestinationStop, travelTime));
@@ -96,5 +101,21 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             };
         }
 
+        private DescriptionRow WriteTheSameStopsCommunicate()
+        {
+            return new DescriptionRow
+            {
+                First = DescriptionResources.SameStops,
+                Third = $"0 { DescriptionResources.Minutes}",
+            };
+        }
+
+        private bool IsTheFastestPathByFoot(FastestPath fastestPath)
+        {
+            return
+                fastestPath.Path.Count() == 1 &&
+                (fastestPath.Path.First().SourceStop.Stop.Id == fastestPath.Path.First().DestinationStop.Stop.Id ||
+                fastestPath.Path.First().IsTransfer);
+        }
     }
 }

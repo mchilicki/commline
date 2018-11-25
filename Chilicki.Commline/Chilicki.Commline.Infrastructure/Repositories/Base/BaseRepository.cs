@@ -41,8 +41,12 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
         
         public virtual void Update(TEntity entity)
         {
-            if (!_entities.Contains(entity))
-                throw new InvalidOperationException(DatabaseResources.Exception_EntityDoesntExist);
+            _database.SaveChanges();
+        }
+
+        public virtual void Remove(TEntity entity)
+        {
+            _entities.Remove(entity);
             _database.SaveChanges();
         }
     }

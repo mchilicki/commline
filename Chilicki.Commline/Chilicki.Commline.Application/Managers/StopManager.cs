@@ -71,17 +71,44 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(StopDTO stopDTO)
         {
-            _stopValidator.Validate(stopDTO);
             Stop stop = Mapper.Map<StopDTO, Stop>(stopDTO);
-            stop.StopNumber = _stopRepository.GetStopNumberForStopName(stopDTO.Name);
+            stop.StopNumber = _stopRepository.GetNextStopNumberForStopName(stopDTO.Name);
             _stopRepository.Insert(stop);
         }
 
-        public void Edit(StopDTO stopDTO)
+        public void Edit(IEnumerable<StopDTO> stopDTOs)
         {
-            _stopValidator.Validate(stopDTO);
-            Stop stop = Mapper.Map<StopDTO, Stop>(stopDTO);
+            _stopValidator.ValidateEdit(stopDTOs);
+            foreach (var stopDTO in stopDTOs)
+            {
+                Edit(stopDTO);
+            }
+        }
+
+        public void Edit(StopDTO stopDTO)
+        {            
+            Stop stop = _stopRepository.GetById(stopDTO.Id);
+            stop.Name = stopDTO.Name;
+            stop.Latitude = stopDTO.Latitude;
+            stop.Longitude = stopDTO.Longitude;
+            stop.StopType = stopDTO.StopType;
+            stop.StopNumber = _stopRepository.GetNextStopNumberForStopName(stopDTO.Name);
             _stopRepository.Update(stop);
+        }
+
+        public void Remove(IEnumerable<StopDTO> stopDTOs)
+        {
+            _stopValidator.ValidateRemove(stopDTOs);
+            foreach (var stopDTO in stopDTOs)
+            {
+                Remove(stopDTO);
+            }
+        }
+
+        public void Remove(StopDTO stopDTO)
+        {
+            Stop stop = _stopRepository.GetById(stopDTO.Id);
+            _stopRepository.Remove(stop);
         }
     }
 }

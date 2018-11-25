@@ -97,6 +97,15 @@ namespace Chilicki.Commline.Domain.Search.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By foot :).
+        /// </summary>
+        internal static string SameStops {
+            get {
+                return ResourceManager.GetString("SameStops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         internal static string To {

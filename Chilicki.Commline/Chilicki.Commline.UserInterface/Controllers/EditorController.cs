@@ -14,15 +14,18 @@ namespace Chilicki.Commline.UserInterface.Controllers
         readonly LineManager _lineManager;
         readonly StopManager _stopManager;
         readonly DepartureManager _departureManager;
+        readonly EditorManager _editorManager;
 
         public EditorController(
             LineManager lineManager, 
             StopManager stopManager,
-            DepartureManager departureManager)
+            DepartureManager departureManager,
+            EditorManager editorManager)
         {
             _lineManager = lineManager;
             _stopManager = stopManager;
             _departureManager = departureManager;
+            _editorManager = editorManager;
         }
 
         public ActionResult Index()
@@ -61,12 +64,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
         {
             try
             {
-                if (stopsEditionModel.Added != null)
-                    _stopManager.Create(stopsEditionModel.Added);
-                //if (stopsEditionModel.Modified != null)
-                    //_stopManager.Edit(stopsEditionModel.Modified);
-                //if (stopsEditionModel.Deleted != null)
-                    //_stopManager.Delete(stopsEditionModel.Deleted);
+                _editorManager.EditStops(stopsEditionModel);
             }
             catch (Exception ex)
             {

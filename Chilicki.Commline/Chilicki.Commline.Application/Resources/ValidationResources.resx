@@ -171,4 +171,13 @@
   <data name="DeparturesTimesNotCorrect" xml:space="preserve">
     <value>Departure time can't be less than than the previous departure in the same run</value>
   </data>
+  <data name="StopDoesntExist" xml:space="preserve">
+    <value>Stop doesn't exist</value>
+  </data>
+  <data name="StopIsConnectedToLine" xml:space="preserve">
+    <value>Stop is connected to line. Delete lines that contain this stop first.</value>
+  </data>
+  <data name="StopTypeCannotBeEditedWhenItsInPreviousTypeLine" xml:space="preserve">
+    <value>Stop type cannot be edited when it's in previous type line</value>
+  </data>
 </root>

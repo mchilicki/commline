@@ -79,11 +79,11 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Bus Stop Tool to add, edit or delete bus stops.
+        ///   Looks up a localized string similar to Are you sure you want to remove this stop?.
         /// </summary>
-        public static string BusStopToolDescription {
+        public static string AreYouSureRemoveStop {
             get {
-                return ResourceManager.GetString("BusStopToolDescription", resourceCulture);
+                return ResourceManager.GetString("AreYouSureRemoveStop", resourceCulture);
             }
         }
         
@@ -97,11 +97,29 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Create Line Tool to create new line.
+        /// </summary>
+        public static string CreateLineToolDescription {
+            get {
+                return ResourceManager.GetString("CreateLineToolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Stop Tool.
         /// </summary>
         public static string CreateStopTool {
             get {
                 return ResourceManager.GetString("CreateStopTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Add Stop Tool to add bus stops.
+        /// </summary>
+        public static string CreateStopToolDescription {
+            get {
+                return ResourceManager.GetString("CreateStopToolDescription", resourceCulture);
             }
         }
         
@@ -120,6 +138,51 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string DeparturesFor {
             get {
                 return ResourceManager.GetString("DeparturesFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Line Tool.
+        /// </summary>
+        public static string EditLineTool {
+            get {
+                return ResourceManager.GetString("EditLineTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Edit Line Tool to change line name, type, color and path.
+        /// </summary>
+        public static string EditLineToolDescription {
+            get {
+                return ResourceManager.GetString("EditLineToolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter edited details for this stop.
+        /// </summary>
+        public static string EditStopDetails {
+            get {
+                return ResourceManager.GetString("EditStopDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Stop Tool.
+        /// </summary>
+        public static string EditStopTool {
+            get {
+                return ResourceManager.GetString("EditStopTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Edit Stop Tool to change stop name and type.
+        /// </summary>
+        public static string EditStopToolDescription {
+            get {
+                return ResourceManager.GetString("EditStopToolDescription", resourceCulture);
             }
         }
         
@@ -192,6 +255,42 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string NewLineCreation {
             get {
                 return ResourceManager.GetString("NewLineCreation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Line Tool.
+        /// </summary>
+        public static string RemoveLineTool {
+            get {
+                return ResourceManager.GetString("RemoveLineTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Remove Line Tool to remove line from the map.
+        /// </summary>
+        public static string RemoveLineToolDescription {
+            get {
+                return ResourceManager.GetString("RemoveLineToolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Stop Tool.
+        /// </summary>
+        public static string RemoveStopTool {
+            get {
+                return ResourceManager.GetString("RemoveStopTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Remove Stop Tool to remove unused stops from the map.
+        /// </summary>
+        public static string RemoveStopToolDescription {
+            get {
+                return ResourceManager.GetString("RemoveStopToolDescription", resourceCulture);
             }
         }
         
