@@ -1,6 +1,6 @@
 # Commline
 
-The public communication transporation system with editor tool and scheme generator.
+The public communication transporation system with Editor and Search tools.
 
 Future features:
 - viewing lines with stations
