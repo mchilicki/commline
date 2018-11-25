@@ -26,11 +26,19 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                 .ToList();
         }
 
-        public int GetStopNumberForStopName(string stopName)
+        public int GetNextStopNumberForStopName(string stopName)
         {
-            return _entities
+            var stopNumbersForStopName = _entities
                 .Where(e => e.Name == stopName)
-                .Count() + 1;
+                .Select(p => p.StopNumber);
+            int currentStopNumber = 1;
+            foreach (int stopNumber in stopNumbersForStopName)
+            {
+                if (stopNumber != currentStopNumber)
+                    return currentStopNumber;
+                currentStopNumber++;
+            }
+            return currentStopNumber;
         }
 
         public bool DoesStopWithIdExist(long id)
@@ -38,6 +46,14 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             return _entities
                 .Where(p => p.Id == id)
                 .Count() == 1;
-        }                
+        }       
+        
+        public bool IsStopConnectedToAnyLine(long id)
+        {
+            return _entities
+                .Find(id)
+                .RouteStops
+                .Count > 0;
+        }
     }
 }

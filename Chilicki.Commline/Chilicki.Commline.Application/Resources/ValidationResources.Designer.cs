@@ -178,6 +178,24 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop doesn&apos;t exist.
+        /// </summary>
+        internal static string StopDoesntExist {
+            get {
+                return ResourceManager.GetString("StopDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop is connected to line. Delete lines that contain this stop first..
+        /// </summary>
+        internal static string StopIsConnectedToLine {
+            get {
+                return ResourceManager.GetString("StopIsConnectedToLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line can be routed on stops of matching type, for example bus line can only go through bus stops.
         /// </summary>
         internal static string StopLineTypesDoNotMatch {
@@ -201,6 +219,15 @@ namespace Chilicki.Commline.Application.Resources {
         internal static string StopsInDeparturesDoNotMatch {
             get {
                 return ResourceManager.GetString("StopsInDeparturesDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop type cannot be edited when it&apos;s in previous type line.
+        /// </summary>
+        internal static string StopTypeCannotBeEditedWhenItsInPreviousTypeLine {
+            get {
+                return ResourceManager.GetString("StopTypeCannotBeEditedWhenItsInPreviousTypeLine", resourceCulture);
             }
         }
         

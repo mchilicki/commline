@@ -68,6 +68,7 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<StopManager>().ToSelf();
             _kernel.Bind<LineManager>().ToSelf();
             _kernel.Bind<DepartureManager>().ToSelf();
+            _kernel.Bind<EditorManager>().ToSelf();
 
             _kernel.Bind<SearchValidator>().ToSelf();
             _kernel.Bind<LineValidator>().ToSelf();

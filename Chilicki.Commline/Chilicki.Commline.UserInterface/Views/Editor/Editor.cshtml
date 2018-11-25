@@ -194,11 +194,13 @@
         var sendData = { 'stopsEditionModel': editedStops };
         $.post("Editor/SaveStops",
             sendData,
-            function (data, status) {                
-                if (data === "") 
+            function (data, status) {   
+                if (data.success !== undefined) {
                     editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
-                else
-                    alert('@BaseResources.ErrorOccured: ' + data);
+                }
+                else if (data.error !== undefined) {
+                    alert('@BaseResources.ErrorOccured: ' + data.error);
+                }    
             });
     }
 
@@ -206,14 +208,14 @@
         var sendData = { 'linesEditionModel': editedLines };
         $.post("Editor/SaveLines",
             sendData,
-            function (data, status) {                
-                if (data === "") {
+            function (data, status) {   
+                if (data.success !== undefined) {
                     editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
                     location.reload();
                 }
-                else {
-                    alert('@BaseResources.ErrorOccured: ' + data);
-                }                    
+                else if (data.error !== undefined) {
+                    alert('@BaseResources.ErrorOccured: ' + data.error);
+                }                   
             });
     }
 
