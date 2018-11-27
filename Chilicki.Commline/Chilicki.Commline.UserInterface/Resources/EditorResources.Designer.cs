@@ -223,6 +223,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter edited details for this line.
+        /// </summary>
+        public static string LineEdition {
+            get {
+                return ResourceManager.GetString("LineEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line name.
         /// </summary>
         public static string LineName {

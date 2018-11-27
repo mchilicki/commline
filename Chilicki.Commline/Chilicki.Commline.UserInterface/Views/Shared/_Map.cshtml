@@ -180,7 +180,7 @@
             });
         }
 
-        function drawLine(map, lineName, lineType, stopList, color) {
+        function drawLine(map, lineId, lineName, lineType, stopList, color, routeType) {
             var stopLocations = [];
             $.each(stopList, function (i, stop) {
                 stopLocations.push(new google.maps.LatLng(stop.Latitude, stop.Longitude));
@@ -193,14 +193,24 @@
                 path: stopLocations,
                 strokeColor: color,
                 strokeOpacity: 0.8,
-                strokeWeight: 6
+                strokeWeight: 6,
+                id: lineId,
+                name: lineName,
+                type: lineType,
+                color: color,
+                routeType: routeType
             });
             var infowindow = new google.maps.InfoWindow({
                 content: "<div class='infoDiv'><h4>" + lineTypes[lineType] + " " + lineName + "</h4></div>"
             });
             google.maps.event.addListener(stopPath, 'click', function (event) {
-                infowindow.setPosition(event.latLng);
-                infowindow.open(map);
+                if (currentTool == '@EditorToolType.EditLine') {
+                    editLineAction(stopPath);                    
+                }
+                else {
+                    infowindow.setPosition(event.latLng);
+                    infowindow.open(map);
+                }                
             });
             polylineList.push(stopPath);
             stopPath.setMap(map);
@@ -234,7 +244,7 @@
 
         function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
-                drawLine(map, line.Name, line.LineType, line.Stops, line.Color);
+                drawLine(map, line.Id, line.Name, line.LineType, line.Stops, line.Color, line.IsCircular);
             });
         }
 

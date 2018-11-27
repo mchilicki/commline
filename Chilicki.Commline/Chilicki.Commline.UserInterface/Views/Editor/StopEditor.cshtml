@@ -156,7 +156,6 @@
             sendData,
             function (data, status) {   
                 if (data.success !== undefined) {
-                    editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
                     location.reload();
                 }
                 else if (data.error !== undefined) {

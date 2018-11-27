@@ -56,7 +56,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        onclick="addLineToContainer()">
+                        onclick="addLineToAddedContainer()">
                     @BaseResources.Save
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"
@@ -68,14 +68,51 @@
     </div>
 </div>
 
-<script>
+<div id="editLineModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@EditorResources.LineEdition</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <label for="editModalLineName">@EditorResources.LineName</label>
+                    <input id="editModalLineName" type="text" class="form-control" />
+                </p>
+                <p>
+                    <label for="editModalLineType">@EditorResources.LineType</label>
+                    @Html.DropDownList("editModalLineType", dropdownSelectedLineType.ToSelectList(), new { @class = "form-control" })
+                </p>
+                <p>
+                    <label for="editModalLineColor">@EditorResources.LineColor</label>
+                    <input id="editModalLineColor" type="color" class="form-control" />
+                </p>
+                <p>
+                    <label for="editModalLineRouteType">@EditorResources.LineRouteType</label>
+                    @Html.DropDownList("editModalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"), new { @class = "form-control" })
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="addLineToEditedContainer()">
+                    @BaseResources.Save
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    @BaseResources.Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
     var toolboxOpened = false;
 
     var editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
     var currentEditedLine = {};
 
     var lastEditedStopMarker;
+    var lastEditedLinePolyline;
 
     $(document).ready(function () {
         $("#toolboxButton").show();
@@ -90,14 +127,12 @@
             loadAllLines();
     });
 
-
     function saveLines() {
         var sendData = { 'linesEditionModel': editedLines };
         $.post("@Url.Action("SaveLines", "Editor")",
             sendData,
             function (data, status) {   
                 if (data.success !== undefined) {
-                    editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
                     location.reload();
                 }
                 else if (data.error !== undefined) {
@@ -120,7 +155,7 @@
             });
     }
 
-    function addLineToContainer() {
+    function addLineToAddedContainer() {
         var newLine = {
             'Name': $("#modalLineName").val(),
             'LineType': $("#modalLineType").val(),
@@ -135,9 +170,48 @@
         $("#modalLineNumber").val('');
     }
 
+    function addLineToEditedContainer() {
+        var editedLine = {
+            'Name': $("#editModalLineName").val(),
+            'LineType': $("#editModalLineType").val(),
+            //'Stops': [],
+            'Color': $("#editModalLineColor").val(),
+            'IsCircular': $("#editModalLineRouteType").val(),
+        };
+        //allLines.Lines.filter
+        editedLines.Modified.push(editedLine);
+        //currentEditedLine = editedLine;
+        $("#editModalLineName").val('');
+        $("#editModalLineNumber").val('');
+    }
+
     function cancelNewLineCreation() {
         currentEditedLine = {};
         setCurrentTool("#createLineButton", '@EditorToolType.None');
+    }
+
+    function addLineAction() {
+        $("#newLineModal").modal();
+    }
+
+    function editLineAction(polyline) {        
+        $("#editModalLineName").val(polyline.name);
+        $("#editModalLineType").val(polyline.type);
+        $("#editModalLineColor").val(polyline.color);
+        $("#editModalLineRouteType").val(polyline.routeType);
+        $("#editLineModal").modal();
+    }
+
+    function removeLineFromAllContainers(lineId, lineName) {
+        editedLines.Added = editedLines.Added.filter(function (line) {
+            return line.Name != lineName;
+        });
+        editedLines.Modified = editedLines.Modified.filter(function (line) {
+            return line.Id != lineId;
+        });
+        editedLines.Removed = editedLines.Removed.filter(function (line) {
+            return line.Id != lineId;
+        });
     }
 
     function setCurrentTool(toolButton, newTool) {
@@ -152,7 +226,7 @@
             $(toolButton).css('color', '#818181');
         }
         if (currentTool == '@EditorToolType.CreateLine') {
-            $("#newLineModal").modal();
+            addLineAction();
         }
     }
 
