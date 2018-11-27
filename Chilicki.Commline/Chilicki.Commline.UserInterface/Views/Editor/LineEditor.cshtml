@@ -1,0 +1,164 @@
+﻿@using Chilicki.Commline.UserInterface.Resources
+@using Chilicki.Commline.Domain.Enums
+@using Chilicki.Commline.UserInterface.HtmlExtensions
+@using Chilicki.Commline.Application.Enums
+
+@{
+    var lineRouteTypes = new List<SelectListItem> {
+        new SelectListItem { Text = BaseResources.OneWay, Value = "false", Selected = true },
+        new SelectListItem { Text = BaseResources.Circular, Value = "true" }
+    };
+
+    LineType dropdownSelectedLineType = LineType.Bus;
+    StopType dropdownStopType = StopType.Bus;
+}
+
+<div>
+    @Html.Partial("~/Views/Shared/_Map.cshtml",
+        new ViewDataDictionary { { "viewName", BaseResources.LineEditor } })
+</div>
+
+<div id="toolboxSidenav" class="sidenav-toolbox">
+    <abbr title="@EditorResources.CreateLineToolDescription">
+        <a id="createLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
+    </abbr>
+    <abbr title="@EditorResources.EditLineToolDescription">
+        <a id="editLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.EditLine')">@EditorResources.EditLineTool</a>
+    </abbr>
+    <abbr title="@EditorResources.RemoveLineToolDescription">
+        <a id="removeLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveLine')">@EditorResources.RemoveLineTool</a>
+    </abbr>
+</div>
+
+<div id="newLineModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@EditorResources.NewLineCreation</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <label for="modalLineName">@EditorResources.LineName</label>
+                    <input id="modalLineName" type="text" class="form-control"/>
+                </p>
+                <p>
+                    <label for="modalLineType">@EditorResources.LineType</label>
+                    @Html.DropDownList("modalLineType", dropdownSelectedLineType.ToSelectList(), new { @class = "form-control" })
+                </p>
+                <p>
+                    <label for="modalLineColor">@EditorResources.LineColor</label>
+                    <input id="modalLineColor" type="color" class="form-control"/>
+                </p>
+                <p>
+                    <label for="modalLineRouteType">@EditorResources.LineRouteType</label>
+                    @Html.DropDownList("modalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"), new { @class = "form-control" })
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="addLineToContainer()">
+                    @BaseResources.Save
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        onclick="cancelNewLineCreation()">
+                    @BaseResources.Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var toolboxOpened = false;
+
+    var editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
+    var currentEditedLine = {};
+
+    var lastEditedStopMarker;
+
+    $(document).ready(function () {
+        $("#toolboxButton").show();
+        $("#toolboxButton").click(switchToolboxSidenav);
+        $("#saveModification").show();
+        $("#saveModification").click(saveLines);
+        $("#searchButton").hide();
+        switchToolboxSidenav();
+        if (currentView === '@CommlineViewType.Search')
+            loadAllStops();
+        else 
+            loadAllLines();
+    });
+
+
+    function saveLines() {
+        var sendData = { 'linesEditionModel': editedLines };
+        $.post("@Url.Action("SaveLines", "Editor")",
+            sendData,
+            function (data, status) {   
+                if (data.success !== undefined) {
+                    editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
+                    location.reload();
+                }
+                else if (data.error !== undefined) {
+                    alert('@BaseResources.ErrorOccured: ' + data.error);
+                }                   
+            });
+    }
+
+    function addStopToLine(marker) {
+        var sendData = { 'id': marker.id };
+        $.post("@Url.Action("GetStop", "Editor")",
+            sendData,
+            function (data, status) {
+                currentEditedLine.Stops.push(data);
+            });
+    }
+
+    function addLineToContainer() {
+        var newLine = {
+            'Name': $("#modalLineName").val(),
+            'LineType': $("#modalLineType").val(),
+            'Stops': [],
+            'Color': $("#modalLineColor").val(),
+            'IsCircular': $("#modalLineRouteType").val(),            
+        };
+        allLines.Lines.push(newLine);
+        editedLines.Added.push(newLine);
+        currentEditedLine = newLine;
+        $("#modalLineName").val('');
+        $("#modalLineNumber").val('');
+    }
+
+    function cancelNewLineCreation() {
+        currentEditedLine = {};
+        setCurrentTool("#createLineButton", '@EditorToolType.None');
+    }
+
+    function setCurrentTool(toolButton, newTool) {
+        $(".toolbox-tool-button").css('color', '#818181')
+        if (newTool != '@EditorToolType.None' && currentTool != newTool) {
+            currentTool = newTool;
+            $(toolButton).css('color', '#ffffff');
+        }
+        else {
+            currentTool = '@EditorToolType.None';
+            currentEditedLine = {};
+            $(toolButton).css('color', '#818181');
+        }
+        if (currentTool == '@EditorToolType.CreateLine') {
+            $("#newLineModal").modal();
+        }
+    }
+
+    function switchToolboxSidenav() {
+        if (toolboxOpened == false) {
+            document.getElementById("toolboxSidenav").style.width = "250px";
+            toolboxOpened = true;
+        }
+        else {
+            document.getElementById("toolboxSidenav").style.width = "0";
+            toolboxOpened = false;
+        }
+    }
+</script>

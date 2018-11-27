@@ -133,15 +133,6 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editor.
-        /// </summary>
-        public static string Editor {
-            get {
-                return ResourceManager.GetString("Editor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Error occured.
         /// </summary>
         public static string ErrorOccured {
@@ -156,6 +147,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string HomePage {
             get {
                 return ResourceManager.GetString("HomePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lines Editor.
+        /// </summary>
+        public static string LineEditor {
+            get {
+                return ResourceManager.GetString("LineEditor", resourceCulture);
             }
         }
         
@@ -228,6 +228,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string SearchAsAction {
             get {
                 return ResourceManager.GetString("SearchAsAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops Editor.
+        /// </summary>
+        public static string StopEditor {
+            get {
+                return ResourceManager.GetString("StopEditor", resourceCulture);
             }
         }
         

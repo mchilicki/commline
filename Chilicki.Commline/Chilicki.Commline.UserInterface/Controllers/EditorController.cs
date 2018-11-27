@@ -34,6 +34,12 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return View("StopEditor");
         }
 
+        public ActionResult Lines()
+        {
+            ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
+            return View("LineEditor");
+        }
+
         public ActionResult Departures(long lineId)
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();

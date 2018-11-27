@@ -365,6 +365,7 @@
     <Content Include="Views\Shared\_Map.cshtml" />
     <Content Include="Views\Editor\Departures.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
+    <Content Include="Views\Editor\LineEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

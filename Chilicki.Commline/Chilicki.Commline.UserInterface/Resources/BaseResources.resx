@@ -141,14 +141,14 @@
   <data name="Departures" xml:space="preserve">
     <value>Departures</value>
   </data>
-  <data name="Editor" xml:space="preserve">
-    <value>Editor</value>
-  </data>
   <data name="ErrorOccured" xml:space="preserve">
     <value>Error occured</value>
   </data>
   <data name="HomePage" xml:space="preserve">
     <value>Home Page</value>
+  </data>
+  <data name="LineEditor" xml:space="preserve">
+    <value>Lines Editor</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
@@ -173,6 +173,9 @@
   </data>
   <data name="SearchAsAction" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="StopEditor" xml:space="preserve">
+    <value>Stops Editor</value>
   </data>
   <data name="Toolbox" xml:space="preserve">
     <value>Toolbox</value>

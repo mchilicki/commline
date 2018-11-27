@@ -9,13 +9,12 @@
         new SelectListItem { Text = BaseResources.Circular, Value = "true" }
     };
 
-    LineType dropdownSelectedLineType = LineType.Bus;
     StopType dropdownStopType = StopType.Bus;
 }
 
 <div>
     @Html.Partial("~/Views/Shared/_Map.cshtml",
-        new ViewDataDictionary { { "viewName", BaseResources.Editor } })
+        new ViewDataDictionary { { "viewName", BaseResources.StopEditor } })
 </div>
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
@@ -27,15 +26,6 @@
     </abbr>
     <abbr title="@EditorResources.RemoveStopToolDescription">
         <a id="removeStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveStop')">@EditorResources.RemoveStopTool</a>
-    </abbr>
-    <abbr title="@EditorResources.CreateLineToolDescription">
-        <a id="createLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
-    </abbr>
-    <abbr title="@EditorResources.EditLineToolDescription">
-        <a id="editLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.EditLine')">@EditorResources.EditLineTool</a>
-    </abbr>
-    <abbr title="@EditorResources.RemoveLineToolDescription">
-        <a id="removeLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveLine')">@EditorResources.RemoveLineTool</a>
     </abbr>
 </div>
 
@@ -139,51 +129,11 @@
     </div>
 </div>
 
-<div id="newLineModal" class="modal fade primary-element" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@EditorResources.NewLineCreation</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <label for="modalLineName">@EditorResources.LineName</label>
-                    <input id="modalLineName" type="text" class="form-control"/>
-                </p>
-                <p>
-                    <label for="modalLineType">@EditorResources.LineType</label>
-                    @Html.DropDownList("modalLineType", dropdownSelectedLineType.ToSelectList(), new { @class = "form-control" })
-                </p>
-                <p>
-                    <label for="modalLineColor">@EditorResources.LineColor</label>
-                    <input id="modalLineColor" type="color" class="form-control"/>
-                </p>
-                <p>
-                    <label for="modalLineRouteType">@EditorResources.LineRouteType</label>
-                    @Html.DropDownList("modalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"), new { @class = "form-control" })
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        onclick="addLineToContainer()">
-                    @BaseResources.Save
-                </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"
-                        onclick="cancelNewLineCreation()">
-                    @BaseResources.Cancel
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
 
     var toolboxOpened = false;
 
     var editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
-    var editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
-    var currentEditedLine = {};
 
     var lastEditedStopMarker;
 
@@ -215,54 +165,10 @@
             });
     }
 
-    function saveLines() {
-        var sendData = { 'linesEditionModel': editedLines };
-        $.post("@Url.Action("SaveLines", "Editor")",
-            sendData,
-            function (data, status) {   
-                if (data.success !== undefined) {
-                    editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
-                    location.reload();
-                }
-                else if (data.error !== undefined) {
-                    alert('@BaseResources.ErrorOccured: ' + data.error);
-                }                   
-            });
-    }
-
     function onMapClick(coordinates) {
         if (currentTool == '@EditorToolType.CreateStop') {
             addStopAction(coordinates);                       
         }
-    }
-
-    function addStopToLine(marker) {
-        var sendData = { 'id': marker.id };
-        $.post("@Url.Action("GetStop", "Editor")",
-            sendData,
-            function (data, status) {
-                currentEditedLine.Stops.push(data);
-            });
-    }
-
-    function addLineToContainer() {
-        var newLine = {
-            'Name': $("#modalLineName").val(),
-            'LineType': $("#modalLineType").val(),
-            'Stops': [],
-            'Color': $("#modalLineColor").val(),
-            'IsCircular': $("#modalLineRouteType").val(),            
-        };
-        allLines.Lines.push(newLine);
-        editedLines.Added.push(newLine);
-        currentEditedLine = newLine;
-        $("#modalLineName").val('');
-        $("#modalLineNumber").val('');
-    }
-
-    function cancelNewLineCreation() {
-        currentEditedLine = {};
-        setCurrentTool("#createLineButton", '@EditorToolType.None');
     }
 
     function addStopToAddedContainer() {
@@ -276,12 +182,13 @@
         };
         var lastCoordinates = new google.maps.LatLng(latitude, longitude);
         drawMarker(MAP, '', $("#modalStopName").val(), lastCoordinates, $("#modalStopType").val());
-        allLines.StopsWithoutLines.push(newStop);
+        allLines.Stops.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
     }
 
     function addStopToEditedContainer() {
+        var previousPosition = lastEditedStopMarker.position;
         var longitude = $("#editModalStopLongitude").val();
         var latitude = $("#editModalStopLatitude").val();
         var editedStop = {
@@ -300,10 +207,14 @@
                     stop.Longitude = longitude;
                     stop.Latitude = latitude;
                 });
-            });            
+            });
             drawAllLines(MAP, allLines.Lines);
+            editedStops.Modified.push(editedStop);
+        }
+        else {
+            removeStopFromAllContainers(editedStop.Id, previousPosition);
+            editedStops.Added.push(editedStop);
         }        
-        editedStops.Modified.push(editedStop);
         $("#editModalStopName").val('');
     }
 
@@ -358,11 +269,7 @@
         }
         else {
             currentTool = '@EditorToolType.None';
-            currentEditedLine = {};
             $(toolButton).css('color', '#818181');
-        }
-        if (currentTool == '@EditorToolType.CreateLine') {
-            $("#newLineModal").modal();
         }
     }
 
