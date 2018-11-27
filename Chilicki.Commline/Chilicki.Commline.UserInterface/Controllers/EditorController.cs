@@ -116,7 +116,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
             }
             catch (Exception ex)
             {
-
+                return Json(new { error = ex.Message });
             }
             return Json(stop, JsonRequestBehavior.AllowGet);
         }

@@ -49,11 +49,19 @@
                 <div class="modal-body">
                     <p>
                         <label for="modalStopName">@EditorResources.StopName</label>
-                        <input id="modalStopName" type="text" class="form-control"/>
+                        <input id="modalStopName" type="text" class="form-control" />
                     </p>
                     <p>
                         <label for="modalStopType">@EditorResources.StopType</label>
                         @Html.DropDownList("modalStopType", dropdownStopType.ToSelectList(), new { @class = "form-control" })
+                    </p>
+                    <p>
+                        <label for="modalStopLongitude">@EditorResources.Longitude</label>
+                        <input id="modalStopLongitude" type="number" step="any" min="0" class="form-control" />
+                    </p>
+                    <p>
+                        <label for="modalStopLatitude">@EditorResources.Latitude</label>
+                        <input id="modalStopLatitude" type="number" step="any" min="0" class="form-control" />
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -85,6 +93,14 @@
                     <p>
                         <label for="editModalStopType">@EditorResources.StopType</label>
                         @Html.DropDownList("editModalStopType", dropdownStopType.ToSelectList(), new { @class = "form-control" })
+                    </p>
+                    <p>
+                        <label for="editModalStopLongitude">@EditorResources.Longitude</label>
+                        <input id="editModalStopLongitude" type="number" step="any" min="0" class="form-control" />
+                    </p>
+                    <p>
+                        <label for="editModalStopLatitude">@EditorResources.Latitude</label>
+                        <input id="editModalStopLatitude" type="number" step="any" min="0" class="form-control" />
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -255,12 +271,15 @@
     }
 
     function addStopToAddedContainer() {
+        var longitude = $("#modalStopLongitude").val();
+        var latitude = $("#modalStopLatitude").val();
         var newStop = {
             'Name': $("#modalStopName").val(),
             'StopType': $("#modalStopType").val(),
-            'Longitude': lastCoordinates.lng(),
-            'Latitude': lastCoordinates.lat(),
+            'Longitude': longitude,
+            'Latitude': latitude,
         };
+        var lastCoordinates = new google.maps.LatLng(latitude, longitude);
         drawMarker(MAP, '', $("#modalStopName").val(), lastCoordinates, $("#modalStopType").val());
         allLines.StopsWithoutLines.push(newStop);
         editedStops.Added.push(newStop);
@@ -268,13 +287,16 @@
     }
 
     function addStopToEditedContainer() {
+        var longitude = $("#editModalStopLongitude").val();
+        var latitude = $("#editModalStopLatitude").val();
         var editedStop = {
             'Id': lastEditedStopMarker.id,
             'Name': $("#editModalStopName").val(),
             'StopType': $("#editModalStopType").val(),
-            'Longitude': lastEditedStopMarker.position.lng(),
-            'Latitude': lastEditedStopMarker.position.lat(),
+            'Longitude': longitude,
+            'Latitude': latitude,
         };
+        lastEditedStopMarker.setPosition(new google.maps.LatLng(latitude, longitude));
         editedStops.Modified.push(editedStop);
         $("#editModalStopName").val('');
     }
@@ -303,14 +325,17 @@
     }
 
     function addStopAction(coordinates) {
-        lastCoordinates = coordinates;
-        $("#newStopModal").modal({ backdrop: "static" }); 
+        $("#modalStopLongitude").val(coordinates.lng());
+        $("#modalStopLatitude").val(coordinates.lat());
+        $("#newStopModal").modal({ backdrop: "static" });        
     }
 
     function editStopAction(marker) {
         lastEditedStopMarker = marker;
         $("#editModalStopName").val(marker.title);
         $("#editModalStopType").val(marker.stopType);
+        $("#editModalStopLongitude").val(marker.position.lng());
+        $("#editModalStopLatitude").val(marker.position.lat());
         $("#editStopModal").modal({ backdrop: "static" }); 
     }
 
