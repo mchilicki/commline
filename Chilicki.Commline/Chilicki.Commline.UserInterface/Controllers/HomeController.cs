@@ -29,7 +29,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
 
         public JsonResult GetAllLines()
         {
-            return Json(_lineManager.GetAll(), JsonRequestBehavior.AllowGet);
+            return Json(_lineManager.GetEverything(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAllStopsConnectedToAnyLine()

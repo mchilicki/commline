@@ -14,7 +14,7 @@
     <script type="text/javascript">
         var stopIconSize = 18;
         var MAP;
-        var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
+        var allLines = { 'Lines': [], 'Stops': [] };
         var searchStops = { 'Stops': [] };
         var stopMarkerList = [];
         var polylineList = [];
@@ -174,7 +174,7 @@
             return stopMarker;
         }
 
-        function drawAllStopsWithoutLines(map, stops) {
+        function drawAllStops(map, stops) {
             $.each(stops, function (stopIndex, stop) {
                 drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude), stop.StopType);
             });
@@ -183,9 +183,7 @@
         function drawLine(map, lineName, lineType, stopList, color) {
             var stopLocations = [];
             $.each(stopList, function (i, stop) {
-                var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
-                stopLocations.push(coordinates);
-                drawMarker(map, stop.Id, stop.Name, coordinates, stop.StopType);
+                stopLocations.push(new google.maps.LatLng(stop.Latitude, stop.Longitude));
             })
 
             if (color === null)
@@ -249,12 +247,12 @@
         function loadAllStops() {
             $.ajax({
                 type: "GET",
-                url: 'Home/GetAllStopsConnectedToAnyLine',
+                url: '@Url.Action("GetAllStopsConnectedToAnyLine", "Home")',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
                     searchStops = result;
-                    drawAllStopsWithoutLines(MAP, searchStops);
+                    drawAllStops(MAP, searchStops);
                 }
             });
         }
@@ -262,13 +260,13 @@
         function loadAllLines() {
             $.ajax({
                 type: "GET",
-                url: 'Editor/GetAllLines',
+                url: '@Url.Action("GetAllLines", "Home")',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
                     allLines = result;
                     drawAllLines(MAP, result.Lines);
-                    drawAllStopsWithoutLines(MAP, result.StopsWithoutLines);
+                    drawAllStops(MAP, result.Stops);
                 }
             });
         }

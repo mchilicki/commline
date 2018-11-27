@@ -28,10 +28,10 @@ namespace Chilicki.Commline.UserInterface.Controllers
             _editorManager = editorManager;
         }
 
-        public ActionResult Index()
+        public ActionResult Stops()
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
-            return View("Editor");
+            return View("StopEditor");
         }
 
         public ActionResult Departures(long lineId)
@@ -40,16 +40,6 @@ namespace Chilicki.Commline.UserInterface.Controllers
             var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
             ViewData["LineDepartures"] = JsonConvert.SerializeObject(lineDepartures);
             return View("Departures", lineDepartures);
-        }
-
-        public JsonResult GetAllLines()
-        {
-            return Json(_lineManager.GetEverything(), JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetAllStopsConnectedToAnyLine()
-        {
-            return Json(_stopManager.GetAllConnectedToAnyLine(), JsonRequestBehavior.AllowGet);
         }
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()

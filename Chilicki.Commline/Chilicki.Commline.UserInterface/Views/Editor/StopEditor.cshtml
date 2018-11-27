@@ -185,14 +185,13 @@
     var editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
     var currentEditedLine = {};
 
-    var lastCoordinates;
     var lastEditedStopMarker;
 
     $(document).ready(function () {
         $("#toolboxButton").show();
         $("#toolboxButton").click(switchToolboxSidenav);
         $("#saveModification").show();
-        $("#saveModification").click(saveEverything);
+        $("#saveModification").click(saveStops);
         $("#searchButton").hide();
         switchToolboxSidenav();
         if (currentView === '@CommlineViewType.Search')
@@ -201,18 +200,14 @@
             loadAllLines();
     });
 
-    function saveEverything() {
-        saveStops();
-        saveLines();
-    }
-
     function saveStops() {
         var sendData = { 'stopsEditionModel': editedStops };
-        $.post("Editor/SaveStops",
+        $.post("@Url.Action("SaveStops", "Editor")",
             sendData,
             function (data, status) {   
                 if (data.success !== undefined) {
                     editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
+                    location.reload();
                 }
                 else if (data.error !== undefined) {
                     alert('@BaseResources.ErrorOccured: ' + data.error);
@@ -222,7 +217,7 @@
 
     function saveLines() {
         var sendData = { 'linesEditionModel': editedLines };
-        $.post("Editor/SaveLines",
+        $.post("@Url.Action("SaveLines", "Editor")",
             sendData,
             function (data, status) {   
                 if (data.success !== undefined) {
@@ -243,7 +238,7 @@
 
     function addStopToLine(marker) {
         var sendData = { 'id': marker.id };
-        $.post("Editor/GetStop",
+        $.post("@Url.Action("GetStop", "Editor")",
             sendData,
             function (data, status) {
                 currentEditedLine.Stops.push(data);
@@ -297,6 +292,17 @@
             'Latitude': latitude,
         };
         lastEditedStopMarker.setPosition(new google.maps.LatLng(latitude, longitude));
+        if (editedStop.Id !== "") {
+            removeAllPolylines(MAP);
+            $.each(allLines.Lines, function (i, line) {
+                var editedStops = line.Stops.filter((stop) => { return stop.Id === editedStop.Id; });
+                $.each(editedStops, function (i, stop) {
+                    stop.Longitude = longitude;
+                    stop.Latitude = latitude;
+                });
+            });            
+            drawAllLines(MAP, allLines.Lines);
+        }        
         editedStops.Modified.push(editedStop);
         $("#editModalStopName").val('');
     }

@@ -61,7 +61,7 @@ namespace Chilicki.Commline.Application.Managers
             return new AllLinesDTO()
             {
                 Lines = GetAll(),
-                StopsWithoutLines = _stopManager.GetAllNotConnectedToAnyLine(),
+                Stops = _stopManager.GetAll(),
             };
         }
 
