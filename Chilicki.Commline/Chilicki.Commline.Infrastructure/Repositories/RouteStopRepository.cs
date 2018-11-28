@@ -20,10 +20,10 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         public void InsertForLineAndStops(Line line, IEnumerable<Stop> stops)
         {
             int stopIndex = 0;
-            var entityLine = _lineRepository.GetById(line.Id);
+            var entityLine = _lineRepository.Find(line.Id);
             foreach (var stop in stops)
             {
-                var entityStop = _stopRepository.GetById(stop.Id);
+                var entityStop = _stopRepository.Find(stop.Id);
                 _entities.Add(new RouteStop()
                 {
                     Line = entityLine,

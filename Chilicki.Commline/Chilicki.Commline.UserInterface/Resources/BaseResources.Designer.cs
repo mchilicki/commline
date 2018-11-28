@@ -133,15 +133,6 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editor.
-        /// </summary>
-        public static string Editor {
-            get {
-                return ResourceManager.GetString("Editor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Error occured.
         /// </summary>
         public static string ErrorOccured {
@@ -156,6 +147,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string HomePage {
             get {
                 return ResourceManager.GetString("HomePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lines Editor.
+        /// </summary>
+        public static string LineEditor {
+            get {
+                return ResourceManager.GetString("LineEditor", resourceCulture);
             }
         }
         
@@ -187,6 +187,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not Set Yet.
+        /// </summary>
+        public static string NotSetYet {
+            get {
+                return ResourceManager.GetString("NotSetYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now.
         /// </summary>
         public static string Now {
@@ -201,6 +210,60 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string OneWay {
             get {
                 return ResourceManager.GetString("OneWay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude:.
+        /// </summary>
+        public static string ReadonlyLatitude {
+            get {
+                return ResourceManager.GetString("ReadonlyLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Route Type:.
+        /// </summary>
+        public static string ReadonlyLineRouteType {
+            get {
+                return ResourceManager.GetString("ReadonlyLineRouteType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude:.
+        /// </summary>
+        public static string ReadonlyLongitude {
+            get {
+                return ResourceManager.GetString("ReadonlyLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string ReadonlyName {
+            get {
+                return ResourceManager.GetString("ReadonlyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Station Number:.
+        /// </summary>
+        public static string ReadonlyStationNumber {
+            get {
+                return ResourceManager.GetString("ReadonlyStationNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         
@@ -228,6 +291,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string SearchAsAction {
             get {
                 return ResourceManager.GetString("SearchAsAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops Editor.
+        /// </summary>
+        public static string StopEditor {
+            get {
+                return ResourceManager.GetString("StopEditor", resourceCulture);
             }
         }
         

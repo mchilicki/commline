@@ -1,6 +1,4 @@
 ﻿using Chilicki.Commline.Infrastructure.Databases;
-using Chilicki.Commline.Infrastructure.Resources;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -18,12 +16,12 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
             _entities = database.Set<TEntity>();
         }
 
-        public virtual int GetCount()
+        public virtual int Count()
         {
             return _entities.Count();
         }
 
-        public virtual TEntity GetById(long id)
+        public virtual TEntity Find(long id)
         {
             return _entities.Find(id);
         }
@@ -33,7 +31,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
             return _entities;
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             _entities.Add(entity);
             _database.SaveChanges();

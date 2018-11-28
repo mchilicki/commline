@@ -2,6 +2,7 @@
 using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
+using Chilicki.Commline.Domain.Factories;
 using Chilicki.Commline.Infrastructure.Repositories;
 using System.Collections.Generic;
 
@@ -12,20 +13,23 @@ namespace Chilicki.Commline.Application.Managers
         readonly StopRepository _stopRepository;
         readonly MixedRepository _mixedRepository;
         readonly StopValidator _stopValidator;
+        readonly StopFactory _stopFactory;
 
         public StopManager(
             StopRepository stopRepository, 
             MixedRepository mixedRepository,
-            StopValidator stopValidator)
+            StopValidator stopValidator,
+            StopFactory stopFactory)
         {
             _stopRepository = stopRepository;
             _mixedRepository = mixedRepository;
             _stopValidator = stopValidator;
+            _stopFactory = stopFactory;
         }
 
         public StopDTO GetById(long id)
         {
-            var stopDTO = Mapper.Map<Stop, StopDTO>(_stopRepository.GetById(id));
+            var stopDTO = Mapper.Map<Stop, StopDTO>(_stopRepository.Find(id));
             return stopDTO;
         }
 
@@ -71,9 +75,9 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(StopDTO stopDTO)
         {
-            Stop stop = Mapper.Map<StopDTO, Stop>(stopDTO);
+            var stop = Mapper.Map<StopDTO, Stop>(stopDTO);
             stop.StopNumber = _stopRepository.GetNextStopNumberForStopName(stopDTO.Name);
-            _stopRepository.Insert(stop);
+            _stopRepository.Add(stop);
         }
 
         public void Edit(IEnumerable<StopDTO> stopDTOs)
@@ -87,12 +91,10 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Edit(StopDTO stopDTO)
         {            
-            Stop stop = _stopRepository.GetById(stopDTO.Id);
-            stop.Name = stopDTO.Name;
-            stop.Latitude = stopDTO.Latitude;
-            stop.Longitude = stopDTO.Longitude;
-            stop.StopType = stopDTO.StopType;
-            stop.StopNumber = _stopRepository.GetNextStopNumberForStopName(stopDTO.Name);
+            var stop = _stopRepository.Find(stopDTO.Id);
+            int newStationNumber = _stopRepository.GetNextStopNumberForStopName(stopDTO.Name);
+            stop = _stopFactory.FillIn(stop, stopDTO.Name, stopDTO.Latitude, 
+                stopDTO.Longitude, stopDTO.StopType, newStationNumber);
             _stopRepository.Update(stop);
         }
 
@@ -107,7 +109,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Remove(StopDTO stopDTO)
         {
-            Stop stop = _stopRepository.GetById(stopDTO.Id);
+            var stop = _stopRepository.Find(stopDTO.Id);
             _stopRepository.Remove(stop);
         }
     }

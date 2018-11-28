@@ -28,10 +28,16 @@ namespace Chilicki.Commline.UserInterface.Controllers
             _editorManager = editorManager;
         }
 
-        public ActionResult Index()
+        public ActionResult Stops()
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
-            return View("Editor");
+            return View("StopEditor");
+        }
+
+        public ActionResult Lines()
+        {
+            ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
+            return View("LineEditor");
         }
 
         public ActionResult Departures(long lineId)
@@ -40,16 +46,6 @@ namespace Chilicki.Commline.UserInterface.Controllers
             var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
             ViewData["LineDepartures"] = JsonConvert.SerializeObject(lineDepartures);
             return View("Departures", lineDepartures);
-        }
-
-        public JsonResult GetAllLines()
-        {
-            return Json(_lineManager.GetEverything(), JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetAllStopsConnectedToAnyLine()
-        {
-            return Json(_stopManager.GetAllConnectedToAnyLine(), JsonRequestBehavior.AllowGet);
         }
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()
@@ -78,12 +74,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
         {
             try
             {
-                if (linesEditionModel.Added != null)
-                    _lineManager.Create(linesEditionModel.Added);
-                //if (stopsEditionModel.Modified != null)
-                //_stopManager.Edit(stopsEditionModel.Modified);
-                //if (stopsEditionModel.Deleted != null)
-                //_stopManager.Delete(stopsEditionModel.Deleted);
+                _editorManager.EditLines(linesEditionModel);
             }
             catch (Exception ex)
             {
@@ -116,7 +107,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
             }
             catch (Exception ex)
             {
-
+                return Json(new { error = ex.Message });
             }
             return Json(stop, JsonRequestBehavior.AllowGet);
         }

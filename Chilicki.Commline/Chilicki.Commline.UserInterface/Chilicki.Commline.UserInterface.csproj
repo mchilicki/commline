@@ -361,10 +361,11 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
-    <Content Include="Views\Editor\Editor.cshtml" />
+    <Content Include="Views\Editor\StopEditor.cshtml" />
     <Content Include="Views\Shared\_Map.cshtml" />
     <Content Include="Views\Editor\Departures.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
+    <Content Include="Views\Editor\LineEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

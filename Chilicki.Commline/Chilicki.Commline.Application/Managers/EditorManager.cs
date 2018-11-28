@@ -27,5 +27,15 @@ namespace Chilicki.Commline.Application.Managers
             if (stopsEditionModel.Removed != null)
                 _stopManager.Remove(stopsEditionModel.Removed);
         }
+
+        public void EditLines(LinesEditionModel linesEditionModel)
+        {
+            if (linesEditionModel.Added != null)
+                _lineManager.Create(linesEditionModel.Added);
+            if (linesEditionModel.Modified != null)
+                _lineManager.Edit(linesEditionModel.Modified);
+            if (linesEditionModel.Removed != null)
+                _lineManager.Remove(linesEditionModel.Removed);
+        }
     }
 }

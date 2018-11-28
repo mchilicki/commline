@@ -2,7 +2,7 @@
 @using Chilicki.Commline.UserInterface.HtmlExtensions
 @using Chilicki.Commline.UserInterface.Resources
 
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyBWGMUQJXHJ6E0oOLMs-4Ps1hNCPo3zcno&sensor=true" type="text/javascript"></script>
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyBWGMUQJXHJ6E0oOLMs-4Ps1hNCPo3zcno" type="text/javascript"></script>
 
 <br />
 <div id="map_canvas"></div>
@@ -14,7 +14,7 @@
     <script type="text/javascript">
         var stopIconSize = 18;
         var MAP;
-        var allLines = { 'Lines': [], 'StopsWithoutLines': [] };
+        var allLines = { 'Lines': [], 'Stops': [] };
         var searchStops = { 'Stops': [] };
         var stopMarkerList = [];
         var polylineList = [];
@@ -133,7 +133,7 @@
             // Do nothing
         }
 
-        function drawMarker(map, id, stopName, coordinates, stopType) {
+        function drawMarker(map, id, stopName, coordinates, stopType, stationNumber) {
             var stopIcon = getStopIconByStopType(stopType);
             var stopMarker = new google.maps.Marker({
                 'position': coordinates,
@@ -145,11 +145,21 @@
             });
 
             var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h4>" + stopTypes[stopType] + " " + stopName + "</h4></div>"
+                content: "<div class='infoDiv'><h4>" + stopTypes[stopType] + " </br>" + stopName + "</h4></div>"
+            });
+
+            if (stationNumber === undefined)
+                stationNumber = '@BaseResources.NotSetYet';
+            var readonlyWindow = new google.maps.InfoWindow({
+                content: "<div class='readonlyInfoDiv'><h4>" + stopTypes[stopType] + " </br>" +
+                    "@BaseResources.ReadonlyName " + stopName + "</h4><h5>" +
+                    "@BaseResources.ReadonlyStationNumber " + stationNumber + "</br>" +
+                    "@BaseResources.ReadonlyLongitude " + coordinates.lng() + "</br>" +
+                    "@BaseResources.ReadonlyLatitude " + coordinates.lat() + "</br></h5></div>"
             });
             
             var searchWindow = new google.maps.InfoWindow({
-                content: '<div class="infoDiv"><h4>' + stopTypes[stopType] + ' ' + stopName + '</h4>' +
+                content: '<div class="searchInfoDiv"><h4>' + stopTypes[stopType] + ' </br>' + stopName + '</h4>' +
                     '<button type="button" class="btn btn-default" onclick="setStopAsStart(' + stopMarker.id + ', &quot;' + stopMarker.title + '&quot;)">@SearchResources.SetAsStartStop</button><br />' +
                     '<button type="button" class="btn btn-default" onclick="setStopAsEnd(' + stopMarker.id + ', &quot;' + stopMarker.title + '&quot;)">@SearchResources.SetAsEndStop</button>' +
                             '</div >'
@@ -161,7 +171,7 @@
                 }
                 else {
                     if (currentTool == '@EditorToolType.None')
-                        infowindow.open(map, stopMarker);
+                        readonlyWindow.open(map, stopMarker);
                     if (currentTool == '@EditorToolType.CreateLine')
                         addStopToLine(stopMarker);
                     if (currentTool == '@EditorToolType.EditStop')
@@ -174,18 +184,16 @@
             return stopMarker;
         }
 
-        function drawAllStopsWithoutLines(map, stops) {
+        function drawAllStops(map, stops) {
             $.each(stops, function (stopIndex, stop) {
-                drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude), stop.StopType);
+                drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude), stop.StopType, stop.SiteNumber);
             });
         }
 
-        function drawLine(map, lineName, lineType, stopList, color) {
+        function drawLine(map, lineId, lineName, lineType, stopList, color, routeType, temporaryId) {
             var stopLocations = [];
             $.each(stopList, function (i, stop) {
-                var coordinates = new google.maps.LatLng(stop.Latitude, stop.Longitude);
-                stopLocations.push(coordinates);
-                drawMarker(map, stop.Id, stop.Name, coordinates, stop.StopType);
+                stopLocations.push(new google.maps.LatLng(stop.Latitude, stop.Longitude));
             })
 
             if (color === null)
@@ -195,14 +203,30 @@
                 path: stopLocations,
                 strokeColor: color,
                 strokeOpacity: 0.8,
-                strokeWeight: 6
+                strokeWeight: 6,
+                id: lineId,
+                name: lineName,
+                type: lineType,
+                color: color,
+                routeType: routeType,
+                temporaryId: temporaryId
             });
-            var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h4>" + lineTypes[lineType] + " " + lineName + "</h4></div>"
+
+            var lineReadonlyWindow = new google.maps.InfoWindow({
+                content: "<div class='readonlyLineInfoDiv'><h4>" + lineTypes[lineType] + " </br>" +
+                    '@BaseResources.ReadonlyName ' + lineName + "</h4></div>"
             });
             google.maps.event.addListener(stopPath, 'click', function (event) {
-                infowindow.setPosition(event.latLng);
-                infowindow.open(map);
+                if (currentTool === '@EditorToolType.EditLine') {
+                    editLineAction(stopPath);                    
+                }
+                else if (currentTool === '@EditorToolType.RemoveLine') {
+                    removeLineAction(stopPath); 
+                }
+                else {
+                    lineReadonlyWindow.setPosition(event.latLng);
+                    lineReadonlyWindow.open(map);
+                }                
             });
             polylineList.push(stopPath);
             stopPath.setMap(map);
@@ -236,7 +260,7 @@
 
         function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
-                drawLine(map, line.Name, line.LineType, line.Stops, line.Color);
+                drawLine(map, line.Id, line.Name, line.LineType, line.Stops, line.Color, line.IsCircular, line.TemporaryId);
             });
         }
 
@@ -249,12 +273,12 @@
         function loadAllStops() {
             $.ajax({
                 type: "GET",
-                url: 'Home/GetAllStopsConnectedToAnyLine',
+                url: '@Url.Action("GetAllStopsConnectedToAnyLine", "Home")',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
                     searchStops = result;
-                    drawAllStopsWithoutLines(MAP, searchStops);
+                    drawAllStops(MAP, searchStops);
                 }
             });
         }
@@ -262,13 +286,13 @@
         function loadAllLines() {
             $.ajax({
                 type: "GET",
-                url: 'Editor/GetAllLines',
+                url: '@Url.Action("GetAllLines", "Home")',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
                     allLines = result;
                     drawAllLines(MAP, result.Lines);
-                    drawAllStopsWithoutLines(MAP, result.StopsWithoutLines);
+                    drawAllStops(MAP, result.Stops);
                 }
             });
         }

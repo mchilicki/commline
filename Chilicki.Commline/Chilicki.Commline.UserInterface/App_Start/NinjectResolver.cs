@@ -1,8 +1,10 @@
-﻿using Chilicki.Commline.Application.Managers;
+﻿using Chilicki.Commline.Application.Correctors;
+using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Search.Managers;
 using Chilicki.Commline.Application.Search.ManualMappers;
 using Chilicki.Commline.Application.Search.Validators;
 using Chilicki.Commline.Application.Validators;
+using Chilicki.Commline.Domain.Factories;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using Chilicki.Commline.Domain.Search.Factories.Dijkstra;
 using Chilicki.Commline.Domain.Search.Services;
@@ -64,6 +66,8 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<FastestPathResolver>().ToSelf();
             _kernel.Bind<FastestPathTransferService>().ToSelf();
 
+            _kernel.Bind<StopFactory>().ToSelf();
+
             _kernel.Bind<SearchManager>().ToSelf();
             _kernel.Bind<StopManager>().ToSelf();
             _kernel.Bind<LineManager>().ToSelf();
@@ -74,6 +78,8 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<LineValidator>().ToSelf();
             _kernel.Bind<DeparturesValidator>().ToSelf();
             _kernel.Bind<StopValidator>().ToSelf();
+
+            _kernel.Bind<LineCorrector>().ToSelf();
             
             _kernel.Bind<SearchInputManualMapper>().ToSelf();
 

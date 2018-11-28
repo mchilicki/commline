@@ -9,13 +9,12 @@
         new SelectListItem { Text = BaseResources.Circular, Value = "true" }
     };
 
-    LineType dropdownSelectedLineType = LineType.Bus;
     StopType dropdownStopType = StopType.Bus;
 }
 
 <div>
     @Html.Partial("~/Views/Shared/_Map.cshtml",
-        new ViewDataDictionary { { "viewName", BaseResources.Editor } })
+        new ViewDataDictionary { { "viewName", BaseResources.StopEditor } })
 </div>
 
 <div id="toolboxSidenav" class="sidenav-toolbox">
@@ -27,15 +26,6 @@
     </abbr>
     <abbr title="@EditorResources.RemoveStopToolDescription">
         <a id="removeStopButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveStop')">@EditorResources.RemoveStopTool</a>
-    </abbr>
-    <abbr title="@EditorResources.CreateLineToolDescription">
-        <a id="createLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.CreateLine')">@EditorResources.CreateLineTool</a>
-    </abbr>
-    <abbr title="@EditorResources.EditLineToolDescription">
-        <a id="editLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.EditLine')">@EditorResources.EditLineTool</a>
-    </abbr>
-    <abbr title="@EditorResources.RemoveLineToolDescription">
-        <a id="removeLineButton" class="toolbox-tool-button" onclick="setCurrentTool(this, '@EditorToolType.RemoveLine')">@EditorResources.RemoveLineTool</a>
     </abbr>
 </div>
 
@@ -49,17 +39,25 @@
                 <div class="modal-body">
                     <p>
                         <label for="modalStopName">@EditorResources.StopName</label>
-                        <input id="modalStopName" type="text" class="form-control"/>
+                        <input id="modalStopName" type="text" class="form-control" />
                     </p>
                     <p>
                         <label for="modalStopType">@EditorResources.StopType</label>
                         @Html.DropDownList("modalStopType", dropdownStopType.ToSelectList(), new { @class = "form-control" })
                     </p>
+                    <p>
+                        <label for="modalStopLongitude">@EditorResources.Longitude</label>
+                        <input id="modalStopLongitude" type="number" step="any" min="0" class="form-control" />
+                    </p>
+                    <p>
+                        <label for="modalStopLatitude">@EditorResources.Latitude</label>
+                        <input id="modalStopLatitude" type="number" step="any" min="0" class="form-control" />
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" data-dismiss="modal"
                             onclick="addStopToAddedContainer()">
-                        @BaseResources.Save
+                        @BaseResources.Affirm
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         @BaseResources.Cancel
@@ -86,11 +84,19 @@
                         <label for="editModalStopType">@EditorResources.StopType</label>
                         @Html.DropDownList("editModalStopType", dropdownStopType.ToSelectList(), new { @class = "form-control" })
                     </p>
+                    <p>
+                        <label for="editModalStopLongitude">@EditorResources.Longitude</label>
+                        <input id="editModalStopLongitude" type="number" step="any" min="0" class="form-control" />
+                    </p>
+                    <p>
+                        <label for="editModalStopLatitude">@EditorResources.Latitude</label>
+                        <input id="editModalStopLatitude" type="number" step="any" min="0" class="form-control" />
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" data-dismiss="modal"
                             onclick="addStopToEditedContainer()">
-                        @BaseResources.Save
+                        @BaseResources.Affirm
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         @BaseResources.Cancel
@@ -123,99 +129,34 @@
     </div>
 </div>
 
-<div id="newLineModal" class="modal fade primary-element" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@EditorResources.NewLineCreation</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <label for="modalLineName">@EditorResources.LineName</label>
-                    <input id="modalLineName" type="text" class="form-control"/>
-                </p>
-                <p>
-                    <label for="modalLineType">@EditorResources.LineType</label>
-                    @Html.DropDownList("modalLineType", dropdownSelectedLineType.ToSelectList(), new { @class = "form-control" })
-                </p>
-                <p>
-                    <label for="modalLineColor">@EditorResources.LineColor</label>
-                    <input id="modalLineColor" type="color" class="form-control"/>
-                </p>
-                <p>
-                    <label for="modalLineRouteType">@EditorResources.LineRouteType</label>
-                    @Html.DropDownList("modalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"), new { @class = "form-control" })
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        onclick="addLineToContainer()">
-                    @BaseResources.Save
-                </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"
-                        onclick="cancelNewLineCreation()">
-                    @BaseResources.Cancel
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
-
     var toolboxOpened = false;
 
     var editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
-    var editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
-    var currentEditedLine = {};
 
-    var lastCoordinates;
     var lastEditedStopMarker;
 
     $(document).ready(function () {
         $("#toolboxButton").show();
         $("#toolboxButton").click(switchToolboxSidenav);
         $("#saveModification").show();
-        $("#saveModification").click(saveEverything);
+        $("#saveModification").click(saveStops);
         $("#searchButton").hide();
         switchToolboxSidenav();
-        if (currentView === '@CommlineViewType.Search')
-            loadAllStops();
-        else 
-            loadAllLines();
+        loadAllLines();
     });
-
-    function saveEverything() {
-        saveStops();
-        saveLines();
-    }
 
     function saveStops() {
         var sendData = { 'stopsEditionModel': editedStops };
-        $.post("Editor/SaveStops",
+        $.post("@Url.Action("SaveStops", "Editor")",
             sendData,
             function (data, status) {   
                 if (data.success !== undefined) {
-                    editedStops = { 'Added': [], 'Modified': [], 'Removed': [] };
-                }
-                else if (data.error !== undefined) {
-                    alert('@BaseResources.ErrorOccured: ' + data.error);
-                }    
-            });
-    }
-
-    function saveLines() {
-        var sendData = { 'linesEditionModel': editedLines };
-        $.post("Editor/SaveLines",
-            sendData,
-            function (data, status) {   
-                if (data.success !== undefined) {
-                    editedLines = { 'Added': [], 'Modified': [], 'Removed': [] };
                     location.reload();
                 }
                 else if (data.error !== undefined) {
                     alert('@BaseResources.ErrorOccured: ' + data.error);
-                }                   
+                }    
             });
     }
 
@@ -225,57 +166,50 @@
         }
     }
 
-    function addStopToLine(marker) {
-        var sendData = { 'id': marker.id };
-        $.post("Editor/GetStop",
-            sendData,
-            function (data, status) {
-                currentEditedLine.Stops.push(data);
-            });
-    }
-
-    function addLineToContainer() {
-        var newLine = {
-            'Name': $("#modalLineName").val(),
-            'LineType': $("#modalLineType").val(),
-            'Stops': [],
-            'Color': $("#modalLineColor").val(),
-            'IsCircular': $("#modalLineRouteType").val(),            
-        };
-        allLines.Lines.push(newLine);
-        editedLines.Added.push(newLine);
-        currentEditedLine = newLine;
-        $("#modalLineName").val('');
-        $("#modalLineNumber").val('');
-    }
-
-    function cancelNewLineCreation() {
-        currentEditedLine = {};
-        setCurrentTool("#createLineButton", '@EditorToolType.None');
-    }
-
     function addStopToAddedContainer() {
+        var longitude = $("#modalStopLongitude").val();
+        var latitude = $("#modalStopLatitude").val();
         var newStop = {
             'Name': $("#modalStopName").val(),
             'StopType': $("#modalStopType").val(),
-            'Longitude': lastCoordinates.lng(),
-            'Latitude': lastCoordinates.lat(),
+            'Longitude': longitude,
+            'Latitude': latitude,
         };
+        var lastCoordinates = new google.maps.LatLng(latitude, longitude);
         drawMarker(MAP, '', $("#modalStopName").val(), lastCoordinates, $("#modalStopType").val());
-        allLines.StopsWithoutLines.push(newStop);
+        allLines.Stops.push(newStop);
         editedStops.Added.push(newStop);
         $("#modalStopName").val('');
     }
 
     function addStopToEditedContainer() {
+        var previousPosition = lastEditedStopMarker.position;
+        var longitude = $("#editModalStopLongitude").val();
+        var latitude = $("#editModalStopLatitude").val();
         var editedStop = {
             'Id': lastEditedStopMarker.id,
             'Name': $("#editModalStopName").val(),
             'StopType': $("#editModalStopType").val(),
-            'Longitude': lastEditedStopMarker.position.lng(),
-            'Latitude': lastEditedStopMarker.position.lat(),
+            'Longitude': longitude,
+            'Latitude': latitude,
         };
-        editedStops.Modified.push(editedStop);
+        lastEditedStopMarker.setPosition(new google.maps.LatLng(latitude, longitude));
+        if (editedStop.Id !== "") {
+            removeAllPolylines(MAP);
+            $.each(allLines.Lines, function (i, line) {
+                var editedStops = line.Stops.filter((stop) => { return stop.Id === editedStop.Id; });
+                $.each(editedStops, function (i, stop) {
+                    stop.Longitude = longitude;
+                    stop.Latitude = latitude;
+                });
+            });
+            drawAllLines(MAP, allLines.Lines);
+            editedStops.Modified.push(editedStop);
+        }
+        else {
+            removeStopFromAllContainers(editedStop.Id, previousPosition);
+            editedStops.Added.push(editedStop);
+        }        
         $("#editModalStopName").val('');
     }
 
@@ -303,14 +237,17 @@
     }
 
     function addStopAction(coordinates) {
-        lastCoordinates = coordinates;
-        $("#newStopModal").modal({ backdrop: "static" }); 
+        $("#modalStopLongitude").val(coordinates.lng());
+        $("#modalStopLatitude").val(coordinates.lat());
+        $("#newStopModal").modal({ backdrop: "static" });        
     }
 
     function editStopAction(marker) {
         lastEditedStopMarker = marker;
         $("#editModalStopName").val(marker.title);
         $("#editModalStopType").val(marker.stopType);
+        $("#editModalStopLongitude").val(marker.position.lng());
+        $("#editModalStopLatitude").val(marker.position.lat());
         $("#editStopModal").modal({ backdrop: "static" }); 
     }
 
@@ -327,11 +264,7 @@
         }
         else {
             currentTool = '@EditorToolType.None';
-            currentEditedLine = {};
             $(toolButton).css('color', '#818181');
-        }
-        if (currentTool == '@EditorToolType.CreateLine') {
-            $("#newLineModal").modal();
         }
     }
 

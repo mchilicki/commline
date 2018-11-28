@@ -33,7 +33,7 @@ namespace Chilicki.Commline.Application.Managers
 
         private void ChangeLineDeparturesFor(LineDTO lineDTO, IEnumerable<IEnumerable<DepartureDTO>> departuresDTO)
         {
-            Line line = _lineRepository.GetById(lineDTO.Id);
+            Line line = _lineRepository.Find(lineDTO.Id);
             var departures = Mapper.Map
                 <IEnumerable<IEnumerable<DepartureDTO>>,
                 IEnumerable<IEnumerable<Departure>>>

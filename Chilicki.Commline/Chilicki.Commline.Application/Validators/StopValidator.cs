@@ -20,7 +20,7 @@ namespace Chilicki.Commline.Application.Validators
         public bool Validate(StopDTO stop)
         {
             if (stop == null)
-                throw new ArgumentNullException(nameof(stop));
+                throw new ArgumentException(ValidationResources.StopIsEmpty);
             if (string.IsNullOrWhiteSpace(stop.Name))
                 throw new ArgumentException(ValidationResources.StopNameEmpty);
             if (stop.Latitude == 0 && stop.Longitude == 0)
@@ -39,19 +39,12 @@ namespace Chilicki.Commline.Application.Validators
 
         public bool ValidateEdit(StopDTO stop)
         {
-            if (stop == null)
-                throw new ArgumentNullException(nameof(stop));
-            if (string.IsNullOrWhiteSpace(stop.Name))
-                throw new ArgumentException(ValidationResources.StopNameEmpty);
-            if (stop.Latitude == 0 && stop.Longitude == 0)
-                throw new ArgumentException(ValidationResources.InvalidCoordinates);
+            Validate(stop);
             if (!_stopRepository.DoesStopWithIdExist(stop.Id))
                 throw new ArgumentException(ValidationResources.StopDoesntExist);
-            if (_stopRepository.GetById(stop.Id).StopType != stop.StopType &&
+            if (_stopRepository.Find(stop.Id).StopType != stop.StopType &&
                 _stopRepository.IsStopConnectedToAnyLine(stop.Id))
                 throw new ArgumentException(ValidationResources.StopTypeCannotBeEditedWhenItsInPreviousTypeLine);
-            //if (_stopRepository.IsStopConnectedToAnyLine(stop.Id))
-            //    throw new ArgumentException(ValidationResources.StopIsConnectedToLine);
             return true;
         }
 
@@ -67,7 +60,7 @@ namespace Chilicki.Commline.Application.Validators
         public bool ValidateRemove(StopDTO stop)
         {
             if (stop == null)
-                throw new ArgumentNullException(nameof(stop));
+                throw new ArgumentException(ValidationResources.StopIsEmpty);
             if (!_stopRepository.DoesStopWithIdExist(stop.Id))
                 throw new ArgumentException(ValidationResources.StopDoesntExist);
             if (_stopRepository.IsStopConnectedToAnyLine(stop.Id))

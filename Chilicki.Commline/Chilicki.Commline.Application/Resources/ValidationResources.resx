@@ -180,4 +180,13 @@
   <data name="StopTypeCannotBeEditedWhenItsInPreviousTypeLine" xml:space="preserve">
     <value>Stop type cannot be edited when it's in previous type line</value>
   </data>
+  <data name="LineIsEmpty" xml:space="preserve">
+    <value>Line is empty</value>
+  </data>
+  <data name="StopIsEmpty" xml:space="preserve">
+    <value>Stop is empty</value>
+  </data>
+  <data name="LineDoesntExist" xml:space="preserve">
+    <value>Line doesn't exist</value>
+  </data>
 </root>

@@ -34,7 +34,8 @@
 
     <div id="mainMenuSidenav" class="sidenav primary-element">
         @Html.ActionLink(BaseResources.HomePage, "Index", "Home")
-        @Html.ActionLink(BaseResources.Editor, "Index", "Editor")
+        @Html.ActionLink(BaseResources.StopEditor, "Stops", "Editor")
+        @Html.ActionLink(BaseResources.LineEditor, "Lines", "Editor")
         <a href="#" onclick='$("#enterDeparturesModal").modal();'>@BaseResources.Departures</a>
         @Html.ActionLink(BaseResources.Search, "Index", "Search")
     </div>

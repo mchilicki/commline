@@ -165,8 +165,14 @@
   <data name="GiveStopDetails" xml:space="preserve">
     <value>Please enter details for new stop</value>
   </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
   <data name="LineColor" xml:space="preserve">
     <value>Line color</value>
+  </data>
+  <data name="LineEdition" xml:space="preserve">
+    <value>Please enter edited details for this line</value>
   </data>
   <data name="LineName" xml:space="preserve">
     <value>Line name</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="LineType" xml:space="preserve">
     <value>Line type</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
   </data>
   <data name="NewLineCreation" xml:space="preserve">
     <value>Please enter details for new line</value>

@@ -205,11 +205,29 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string Latitude {
+            get {
+                return ResourceManager.GetString("Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line color.
         /// </summary>
         public static string LineColor {
             get {
                 return ResourceManager.GetString("LineColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter edited details for this line.
+        /// </summary>
+        public static string LineEdition {
+            get {
+                return ResourceManager.GetString("LineEdition", resourceCulture);
             }
         }
         
@@ -246,6 +264,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string LineType {
             get {
                 return ResourceManager.GetString("LineType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string Longitude {
+            get {
+                return ResourceManager.GetString("Longitude", resourceCulture);
             }
         }
         
