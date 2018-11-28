@@ -12,6 +12,13 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         {
         }
 
+        public bool DoesStopWithIdExist(long id)
+        {
+            return _entities
+                .Where(p => p.Id == id)
+                .Count() == 1;
+        }
+
         public IEnumerable<Stop> GetAllConnectedToAnyLine()
         {
             return _entities
@@ -39,14 +46,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                 currentStopNumber++;
             }
             return currentStopNumber;
-        }
-
-        public bool DoesStopWithIdExist(long id)
-        {
-            return _entities
-                .Where(p => p.Id == id)
-                .Count() == 1;
-        }       
+        }             
         
         public bool IsStopConnectedToAnyLine(long id)
         {

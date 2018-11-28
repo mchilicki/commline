@@ -15,6 +15,13 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             _stopRepository = stopRepository;
         }
 
+        public bool DoesLineWithIdExist(long lineId)
+        {
+            return _entities
+                .Where(p => p.Id == lineId)
+                .Count() == 1;
+        }
+
         public int GetCountByLineName(string lineName)
         {
             return _entities

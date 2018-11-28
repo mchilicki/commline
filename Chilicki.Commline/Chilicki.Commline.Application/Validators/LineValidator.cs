@@ -9,43 +9,45 @@ using System.Linq;
 
 namespace Chilicki.Commline.Application.Validators
 {
-    public class LineValidator : IValidator<LineDTO>
+    public class LineValidator : IValidator<LineDTO>, IEditValidator<LineDTO>, IRemoveValidator<LineDTO>
     {
         readonly LineRepository _lineRepository;
-        readonly StopLineTypesMatchChecker _stopLineTypesMatchCheckingService;
+        readonly StopLineTypesMatchChecker _stopLineTypesMatchChecker;
 
         public LineValidator(
             LineRepository lineRepository,
-            StopLineTypesMatchChecker stopLineTypesMatchCheckingService)
+            StopLineTypesMatchChecker stopLineTypesMatchChecker)
         {
             _lineRepository = lineRepository;
-            _stopLineTypesMatchCheckingService = stopLineTypesMatchCheckingService;
+            _stopLineTypesMatchChecker = stopLineTypesMatchChecker;
         }
 
-        public bool Validate(LineDTO lineDTO)
+        public bool Validate(LineDTO line)
         {
-            if (string.IsNullOrEmpty(lineDTO.Name))
+            if (line == null)
+                throw new ArgumentException(ValidationResources.LineIsEmpty);
+            if (string.IsNullOrEmpty(line.Name))
                 throw new ArgumentException(ValidationResources.LineNameIsEmpty);      
-            foreach (var stopType in lineDTO.Stops.Select(p => p.StopType))
+            foreach (var stopType in line.Stops.Select(p => p.StopType))
             {
-                if (!_stopLineTypesMatchCheckingService.AreStopAndLineTypesMatching
-                        (stopType, lineDTO.LineType))
+                if (!_stopLineTypesMatchChecker.AreStopAndLineTypesMatching
+                        (stopType, line.LineType))
                     throw new ArgumentException(ValidationResources.StopLineTypesDoNotMatch);                
             }
-            if (lineDTO.IsCircular)
+            if (line.IsCircular)
             {
-                if (lineDTO.Stops == null || lineDTO.Stops.Count() < 3)
+                if (line.Stops == null || line.Stops.Count() < 3)
                     throw new ArgumentException(ValidationResources.CircularLineStopsLessThanThree);
-                if (lineDTO.Stops.First().Id != lineDTO.Stops.Last().Id)
+                if (line.Stops.First().Id != line.Stops.Last().Id)
                     throw new ArgumentException(ValidationResources.CircularLineMustStartAndEndInTheSameStop);
-                if (_lineRepository.GetCountByLineName(lineDTO.Name) >= 1)
+                if (_lineRepository.GetCountByLineName(line.Name) >= 1)
                     throw new ArgumentException(ValidationResources.OnlyOneCircularLineCanExist);
             }
             else
             {
-                if (lineDTO.Stops == null || lineDTO.Stops.Count() < 2)
+                if (line.Stops == null || line.Stops.Count() < 2)
                     throw new ArgumentException(ValidationResources.LineStopsLessThanTwo);
-                if (_lineRepository.GetCountByLineName(lineDTO.Name) >= 2)
+                if (_lineRepository.GetCountByLineName(line.Name) >= 2)
                     throw new ArgumentException(ValidationResources.OnlyTwoOneWaysLinesCanExist);
             }
             return true;
@@ -56,6 +58,41 @@ namespace Chilicki.Commline.Application.Validators
             foreach (var line in lineList)
             {
                 Validate(line);
+            }
+            return true;
+        }
+
+        public bool ValidateEdit(LineDTO line)
+        {
+            Validate(line);
+            if (!_lineRepository.DoesLineWithIdExist(line.Id))
+                throw new ArgumentException(ValidationResources.LineDoesntExist);
+            return true;
+        }
+
+        public bool ValidateEdit(IEnumerable<LineDTO> lineList)
+        {
+            foreach (var line in lineList)
+            {
+                ValidateEdit(line);
+            }
+            return true;
+        }
+
+        public bool ValidateRemove(LineDTO line)
+        {
+            if (line == null)
+                throw new ArgumentException(ValidationResources.LineIsEmpty);
+            if (!_lineRepository.DoesLineWithIdExist(line.Id))
+                throw new ArgumentException(ValidationResources.LineDoesntExist);
+            return true;
+        }
+
+        public bool ValidateRemove(IEnumerable<LineDTO> lineList)
+        {
+            foreach (var line in lineList)
+            {
+                ValidateRemove(line);
             }
             return true;
         }

@@ -24,8 +24,8 @@ namespace Chilicki.Commline.Application.Search.ManualMappers
         {            
             return new SearchInput()
             {
-                StartStop = _stopRepository.GetById(searchInput.StartStopId),
-                DestinationStop = _stopRepository.GetById(searchInput.DestinationStopId),
+                StartStop = _stopRepository.Find(searchInput.StartStopId),
+                DestinationStop = _stopRepository.Find(searchInput.DestinationStopId),
                 StartTime = searchInput.StartTime,
                 StartDate = searchInput.StartDate,
             };

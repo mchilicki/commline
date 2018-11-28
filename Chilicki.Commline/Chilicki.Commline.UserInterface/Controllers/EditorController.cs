@@ -74,12 +74,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
         {
             try
             {
-                if (linesEditionModel.Added != null)
-                    _lineManager.Create(linesEditionModel.Added);
-                //if (stopsEditionModel.Modified != null)
-                //_stopManager.Edit(stopsEditionModel.Modified);
-                //if (stopsEditionModel.Deleted != null)
-                //_stopManager.Delete(stopsEditionModel.Deleted);
+                _editorManager.EditLines(linesEditionModel);
             }
             catch (Exception ex)
             {

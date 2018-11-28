@@ -18,12 +18,12 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
             _entities = database.Set<TEntity>();
         }
 
-        public virtual int GetCount()
+        public virtual int Count()
         {
             return _entities.Count();
         }
 
-        public virtual TEntity GetById(long id)
+        public virtual TEntity Find(long id)
         {
             return _entities.Find(id);
         }

@@ -124,6 +124,24 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line doesn&apos;t exist.
+        /// </summary>
+        internal static string LineDoesntExist {
+            get {
+                return ResourceManager.GetString("LineDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line is empty.
+        /// </summary>
+        internal static string LineIsEmpty {
+            get {
+                return ResourceManager.GetString("LineIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line name is empty.
         /// </summary>
         internal static string LineNameIsEmpty {
@@ -192,6 +210,15 @@ namespace Chilicki.Commline.Application.Resources {
         internal static string StopIsConnectedToLine {
             get {
                 return ResourceManager.GetString("StopIsConnectedToLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop is empty.
+        /// </summary>
+        internal static string StopIsEmpty {
+            get {
+                return ResourceManager.GetString("StopIsEmpty", resourceCulture);
             }
         }
         
