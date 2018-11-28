@@ -114,7 +114,7 @@ namespace Chilicki.Commline.Application.Managers
         {            
             lineDTO = _lineCorrector.CorrectLine(lineDTO);
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);            
-            _lineRepository.Insert(line);                           
+            _lineRepository.Add(line);                           
             _routeStopRepository.InsertForLineAndStops(line, 
                 Mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
         }

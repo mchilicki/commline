@@ -31,7 +31,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
             return _entities;
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             _entities.Add(entity);
             _database.SaveChanges();

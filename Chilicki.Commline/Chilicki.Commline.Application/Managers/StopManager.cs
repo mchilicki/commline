@@ -77,7 +77,7 @@ namespace Chilicki.Commline.Application.Managers
         {
             var stop = Mapper.Map<StopDTO, Stop>(stopDTO);
             stop.StopNumber = _stopRepository.GetNextStopNumberForStopName(stopDTO.Name);
-            _stopRepository.Insert(stop);
+            _stopRepository.Add(stop);
         }
 
         public void Edit(IEnumerable<StopDTO> stopDTOs)
