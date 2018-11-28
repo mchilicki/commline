@@ -44,7 +44,7 @@
 
         function initializeMap() {
             google.maps.visualRefresh = true;
-            var Tychy = new google.maps.LatLng(50.120965, 19.015120);
+            var mapStartCenterPoint = new google.maps.LatLng(50.120965, 19.015120);
             var styles =
                 [
                     {
@@ -85,7 +85,7 @@
             var styledMap = new google.maps.StyledMapType(styles, { name: '@ViewData["viewName"]' });
             var mapOptions = {
                 zoom: 13,
-                center: Tychy,
+                center: mapStartCenterPoint,
                 mapTypeControlOptions:
                     {
                         mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
@@ -134,7 +134,7 @@
         }
 
         function drawMarker(map, id, stopName, coordinates, stopType, stationNumber) {
-            var stopIcon = getStopIconByStopType(stopType);
+            var stopIcon = stopIcons[stopType];
             var stopMarker = new google.maps.Marker({
                 'position': coordinates,
                 'map': map,
@@ -195,9 +195,6 @@
             $.each(stopList, function (i, stop) {
                 stopLocations.push(new google.maps.LatLng(stop.Latitude, stop.Longitude));
             })
-
-            if (color === null)
-                color = getRandomColor();
 
             var stopPath = new google.maps.Polyline({
                 path: stopLocations,
@@ -295,19 +292,6 @@
                     drawAllStops(MAP, result.Stops);
                 }
             });
-        }
-
-        function getStopIconByStopType(stopType) {
-            return stopIcons[stopType];
-        }
-
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
     </script>
 </section>

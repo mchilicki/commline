@@ -60,6 +60,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -77,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Databases\CommlineDBContext.cs" />
+    <Compile Include="IO\Options\SerializationOptions.cs" />
+    <Compile Include="IO\SettingsDeserializer.cs" />
+    <Compile Include="IO\SettingsSerializer.cs" />
     <Compile Include="Migrations\201809252002573_CreateDatabase.cs" />
     <Compile Include="Migrations\201809252002573_CreateDatabase.Designer.cs">
       <DependentUpon>201809252002573_CreateDatabase.cs</DependentUpon>
@@ -114,6 +120,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings\CommlineSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj">
@@ -159,7 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MigrationsScripts.txt" />
-    <Content Include="SqlScripts\2018-09-29-InsertStops.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

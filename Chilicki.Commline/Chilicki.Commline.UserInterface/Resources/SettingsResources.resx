@@ -117,91 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions" xml:space="preserve">
-    <value>Actions</value>
+  <data name="BackToDefaultSettings" xml:space="preserve">
+    <value>Back to default settings</value>
   </data>
-  <data name="Affirm" xml:space="preserve">
-    <value>Affirm</value>
+  <data name="CenterPointLatitude" xml:space="preserve">
+    <value>Center map point latitude</value>
   </data>
-  <data name="AppName" xml:space="preserve">
-    <value>Commline</value>
+  <data name="CenterPointLongitude" xml:space="preserve">
+    <value>Center map point longitude</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="CopyTimesOption1" xml:space="preserve">
+    <value>Departures copy times option 1</value>
   </data>
-  <data name="Circular" xml:space="preserve">
-    <value>Circular</value>
+  <data name="CopyTimesOption2" xml:space="preserve">
+    <value>Departures copy times option 2</value>
   </data>
-  <data name="Clear" xml:space="preserve">
-    <value>Clear</value>
+  <data name="CopyTimesOption3" xml:space="preserve">
+    <value>Departures copy times option 3</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="MinimumZoomStopsAppear" xml:space="preserve">
+    <value>Minimum zoom stops start to appear</value>
   </data>
-  <data name="Departures" xml:space="preserve">
-    <value>Departures</value>
-  </data>
-  <data name="ErrorOccured" xml:space="preserve">
-    <value>Error occured</value>
-  </data>
-  <data name="HomePage" xml:space="preserve">
-    <value>Home Page</value>
-  </data>
-  <data name="LineEditor" xml:space="preserve">
-    <value>Lines Editor</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="Menu" xml:space="preserve">
-    <value>Menu</value>
-  </data>
-  <data name="NoDetailsMap" xml:space="preserve">
-    <value>No details map</value>
-  </data>
-  <data name="NotSetYet" xml:space="preserve">
-    <value>Not Set Yet</value>
-  </data>
-  <data name="Now" xml:space="preserve">
-    <value>Now</value>
-  </data>
-  <data name="OneWay" xml:space="preserve">
-    <value>One way</value>
-  </data>
-  <data name="ReadonlyLatitude" xml:space="preserve">
-    <value>Latitude:</value>
-  </data>
-  <data name="ReadonlyLineRouteType" xml:space="preserve">
-    <value>Line Route Type:</value>
-  </data>
-  <data name="ReadonlyLongitude" xml:space="preserve">
-    <value>Longitude:</value>
-  </data>
-  <data name="ReadonlyName" xml:space="preserve">
-    <value>Name:</value>
-  </data>
-  <data name="ReadonlyStationNumber" xml:space="preserve">
-    <value>Station Number:</value>
-  </data>
-  <data name="Remove" xml:space="preserve">
-    <value>Remove</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="SearchAsAction" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="StopEditor" xml:space="preserve">
-    <value>Stops Editor</value>
-  </data>
-  <data name="Toolbox" xml:space="preserve">
-    <value>Toolbox</value>
+  <data name="StartZoom" xml:space="preserve">
+    <value>Starting map zoom</value>
   </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Application.Correctors;
 using Chilicki.Commline.Application.Managers;
+using Chilicki.Commline.Application.Managers.Settings;
 using Chilicki.Commline.Application.Search.Managers;
 using Chilicki.Commline.Application.Search.ManualMappers;
 using Chilicki.Commline.Application.Search.Validators;
@@ -16,6 +17,7 @@ using Chilicki.Commline.Domain.Search.Services.Path;
 using Chilicki.Commline.Domain.Services.Matching;
 using Chilicki.Commline.Domain.Services.Routes;
 using Chilicki.Commline.Infrastructure.Databases;
+using Chilicki.Commline.Infrastructure.IO;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.UserInterface.Controllers;
 using Ninject;
@@ -83,9 +85,14 @@ namespace Chilicki.Commline.UserInterface.App_Start
             
             _kernel.Bind<SearchInputManualMapper>().ToSelf();
 
+            _kernel.Bind<SettingsManager>().ToSelf();
+            _kernel.Bind<SettingsSerializer>().ToSelf();
+            _kernel.Bind<SettingsDeserializer>().ToSelf();
+
             _kernel.Bind<HomeController>().ToSelf();
             _kernel.Bind<EditorController>().ToSelf();
             _kernel.Bind<SearchController>().ToSelf();
+            _kernel.Bind<SettingsController>().ToSelf();
         }
     }
 }
