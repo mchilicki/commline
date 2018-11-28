@@ -212,18 +212,16 @@
                 temporaryId: temporaryId
             });
 
-            var routeTypeName;
-            if (routeType == true)
-                routeTypeName = '@BaseResources.Circular';
-            else
-                routeTypeName = '@BaseResources.OneWay';
             var lineReadonlyWindow = new google.maps.InfoWindow({
                 content: "<div class='readonlyLineInfoDiv'><h4>" + lineTypes[lineType] + " </br>" +
                     '@BaseResources.ReadonlyName ' + lineName + "</h4></div>"
             });
             google.maps.event.addListener(stopPath, 'click', function (event) {
-                if (currentTool == '@EditorToolType.EditLine') {
+                if (currentTool === '@EditorToolType.EditLine') {
                     editLineAction(stopPath);                    
+                }
+                else if (currentTool === '@EditorToolType.RemoveLine') {
+                    removeLineAction(stopPath); 
                 }
                 else {
                     lineReadonlyWindow.setPosition(event.latLng);

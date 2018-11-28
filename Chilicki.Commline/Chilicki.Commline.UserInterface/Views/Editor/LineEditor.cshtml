@@ -60,7 +60,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                         onclick="addLineToAddedContainer()">
-                    @BaseResources.Save
+                    @BaseResources.Affirm
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"
                         onclick="cancelLineTool()">
@@ -96,7 +96,34 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                         onclick="addLineToEditedContainer()">
-                    @BaseResources.Save
+                    @BaseResources.Affirm
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    @BaseResources.Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="removeLineModal" class="modal fade primary-element" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@EditorResources.LineEdition</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <input id="removeModalLineId" type="text" hidden />
+                </p>
+                <p>
+                    <input id="removeModalLineTemporaryId" type="text" hidden />
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="removeLineAndAddtoRemovedContainer()">
+                    @BaseResources.Affirm
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     @BaseResources.Cancel
@@ -200,9 +227,25 @@
         $("#editModalLineName").val('');
     }
 
+    function removeLineAndAddtoRemovedContainer() {
+        var temporaryId = $("#removeModalLineTemporaryId").val();
+        if (temporaryId === "") {
+            var removedLine = {
+                "Id": $("#removeModalLineId").val()
+            };            
+            removeLineFromAllContainers(removedLine.Id, "");
+            editedLines.Removed.push(removedLine); 
+        }
+        else {
+            removeLineFromAllContainers("", temporaryId);
+        }
+        removeAllPolylines(MAP);
+        drawAllLines(MAP, allLines.Lines);
+    }
+
     function cancelLineTool() {
         currentEditedLine = {};
-        disableAllTools()
+        disableAllTools();
     }
 
     function addLineAction() {
@@ -218,19 +261,24 @@
         $("#editLineModal").modal();
     }
 
+    function removeLineAction(polyline) {
+        $("#removeModalLineId").val(polyline.id);
+        $("#removeModalLineTemporaryId").val(polyline.temporaryId);
+        $("#removeLineModal").modal();
+    }
+
     function removeLineFromAllContainers(lineId, lineTemporaryId) {
         allLines.Lines = allLines.Lines.filter(function (line) {
-            return (line.Id === "" || line.Id !== lineId) &&
-                (line.TemporaryId === "" || line.TemporaryId !== lineTemporaryId);
+            return line.Id != lineId && line.TemporaryId != lineTemporaryId;
         });
         editedLines.Added = editedLines.Added.filter(function (line) {
-            return line.TemporaryId === "" || line.TemporaryId !== lineTemporaryId;
+            return line.TemporaryId != lineTemporaryId;
         });
         editedLines.Modified = editedLines.Modified.filter(function (line) {
-            return line.Id !== lineId;
+            return line.Id != lineId;
         });
         editedLines.Removed = editedLines.Removed.filter(function (line) {
-            return line.Id !== lineId;
+            return line.Id != lineId;
         });
     }
 

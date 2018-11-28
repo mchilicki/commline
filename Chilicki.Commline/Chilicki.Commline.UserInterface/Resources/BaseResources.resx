@@ -183,6 +183,9 @@
   <data name="ReadonlyStationNumber" xml:space="preserve">
     <value>Station Number:</value>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
