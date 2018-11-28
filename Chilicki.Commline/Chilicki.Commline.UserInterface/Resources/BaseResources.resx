@@ -159,11 +159,29 @@
   <data name="NoDetailsMap" xml:space="preserve">
     <value>No details map</value>
   </data>
+  <data name="NotSetYet" xml:space="preserve">
+    <value>Not Set Yet</value>
+  </data>
   <data name="Now" xml:space="preserve">
     <value>Now</value>
   </data>
   <data name="OneWay" xml:space="preserve">
     <value>One way</value>
+  </data>
+  <data name="ReadonlyIsCircular" xml:space="preserve">
+    <value>Is Circular:</value>
+  </data>
+  <data name="ReadonlyLatitude" xml:space="preserve">
+    <value>Latitude:</value>
+  </data>
+  <data name="ReadonlyLongitude" xml:space="preserve">
+    <value>Longitude:</value>
+  </data>
+  <data name="ReadonlyName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="ReadonlyStationNumber" xml:space="preserve">
+    <value>Station Number:</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>

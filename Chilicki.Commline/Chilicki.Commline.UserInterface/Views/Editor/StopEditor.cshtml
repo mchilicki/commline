@@ -144,10 +144,7 @@
         $("#saveModification").click(saveStops);
         $("#searchButton").hide();
         switchToolboxSidenav();
-        if (currentView === '@CommlineViewType.Search')
-            loadAllStops();
-        else 
-            loadAllLines();
+        loadAllLines();
     });
 
     function saveStops() {

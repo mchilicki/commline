@@ -4,9 +4,16 @@
     width: 100%;
 }
 
-.infoDiv {
-    height: 100px;
-    width: 200px;
+.readonlyInfoDiv {
+    height: 110px;
+    width: 220px;
+    -webkit-user-select: none;
+    background-color: white;
+}
+
+.searchInfoDiv {
+    height: 140px;
+    width: 220px;
     -webkit-user-select: none;
     background-color: white;
 }

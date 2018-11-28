@@ -187,6 +187,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not Set Yet.
+        /// </summary>
+        public static string NotSetYet {
+            get {
+                return ResourceManager.GetString("NotSetYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now.
         /// </summary>
         public static string Now {
@@ -201,6 +210,51 @@ namespace Chilicki.Commline.UserInterface.Resources {
         public static string OneWay {
             get {
                 return ResourceManager.GetString("OneWay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Circular:.
+        /// </summary>
+        public static string ReadonlyIsCircular {
+            get {
+                return ResourceManager.GetString("ReadonlyIsCircular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude:.
+        /// </summary>
+        public static string ReadonlyLatitude {
+            get {
+                return ResourceManager.GetString("ReadonlyLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude:.
+        /// </summary>
+        public static string ReadonlyLongitude {
+            get {
+                return ResourceManager.GetString("ReadonlyLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string ReadonlyName {
+            get {
+                return ResourceManager.GetString("ReadonlyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Station Number:.
+        /// </summary>
+        public static string ReadonlyStationNumber {
+            get {
+                return ResourceManager.GetString("ReadonlyStationNumber", resourceCulture);
             }
         }
         

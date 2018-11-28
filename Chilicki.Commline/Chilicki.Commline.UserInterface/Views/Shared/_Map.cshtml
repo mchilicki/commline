@@ -133,7 +133,7 @@
             // Do nothing
         }
 
-        function drawMarker(map, id, stopName, coordinates, stopType) {
+        function drawMarker(map, id, stopName, coordinates, stopType, stationNumber) {
             var stopIcon = getStopIconByStopType(stopType);
             var stopMarker = new google.maps.Marker({
                 'position': coordinates,
@@ -145,11 +145,21 @@
             });
 
             var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h4>" + stopTypes[stopType] + " " + stopName + "</h4></div>"
+                content: "<div class='infoDiv'><h4>" + stopTypes[stopType] + " </br>" + stopName + "</h4></div>"
+            });
+
+            if (stationNumber === undefined)
+                stationNumber = '@BaseResources.NotSetYet';
+            var readonlyWindow = new google.maps.InfoWindow({
+                content: "<div class='readonlyInfoDiv'><h4>" + stopTypes[stopType] + " </br>" +
+                    "@BaseResources.ReadonlyName " + stopName + "</h4><h5>" +
+                    "@BaseResources.ReadonlyStationNumber " + stationNumber + "</br>" +
+                    "@BaseResources.ReadonlyLongitude " + coordinates.lng() + "</br>" +
+                    "@BaseResources.ReadonlyLatitude " + coordinates.lat() + "</br></h5></div>"
             });
             
             var searchWindow = new google.maps.InfoWindow({
-                content: '<div class="infoDiv"><h4>' + stopTypes[stopType] + ' ' + stopName + '</h4>' +
+                content: '<div class="searchInfoDiv"><h4>' + stopTypes[stopType] + ' </br>' + stopName + '</h4>' +
                     '<button type="button" class="btn btn-default" onclick="setStopAsStart(' + stopMarker.id + ', &quot;' + stopMarker.title + '&quot;)">@SearchResources.SetAsStartStop</button><br />' +
                     '<button type="button" class="btn btn-default" onclick="setStopAsEnd(' + stopMarker.id + ', &quot;' + stopMarker.title + '&quot;)">@SearchResources.SetAsEndStop</button>' +
                             '</div >'
@@ -161,7 +171,7 @@
                 }
                 else {
                     if (currentTool == '@EditorToolType.None')
-                        infowindow.open(map, stopMarker);
+                        readonlyWindow.open(map, stopMarker);
                     if (currentTool == '@EditorToolType.CreateLine')
                         addStopToLine(stopMarker);
                     if (currentTool == '@EditorToolType.EditStop')
@@ -176,7 +186,7 @@
 
         function drawAllStops(map, stops) {
             $.each(stops, function (stopIndex, stop) {
-                drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude), stop.StopType);
+                drawMarker(map, stop.Id, stop.Name, new google.maps.LatLng(stop.Latitude, stop.Longitude), stop.StopType, stop.SiteNumber);
             });
         }
 

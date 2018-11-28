@@ -60,7 +60,7 @@
                     @BaseResources.Save
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"
-                        onclick="cancelNewLineCreation()">
+                        onclick="cancelLineTool()">
                     @BaseResources.Cancel
                 </button>
             </div>
@@ -76,20 +76,15 @@
             </div>
             <div class="modal-body">
                 <p>
+                    <input id="editModalLineId" type="text" hidden />
+                </p>
+                <p>
                     <label for="editModalLineName">@EditorResources.LineName</label>
                     <input id="editModalLineName" type="text" class="form-control" />
                 </p>
                 <p>
-                    <label for="editModalLineType">@EditorResources.LineType</label>
-                    @Html.DropDownList("editModalLineType", dropdownSelectedLineType.ToSelectList(), new { @class = "form-control" })
-                </p>
-                <p>
                     <label for="editModalLineColor">@EditorResources.LineColor</label>
                     <input id="editModalLineColor" type="color" class="form-control" />
-                </p>
-                <p>
-                    <label for="editModalLineRouteType">@EditorResources.LineRouteType</label>
-                    @Html.DropDownList("editModalLineRouteType", new SelectList(lineRouteTypes, "Value", "Text"), new { @class = "form-control" })
                 </p>
             </div>
             <div class="modal-footer">
@@ -121,10 +116,7 @@
         $("#saveModification").click(saveLines);
         $("#searchButton").hide();
         switchToolboxSidenav();
-        if (currentView === '@CommlineViewType.Search')
-            loadAllStops();
-        else 
-            loadAllLines();
+        loadAllLines();
     });
 
     function saveLines() {
@@ -172,11 +164,9 @@
 
     function addLineToEditedContainer() {
         var editedLine = {
+            'Id': $("#editModalLineId").val(),
             'Name': $("#editModalLineName").val(),
-            'LineType': $("#editModalLineType").val(),
-            //'Stops': [],
             'Color': $("#editModalLineColor").val(),
-            'IsCircular': $("#editModalLineRouteType").val(),
         };
         //allLines.Lines.filter
         editedLines.Modified.push(editedLine);
@@ -185,20 +175,19 @@
         $("#editModalLineNumber").val('');
     }
 
-    function cancelNewLineCreation() {
+    function cancelLineTool() {
         currentEditedLine = {};
-        setCurrentTool("#createLineButton", '@EditorToolType.None');
+        disableAllTools()
     }
 
     function addLineAction() {
         $("#newLineModal").modal();
     }
 
-    function editLineAction(polyline) {        
+    function editLineAction(polyline) {   
+        $("#editModalLineId").val(polyline.id);
         $("#editModalLineName").val(polyline.name);
-        $("#editModalLineType").val(polyline.type);
         $("#editModalLineColor").val(polyline.color);
-        $("#editModalLineRouteType").val(polyline.routeType);
         $("#editLineModal").modal();
     }
 
@@ -215,7 +204,7 @@
     }
 
     function setCurrentTool(toolButton, newTool) {
-        $(".toolbox-tool-button").css('color', '#818181')
+        $(".toolbox-tool-button").css('color', '#818181');
         if (newTool != '@EditorToolType.None' && currentTool != newTool) {
             currentTool = newTool;
             $(toolButton).css('color', '#ffffff');
@@ -228,6 +217,11 @@
         if (currentTool == '@EditorToolType.CreateLine') {
             addLineAction();
         }
+    }
+
+    function disableAllTools() {
+        $(".toolbox-tool-button").css('color', '#818181');
+        currentTool = '@EditorToolType.None';
     }
 
     function switchToolboxSidenav() {
