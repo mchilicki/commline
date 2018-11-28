@@ -1,10 +1,8 @@
 ﻿using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Managers.Settings;
 using Chilicki.Commline.Infrastructure.Settings;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
