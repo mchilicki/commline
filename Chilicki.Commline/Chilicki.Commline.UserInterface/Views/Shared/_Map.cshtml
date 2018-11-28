@@ -2,7 +2,7 @@
 @using Chilicki.Commline.UserInterface.HtmlExtensions
 @using Chilicki.Commline.UserInterface.Resources
 
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyBWGMUQJXHJ6E0oOLMs-4Ps1hNCPo3zcno&sensor=true" type="text/javascript"></script>
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyBWGMUQJXHJ6E0oOLMs-4Ps1hNCPo3zcno" type="text/javascript"></script>
 
 <br />
 <div id="map_canvas"></div>
@@ -210,16 +210,23 @@
                 color: color,
                 routeType: routeType
             });
-            var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h4>" + lineTypes[lineType] + " " + lineName + "</h4></div>"
+
+            var routeTypeName;
+            if (routeType == true)
+                routeTypeName = '@BaseResources.Circular';
+            else
+                routeTypeName = '@BaseResources.OneWay';
+            var lineReadonlyWindow = new google.maps.InfoWindow({
+                content: "<div class='readonlyLineInfoDiv'><h4>" + lineTypes[lineType] + " </br>" +
+                    '@BaseResources.ReadonlyName ' + lineName + "</h4></div>"
             });
             google.maps.event.addListener(stopPath, 'click', function (event) {
                 if (currentTool == '@EditorToolType.EditLine') {
                     editLineAction(stopPath);                    
                 }
                 else {
-                    infowindow.setPosition(event.latLng);
-                    infowindow.open(map);
+                    lineReadonlyWindow.setPosition(event.latLng);
+                    lineReadonlyWindow.open(map);
                 }                
             });
             polylineList.push(stopPath);

@@ -1,4 +1,5 @@
-﻿using Chilicki.Commline.Application.Managers;
+﻿using Chilicki.Commline.Application.Correctors;
+using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Search.Managers;
 using Chilicki.Commline.Application.Search.ManualMappers;
 using Chilicki.Commline.Application.Search.Validators;
@@ -74,6 +75,8 @@ namespace Chilicki.Commline.UserInterface.App_Start
             _kernel.Bind<LineValidator>().ToSelf();
             _kernel.Bind<DeparturesValidator>().ToSelf();
             _kernel.Bind<StopValidator>().ToSelf();
+
+            _kernel.Bind<LineCorrector>().ToSelf();
             
             _kernel.Bind<SearchInputManualMapper>().ToSelf();
 

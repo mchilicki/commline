@@ -141,7 +141,7 @@
                 var lastAddedStop = currentEditedLine.Stops[currentEditedLine.Stops.length - 1];
                 if (lastAddedStop !== undefined) {
                     var twoLastStops = [lastAddedStop, data];
-                    drawLine(MAP, currentEditedLine.Name, currentEditedLine.LineType, twoLastStops, currentEditedLine.Color);
+                    drawLine(MAP, currentEditedLine.Id, currentEditedLine.Name, currentEditedLine.LineType, twoLastStops, currentEditedLine.Color, currentEditedLine.IsCircular);
                 }                
                 currentEditedLine.Stops.push(data);
             });

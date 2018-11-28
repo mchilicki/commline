@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Chilicki.Commline.Application.Correctors;
 using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
@@ -11,22 +12,25 @@ namespace Chilicki.Commline.Application.Managers
     {
         readonly LineRepository _lineRepository;
         readonly StopManager _stopManager;
-        readonly RouteStopRepository _routeStopRepository;
-        readonly LineValidator _lineValidator;
+        readonly RouteStopRepository _routeStopRepository;        
         readonly DepartureRepository _departureRepository;
+        readonly LineValidator _lineValidator;
+        readonly LineCorrector _lineCorrector;
 
         public LineManager(
             LineRepository lineRepository, 
             StopManager stopManager, 
             RouteStopRepository routeStopRepository,
             DepartureRepository departureRepository,
-            LineValidator lineValidator)
+            LineValidator lineValidator,
+            LineCorrector lineCorrector)
         {
             _lineRepository = lineRepository;
             _stopManager = stopManager;
             _routeStopRepository = routeStopRepository;
             _lineValidator = lineValidator;
             _departureRepository = departureRepository;
+            _lineCorrector = lineCorrector;
         }
 
         public LineDTO GetById(long id)
@@ -104,6 +108,7 @@ namespace Chilicki.Commline.Application.Managers
         public void Create(LineDTO lineDTO)
         {
             _lineValidator.Validate(lineDTO);
+            lineDTO = _lineCorrector.CorrectLine(lineDTO);
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);            
             _lineRepository.Insert(line);                           
             _routeStopRepository.InsertForLineAndStops(line, 

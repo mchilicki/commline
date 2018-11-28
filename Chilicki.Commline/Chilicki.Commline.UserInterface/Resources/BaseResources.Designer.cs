@@ -214,20 +214,20 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is Circular:.
-        /// </summary>
-        public static string ReadonlyIsCircular {
-            get {
-                return ResourceManager.GetString("ReadonlyIsCircular", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Latitude:.
         /// </summary>
         public static string ReadonlyLatitude {
             get {
                 return ResourceManager.GetString("ReadonlyLatitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Route Type:.
+        /// </summary>
+        public static string ReadonlyLineRouteType {
+            get {
+                return ResourceManager.GetString("ReadonlyLineRouteType", resourceCulture);
             }
         }
         

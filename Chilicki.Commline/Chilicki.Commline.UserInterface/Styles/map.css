@@ -11,6 +11,13 @@
     background-color: white;
 }
 
+.readonlyLineInfoDiv {
+    height: 80px;
+    width: 220px;
+    -webkit-user-select: none;
+    background-color: white;
+}
+
 .searchInfoDiv {
     height: 140px;
     width: 220px;

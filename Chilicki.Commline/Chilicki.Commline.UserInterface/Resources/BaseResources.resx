@@ -168,11 +168,11 @@
   <data name="OneWay" xml:space="preserve">
     <value>One way</value>
   </data>
-  <data name="ReadonlyIsCircular" xml:space="preserve">
-    <value>Is Circular:</value>
-  </data>
   <data name="ReadonlyLatitude" xml:space="preserve">
     <value>Latitude:</value>
+  </data>
+  <data name="ReadonlyLineRouteType" xml:space="preserve">
+    <value>Line Route Type:</value>
   </data>
   <data name="ReadonlyLongitude" xml:space="preserve">
     <value>Longitude:</value>
