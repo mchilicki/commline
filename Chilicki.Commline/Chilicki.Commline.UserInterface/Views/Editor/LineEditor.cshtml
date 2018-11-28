@@ -38,8 +38,11 @@
             </div>
             <div class="modal-body">
                 <p>
+                    <input id="modalLineTemporaryId" type="text" hidden />
+                </p>
+                <p>
                     <label for="modalLineName">@EditorResources.LineName</label>
-                    <input id="modalLineName" type="text" class="form-control"/>
+                    <input id="modalLineName" type="text" class="form-control" />
                 </p>
                 <p>
                     <label for="modalLineType">@EditorResources.LineType</label>
@@ -47,7 +50,7 @@
                 </p>
                 <p>
                     <label for="modalLineColor">@EditorResources.LineColor</label>
-                    <input id="modalLineColor" type="color" class="form-control"/>
+                    <input id="modalLineColor" type="color" class="form-control" />
                 </p>
                 <p>
                     <label for="modalLineRouteType">@EditorResources.LineRouteType</label>
@@ -79,6 +82,9 @@
                     <input id="editModalLineId" type="text" hidden />
                 </p>
                 <p>
+                    <input id="editModalLineTemporaryId" type="text" hidden />
+                </p>
+                <p>
                     <label for="editModalLineName">@EditorResources.LineName</label>
                     <input id="editModalLineName" type="text" class="form-control" />
                 </p>
@@ -108,6 +114,8 @@
 
     var lastEditedStopMarker;
     var lastEditedLinePolyline;
+
+    var currentTemporaryId = 0;
 
     $(document).ready(function () {
         $("#toolboxButton").show();
@@ -141,7 +149,9 @@
                 var lastAddedStop = currentEditedLine.Stops[currentEditedLine.Stops.length - 1];
                 if (lastAddedStop !== undefined) {
                     var twoLastStops = [lastAddedStop, data];
-                    drawLine(MAP, currentEditedLine.Id, currentEditedLine.Name, currentEditedLine.LineType, twoLastStops, currentEditedLine.Color, currentEditedLine.IsCircular);
+                    drawLine(MAP, currentEditedLine.Id, currentEditedLine.Name,
+                        currentEditedLine.LineType, twoLastStops, currentEditedLine.Color,
+                        currentEditedLine.IsCircular, currentEditedLine.TemporaryId);
                 }                
                 currentEditedLine.Stops.push(data);
             });
@@ -153,7 +163,8 @@
             'LineType': $("#modalLineType").val(),
             'Stops': [],
             'Color': $("#modalLineColor").val(),
-            'IsCircular': $("#modalLineRouteType").val(),            
+            'IsCircular': $("#modalLineRouteType").val(),
+            'TemporaryId': $("#modalLineTemporaryId").val()
         };
         allLines.Lines.push(newLine);
         editedLines.Added.push(newLine);
@@ -163,16 +174,30 @@
     }
 
     function addLineToEditedContainer() {
-        var editedLine = {
-            'Id': $("#editModalLineId").val(),
-            'Name': $("#editModalLineName").val(),
-            'Color': $("#editModalLineColor").val(),
-        };
-        //allLines.Lines.filter
-        editedLines.Modified.push(editedLine);
-        //currentEditedLine = editedLine;
+        var temporaryId = $("#editModalLineTemporaryId").val();
+        if (temporaryId === "") {
+            var lineId = $("#editModalLineId").val();
+            var editedLine = allLines.Lines.find(function (line) {
+                return line.Id == lineId;
+            });
+            editedLine.Name = $("#editModalLineName").val();
+            editedLine.Color = $("#editModalLineColor").val();
+            removeLineFromAllContainers(editedLine.Id, "");
+            editedLines.Modified.push(editedLine);            
+            allLines.Lines.push(editedLine);
+        } else {
+            var addedLineAndNowEdited = editedLines.Added.find(function (line) {
+                return line.TemporaryId !== null && line.TemporaryId == temporaryId;
+            });
+            addedLineAndNowEdited.Name = $("#editModalLineName").val();
+            addedLineAndNowEdited.Color = $("#editModalLineColor").val();
+            removeLineFromAllContainers("", temporaryId);
+            editedLines.Added.push(addedLineAndNowEdited); 
+            allLines.Lines.push(addedLineAndNowEdited);            
+        }
+        removeAllPolylines(MAP);
+        drawAllLines(MAP, allLines.Lines);
         $("#editModalLineName").val('');
-        $("#editModalLineNumber").val('');
     }
 
     function cancelLineTool() {
@@ -181,6 +206,7 @@
     }
 
     function addLineAction() {
+        $("#modalLineTemporaryId").val(getNewTemporaryLineId());
         $("#newLineModal").modal();
     }
 
@@ -188,19 +214,30 @@
         $("#editModalLineId").val(polyline.id);
         $("#editModalLineName").val(polyline.name);
         $("#editModalLineColor").val(polyline.color);
+        $("#editModalLineTemporaryId").val(polyline.temporaryId);
         $("#editLineModal").modal();
     }
 
-    function removeLineFromAllContainers(lineId, lineName) {
+    function removeLineFromAllContainers(lineId, lineTemporaryId) {
+        allLines.Lines = allLines.Lines.filter(function (line) {
+            return (line.Id === "" || line.Id !== lineId) &&
+                (line.TemporaryId === "" || line.TemporaryId !== lineTemporaryId);
+        });
         editedLines.Added = editedLines.Added.filter(function (line) {
-            return line.Name != lineName;
+            return line.TemporaryId === "" || line.TemporaryId !== lineTemporaryId;
         });
         editedLines.Modified = editedLines.Modified.filter(function (line) {
-            return line.Id != lineId;
+            return line.Id !== lineId;
         });
         editedLines.Removed = editedLines.Removed.filter(function (line) {
-            return line.Id != lineId;
+            return line.Id !== lineId;
         });
+    }
+
+    function getNewTemporaryLineId() {
+        var temporaryId = currentTemporaryId;
+        currentTemporaryId++;
+        return temporaryId;
     }
 
     function setCurrentTool(toolButton, newTool) {

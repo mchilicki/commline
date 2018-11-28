@@ -190,7 +190,7 @@
             });
         }
 
-        function drawLine(map, lineId, lineName, lineType, stopList, color, routeType) {
+        function drawLine(map, lineId, lineName, lineType, stopList, color, routeType, temporaryId) {
             var stopLocations = [];
             $.each(stopList, function (i, stop) {
                 stopLocations.push(new google.maps.LatLng(stop.Latitude, stop.Longitude));
@@ -208,7 +208,8 @@
                 name: lineName,
                 type: lineType,
                 color: color,
-                routeType: routeType
+                routeType: routeType,
+                temporaryId: temporaryId
             });
 
             var routeTypeName;
@@ -261,7 +262,7 @@
 
         function drawAllLines(map, lines) {
             $.each(lines, function (i, line) {
-                drawLine(map, line.Id, line.Name, line.LineType, line.Stops, line.Color, line.IsCircular);
+                drawLine(map, line.Id, line.Name, line.LineType, line.Stops, line.Color, line.IsCircular, line.TemporaryId);
             });
         }
 
