@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {
+    [Authorize]
     public class SearchController : Controller
     {
         readonly SearchManager _searchManager;

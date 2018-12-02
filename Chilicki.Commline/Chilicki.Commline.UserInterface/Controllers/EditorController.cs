@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {
+    [Authorize]
     public class EditorController : Controller
     {
         readonly LineManager _lineManager;
