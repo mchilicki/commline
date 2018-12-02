@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         readonly LineManager _lineManager;
