@@ -2,7 +2,7 @@
 @using Chilicki.Commline.Application.Enums
 
 <div>
-    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.HomePage } })
+    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.HomePage }, { "settings", ViewBag.Settings } })
 </div>
 
 <script>

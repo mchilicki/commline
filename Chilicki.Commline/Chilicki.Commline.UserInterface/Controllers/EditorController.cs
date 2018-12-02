@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Managers;
+using Chilicki.Commline.Application.Managers.Settings;
 using Chilicki.Commline.UserInterface.Resources;
 using Newtonsoft.Json;
 using System;
@@ -15,34 +16,40 @@ namespace Chilicki.Commline.UserInterface.Controllers
         readonly StopManager _stopManager;
         readonly DepartureManager _departureManager;
         readonly EditorManager _editorManager;
+        readonly SettingsManager _settingsManager;
 
         public EditorController(
             LineManager lineManager, 
             StopManager stopManager,
             DepartureManager departureManager,
-            EditorManager editorManager)
+            EditorManager editorManager,
+            SettingsManager settingsManager)
         {
             _lineManager = lineManager;
             _stopManager = stopManager;
             _departureManager = departureManager;
             _editorManager = editorManager;
+            _settingsManager = settingsManager;
         }
 
         public ActionResult Stops()
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
+            TempData["settings"] = _settingsManager.GetSettings();
             return View("StopEditor");
         }
 
         public ActionResult Lines()
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
+            TempData["settings"] = _settingsManager.GetSettings();
             return View("LineEditor");
         }
 
         public ActionResult Departures(long lineId)
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
+            TempData["settings"] = _settingsManager.GetSettings();
             var lineDepartures = _lineManager.GetDeparturesForLine(lineId);
             ViewData["LineDepartures"] = JsonConvert.SerializeObject(lineDepartures);
             return View("Departures", lineDepartures);

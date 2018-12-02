@@ -24,7 +24,7 @@ namespace Chilicki.Commline.Application.Managers.Settings
             {
                 settings = _settingsDeserializer.ReadSettings();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 _settingsSerializer.SaveSettings(settings);
             }
