@@ -33,7 +33,7 @@ namespace Chilicki.Commline.Domain.Search.Services
         public IEnumerable<StopConnection> SearchConnections(SearchInput search, StopGraph graph)
         {
             var vertexFastestConnections = _dijkstraEmptyFastestConnectionsFactory
-                .Create(graph, search.StartStop, search.StartTime);
+                .Create(graph, search);
             var currentVertex = _dijkstraNextVertexResolver.GetFirstVertex(graph, search.StartStop);
             vertexFastestConnections = _dijkstraStopGraphService.SetTransferConnectionsToSimilarVertices(
                     vertexFastestConnections, currentVertex, currentVertex.SimilarStopVertices);

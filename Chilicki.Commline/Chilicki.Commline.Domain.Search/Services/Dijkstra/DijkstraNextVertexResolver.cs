@@ -34,7 +34,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
                     if (!maybeNewFastestConnection.DestinationStop.IsVisited)
                     {
                         if (fastestConnection == null || 
-                            fastestConnection.EndTime > maybeNewFastestConnection.EndTime)
+                            fastestConnection.EndDateTime > maybeNewFastestConnection.EndDateTime)
                         {
                             fastestConnection = maybeNewFastestConnection;
                         }                            

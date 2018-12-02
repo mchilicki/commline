@@ -23,8 +23,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
             {
                 SourceStop = sourceConnection.DestinationStop,
                 DestinationStop = sourceConnection.DestinationStop,
-                StartTime = sourceConnection.EndTime,
-                EndTime = nextConnection.StartTime,
+                StartDateTime = sourceConnection.EndDateTime,
+                EndDateTime = nextConnection.StartDateTime,
                 Line = null,
                 IsTransfer = true,
             };
@@ -33,7 +33,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
         public bool ShouldBeWaitingOnFirstStop
             (SearchInput search, StopConnection firstConnection)
         {
-            return search.StartTime != firstConnection.StartTime;
+            return search.StartFullDate != firstConnection.StartDateTime;
         }
 
         public StopConnection GenerateWaitingAsStopConnection
@@ -43,8 +43,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
             {
                 SourceStop = firstConnection.SourceStop,
                 DestinationStop = firstConnection.SourceStop,
-                StartTime = search.StartTime,
-                EndTime = firstConnection.StartTime,
+                StartDateTime = search.StartFullDate,
+                EndDateTime = firstConnection.StartDateTime,
                 Line = null,
                 IsTransfer = true,
             };

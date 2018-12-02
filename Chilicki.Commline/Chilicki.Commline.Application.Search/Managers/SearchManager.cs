@@ -48,7 +48,7 @@ namespace Chilicki.Commline.Application.Search.Managers
             _searchValidator.Validate(searchInputDTO);
             var searchInput = _searchInputManualMapper.ToDomain(searchInputDTO);
             var stops = _stopRepository.GetAllConnectedToAnyLine();
-            var stopGraph = _graphGenerator.CreateGraph(stops);
+            var stopGraph = _graphGenerator.CreateGraph(stops, searchInput.StartDate);
             var fastestConnections = _connectionSearchEngine.SearchConnections(searchInput, stopGraph);
             var fastestPath = _fastestPathResolver.ResolveFastestPath(searchInput, fastestConnections);
             var fastestPathDTO = Mapper.Map<FastestPath, FastestPathDTO>(fastestPath);

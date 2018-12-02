@@ -72,7 +72,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
                         {
                             var lastAddedConnection = flattenPath.Last();
                             lastAddedConnection.DestinationStop = currentConnection.DestinationStop;
-                            lastAddedConnection.EndTime = currentConnection.EndTime;
+                            lastAddedConnection.EndDateTime = currentConnection.EndDateTime;
                         }
                         else
                         {

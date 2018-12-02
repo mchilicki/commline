@@ -3,6 +3,7 @@ using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using Chilicki.Commline.Domain.Search.Services.GraphFactories.Base;
 using Chilicki.Commline.Domain.Services.Routes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,11 +22,11 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
             _stopConnectionFactory = stopConnectionFactory;
         }
 
-        public StopGraph CreateGraph(IEnumerable<Stop> stops)
+        public StopGraph CreateGraph(IEnumerable<Stop> stops, DateTime day)
         {
             var stopVertices = GenerateEmptyStopVertices(stops);
             stopVertices = FillStopVerticesWithSimilarStopVertices(stopVertices, stops);
-            stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops);            
+            stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops, day);            
             return new StopGraph()
             {
                 StopVertices = stopVertices,
@@ -48,7 +49,7 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
         }
 
         private IEnumerable<StopVertex> FillStopVerticesWithStopConnections
-            (IEnumerable<StopVertex> allStopVertices, IEnumerable<Stop> stops)
+            (IEnumerable<StopVertex> allStopVertices, IEnumerable<Stop> stops, DateTime connectionDay)
         {
             foreach (var vertex in allStopVertices)
             {
@@ -63,8 +64,9 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                                     .First();
                         foreach (var departure in routeStop.Departures)
                         {
+                            // TODO Here use new property IsNextDay on connection creation
                             stopConnections.Add(_stopConnectionFactory.Create(
-                                routeStop, departure, vertex, nextRouteStop, nextVertex));
+                                routeStop, departure, vertex, nextRouteStop, nextVertex, connectionDay));
                         }
                     }
                 }

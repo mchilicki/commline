@@ -26,11 +26,11 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
             bool isPreviousVertexFastestConnectionEmpty = _dijkstraStopConnectionsService
                     .IsConnectionEmpty(stopConnectionFromPreviousVertex);
             bool canMaybeNewFastestConnectionExist =
-                searchInput.StartTime <= maybeNewFastestConnection.StartTime &&
+                searchInput.StartFullDate <= maybeNewFastestConnection.StartDateTime &&
                     (isPreviousVertexFastestConnectionEmpty ||
-                    stopConnectionFromPreviousVertex.EndTime <= maybeNewFastestConnection.StartTime);
+                    stopConnectionFromPreviousVertex.EndDateTime <= maybeNewFastestConnection.StartDateTime);
             bool isMaybeNewFastestConnectionFaster =
-                maybeNewFastestConnection.EndTime < destinationStopCurrentFastestConnection.EndTime;
+                maybeNewFastestConnection.EndDateTime < destinationStopCurrentFastestConnection.EndDateTime;
             if (isDestinationVertexMarkedAsVisited)
                 return false;
             return canMaybeNewFastestConnectionExist &&
@@ -43,9 +43,9 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
             StopConnection newFastestConnection)
         {
             currentFastestStopConnection.Line = newFastestConnection.Line;
-            currentFastestStopConnection.StartTime = newFastestConnection.StartTime;
+            currentFastestStopConnection.StartDateTime = newFastestConnection.StartDateTime;
             currentFastestStopConnection.SourceStop = newFastestConnection.SourceStop;
-            currentFastestStopConnection.EndTime = newFastestConnection.EndTime;
+            currentFastestStopConnection.EndDateTime = newFastestConnection.EndDateTime;
         }
     }
 }

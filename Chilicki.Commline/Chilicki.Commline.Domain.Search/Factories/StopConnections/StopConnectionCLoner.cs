@@ -9,11 +9,11 @@ namespace Chilicki.Commline.Domain.Search.Factories.StopConnections
             return new StopConnection
             {
                 DestinationStop = stopConnection.DestinationStop,
-                EndTime = stopConnection.EndTime,
+                EndDateTime = stopConnection.EndDateTime,
                 IsTransfer = stopConnection.IsTransfer,
                 Line = stopConnection.Line,
                 SourceStop = stopConnection.SourceStop,
-                StartTime = stopConnection.StartTime
+                StartDateTime = stopConnection.StartDateTime
             };
         }
     }

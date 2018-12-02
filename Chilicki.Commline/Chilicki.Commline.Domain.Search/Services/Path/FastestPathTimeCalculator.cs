@@ -9,15 +9,15 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
     {
         public int CalculateTravelTime(FastestPath fastestPath)
         {
-            var travelStartTime = fastestPath.Path.First(p => p.IsTransfer == false).StartTime;
-            var travelEndTime = fastestPath.Path.Last(p => p.IsTransfer == false).EndTime;
+            var travelStartTime = fastestPath.Path.First(p => p.IsTransfer == false).StartDateTime;
+            var travelEndTime = fastestPath.Path.Last(p => p.IsTransfer == false).EndDateTime;
             return Math.Abs((travelEndTime - travelStartTime).Minutes);
         }
 
         public int CalculateConnectionTime(StopConnection waitingConnection)
         {
-            var travelStartTime = waitingConnection.StartTime;
-            var travelEndTime = waitingConnection.EndTime;
+            var travelStartTime = waitingConnection.StartDateTime;
+            var travelEndTime = waitingConnection.EndDateTime;
             return Math.Abs((travelEndTime - travelStartTime).Minutes);
         }
     }
