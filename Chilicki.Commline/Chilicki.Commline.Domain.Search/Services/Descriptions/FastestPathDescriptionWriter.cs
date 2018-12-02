@@ -16,7 +16,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
         readonly FastestPathTimeCalculator _timeCalculator;
         readonly LineDirectionService _lineDirectionService;
 
-        const string HOUR_FILTER = @"hh\:mm";
+        const string HOUR_FILTER = @"HH\:mm";
 
         public FastestPathDescriptionWriter(
             FastestPathTimeCalculator timeCalculator,
@@ -70,7 +70,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             var descriptionRows = new List<DescriptionRow>();
             var departureRow = new DescriptionRow
             {
-                First = connection.StartTime.ToString(HOUR_FILTER),
+                First = connection.StartDateTime.ToString(HOUR_FILTER),
                 Second = connection.SourceStop.Stop.Name
             };
             var lineRow = new DescriptionRow
@@ -82,7 +82,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             };
             var arrivalRow = new DescriptionRow
             {
-                First = connection.EndTime.ToString(HOUR_FILTER),
+                First = connection.EndDateTime.ToString(HOUR_FILTER),
                 Second = connection.DestinationStop.Stop.Name
             };
             descriptionRows.Add(departureRow);

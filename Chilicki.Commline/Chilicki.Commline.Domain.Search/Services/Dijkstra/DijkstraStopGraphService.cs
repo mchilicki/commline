@@ -37,8 +37,8 @@ namespace Chilicki.Commline.Domain.Search.Services.Dijkstra
                 var similarVertexFastestConnection = vertexFastestConnections
                     .FirstOrNull(p => p.DestinationStop.Stop.Id == similarVertex.Stop.Id);
                 similarVertexFastestConnection.SourceStop = stopVertex;
-                similarVertexFastestConnection.StartTime = connectionToStopVertex.EndTime;
-                similarVertexFastestConnection.EndTime = connectionToStopVertex.EndTime;
+                similarVertexFastestConnection.StartDateTime = connectionToStopVertex.EndDateTime;
+                similarVertexFastestConnection.EndDateTime = connectionToStopVertex.EndDateTime;
                 similarVertexFastestConnection.Line = null;
                 similarVertexFastestConnection.IsTransfer = true;
             }
