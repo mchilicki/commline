@@ -192,24 +192,28 @@
             'StopType': $("#editModalStopType").val(),
             'Longitude': longitude,
             'Latitude': latitude,
-        };
-        lastEditedStopMarker.setPosition(new google.maps.LatLng(latitude, longitude));
+        };        
         if (editedStop.Id !== "") {
             removeAllPolylines(MAP);
             $.each(allLines.Lines, function (i, line) {
                 var editedStops = line.Stops.filter((stop) => { return stop.Id === editedStop.Id; });
                 $.each(editedStops, function (i, stop) {
+                    stop.Name = editedStop.Name;
+                    stop.StopType = editedStop.StopType;
                     stop.Longitude = longitude;
                     stop.Latitude = latitude;
                 });
             });
             drawAllLines(MAP, allLines.Lines);
-            editedStops.Modified.push(editedStop);
+            removeStopFromAllContainers(editedStop.Id, previousPosition);
+            editedStops.Modified.push(editedStop);            
         }
         else {
             removeStopFromAllContainers(editedStop.Id, previousPosition);
             editedStops.Added.push(editedStop);
-        }        
+        }   
+        lastEditedStopMarker.setMap(null);
+        drawMarker(MAP, editedStop.Id, editedStop.Name, new google.maps.LatLng(latitude, longitude), editedStop.StopType, undefined);
         $("#editModalStopName").val('');
     }
 
