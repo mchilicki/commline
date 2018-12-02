@@ -16,7 +16,7 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
         readonly FastestPathTimeCalculator _timeCalculator;
         readonly LineDirectionService _lineDirectionService;
 
-        const string HOUR_FILTER = @"hh\:mm";
+        const string HOUR_FILTER = @"HH\:mm";
 
         public FastestPathDescriptionWriter(
             FastestPathTimeCalculator timeCalculator,
