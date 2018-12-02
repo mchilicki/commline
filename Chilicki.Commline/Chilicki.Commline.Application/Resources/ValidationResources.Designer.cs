@@ -61,6 +61,15 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Between Days option should not be checked for at least one departure run.
+        /// </summary>
+        internal static string BetweenDaysNotShouldBeChecked {
+            get {
+                return ResourceManager.GetString("BetweenDaysNotShouldBeChecked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Circular line must start and end in the same stop.
         /// </summary>
         internal static string CircularLineMustStartAndEndInTheSameStop {
@@ -97,11 +106,29 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Departure time can&apos;t be less than than the previous departure in the same run.
+        ///   Looks up a localized string similar to Departure times can&apos;t be equal .
+        /// </summary>
+        internal static string DeparturesTimesCantBeEqual {
+            get {
+                return ResourceManager.GetString("DeparturesTimesCantBeEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Departure time can&apos;t be less or equal than than the previous departure in the same run.
         /// </summary>
         internal static string DeparturesTimesNotCorrect {
             get {
                 return ResourceManager.GetString("DeparturesTimesNotCorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On Between Days option selected only on departure time can be less than the previous departure time .
+        /// </summary>
+        internal static string DeparturesTimesNotCorrectOnBetweenDays {
+            get {
+                return ResourceManager.GetString("DeparturesTimesNotCorrectOnBetweenDays", resourceCulture);
             }
         }
         

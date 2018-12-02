@@ -17,6 +17,8 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         {
             if (departures != null)
             {
+                departures = departures
+                    .OrderBy(p => p.First().DepartureTime);
                 int runIndex = 0;
                 foreach (var departureRun in departures)
                 {

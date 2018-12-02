@@ -38,6 +38,7 @@
                 {
                     <th width="auto">@stop.Name</th>
                 }
+                <th width="auto" style="text-align:center;">@EditorResources.IsBetweenDays</th>
                 <th width="auto">@BaseResources.Actions</th>
             </tr>
         </thead>
@@ -51,7 +52,11 @@
                         <td><input id="time-@departureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
                         tempDepartureIndex++;
                     }
+                    <td style="text-align: center;">
+                        <input id="isNextDay-@departureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                    </td>
                     <td>
+                        
                         <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
                         @if (departureRunIndex != 0)
                         {
@@ -68,6 +73,9 @@
                 {
                     <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                 }
+                <td style="text-align: center;">
+                    <input id="isNextDay-@departureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                </td>
                 <td>
                     <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
                     @if (departureRunIndex != 0)
@@ -86,6 +94,9 @@
                     {
                         <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                     }
+                    <td style="text-align: center;">
+                        <input id="isNextDay-@departureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                    </td>
                     <td>
                         <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
                         <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
@@ -110,6 +121,7 @@
                     {
                         <th width="auto">@stop.Name</th>
                     }
+                    <th width="auto">@EditorResources.IsBetweenDays</th>
                     <th width="auto">@BaseResources.Actions</th>
                 </tr>
             </thead>
@@ -123,6 +135,9 @@
                             <td><input id="return-time-@returnDepartureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
                             tempDepartureIndex++;
                         }
+                        <td style="text-align: center;">
+                            <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                        </td>
                         <td>
                             <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
                             @if (returnDepartureRunIndex != 0)
@@ -140,6 +155,9 @@
                     {
                         <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                     }
+                    <td style="text-align: center;">
+                        <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                    </td>
                     <td>
                         <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
                         @if (returnDepartureRunIndex != 0)
@@ -158,6 +176,9 @@
                         {
                             <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                         }
+                        <td style="text-align: center;">
+                            <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                        </td>
                         <td>
                             <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
                             <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
@@ -199,6 +220,8 @@
             $("#searchButton").hide();
             departureRunList = initializeDepartureRunList(departureRunList, @Model.Departures.Count() + 1);
             returnDepartureRunList = initializeDepartureRunList(returnDepartureRunList, @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1);
+            setProperlyBetweenDaysOptionForRunList(lineDepartures.Departures, false);
+            setProperlyBetweenDaysOptionForRunList(lineDepartures.ReturnDepartures, true);
             $.unblockUI();
         });
 
@@ -217,6 +240,26 @@
             clearButton: true,
             clearText: '@TimepickerResources.Clear',
         });
+
+        function setProperlyBetweenDaysOptionForRunList(runList, forReturnDepartures) {
+            $.each(runList, function (index, run) {
+                setProperlyBetweenDaysOption(run, index, forReturnDepartures);
+            });
+        }
+
+        function setProperlyBetweenDaysOption(departureRun, runIndex, forReturnDepartures) {
+            var shouldBeBetweenDayOptionActive = false;
+            $.each(departureRun, function (index, departure) {
+                if (departure.IsBetweenDays === true)
+                    shouldBeBetweenDayOptionActive = true;
+            });
+            if (shouldBeBetweenDayOptionActive === true) {
+                if (forReturnDepartures === false) 
+                    $('#isNextDay-' + runIndex).prop("checked", true);
+                else
+                    $('#return-isNextDay-' + runIndex).prop("checked", true);
+            }
+        }
 
         function saveModification() {
             var times = collectDeparturesData();
@@ -280,10 +323,12 @@
             var times = [];
             $.each(departureRunList, function (index, currentRunIndex) {
                 var rowTimes = [];
+                var isNextDay = $("#isNextDay-" + currentRunIndex).prop("checked");
                 for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
                     rowTimes.push({
                         'DepartureTime': $("#time-" + currentRunIndex + "-" + currentStopIndex).val(),
-                        'DayType': @((int)(DayType.Workday)) // TODO This should be editable
+                        'DayType': @((int)(DayType.Workday)),
+                        'IsNextDay': isNextDay
                     });
                 }
                 times.push(rowTimes);
@@ -295,10 +340,12 @@
             var returnTimes = [];
             $.each(returnDepartureRunList, function (index, currentRunIndex) {
                 var rowTimes = [];
+                var isNextDay = $("#return-isNextDay-" + currentRunIndex).prop("checked");
                 for (var currentStopIndex = 0; currentStopIndex < @(Model.ReturnLine != null ? Model.ReturnLine.Stops.Count() : 0); currentStopIndex++) {
                     rowTimes.push({
                         'DepartureTime': $("#return-time-" + currentRunIndex + "-" + currentStopIndex).val(),
-                        'DayType': @((int)(DayType.Workday)) // TODO This should be editable
+                        'DayType': @((int)(DayType.Workday)),
+                        'IsNextDay': isNextDay
                     });
                 }
                 returnTimes.push(rowTimes);

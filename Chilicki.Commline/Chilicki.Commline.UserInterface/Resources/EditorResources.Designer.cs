@@ -205,6 +205,15 @@ namespace Chilicki.Commline.UserInterface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Between Days.
+        /// </summary>
+        public static string IsBetweenDays {
+            get {
+                return ResourceManager.GetString("IsBetweenDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latitude.
         /// </summary>
         public static string Latitude {
