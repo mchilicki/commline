@@ -24,7 +24,7 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                 Line = routeStop.Line,
                 StartDateTime = connectionStartDay + departure.DepartureTime,
                 SourceStop = currentVertex,
-                EndDateTime = connectionStartDay + nextRouteStop
+                EndDateTime = endDay + nextRouteStop
                             .Departures
                             .Where(p => p.RunIndex == departure.RunIndex)
                             .First()
