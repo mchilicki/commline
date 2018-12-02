@@ -108,7 +108,7 @@ namespace Chilicki.Commline.Application.Validators
         private bool IsRunBetweenDays(IEnumerable<DepartureDTO> departureRun)
         {
             return departureRun
-                .Where(p => p.IsBetweenDays == true)
+                .Where(p => p.IsNextDay == true)
                 .Count() > 0;
         }
     }

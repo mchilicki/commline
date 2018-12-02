@@ -65,7 +65,7 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                                     .First();
                         foreach (var departure in routeStop.Departures)
                         {
-                            if (departure.IsBetweenDays)
+                            if (departure.IsOnNextDay)
                             {
                                 stopConnections.Add(_stopConnectionFactory.Create(
                                     routeStop, departure, vertex, nextRouteStop, nextVertex, connectionDay, betweenTwoDays: true));

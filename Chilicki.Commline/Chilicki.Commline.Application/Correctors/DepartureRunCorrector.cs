@@ -28,7 +28,7 @@ namespace Chilicki.Commline.Application.Correctors
             if (ShoulRunBeCorrected(departureRun))
             {
                 DepartureDTO lastDeparture = null;
-                departureRun.Last().IsBetweenDays = true;
+                departureRun.Last().IsNextDay = true;
                 bool shouldRestBeTrue = false;
                 foreach(var departure in departureRun)
                 {
@@ -38,7 +38,7 @@ namespace Chilicki.Commline.Application.Correctors
                         {
                             if (lastDeparture.DepartureTime < departure.DepartureTime)
                             {
-                                lastDeparture.IsBetweenDays = false;
+                                lastDeparture.IsNextDay = false;
                             }
                             else
                             {
@@ -47,7 +47,7 @@ namespace Chilicki.Commline.Application.Correctors
                         }
                         else
                         {
-                            lastDeparture.IsBetweenDays = true;
+                            lastDeparture.IsNextDay = true;
                         }                        
                     }
                     lastDeparture = departure;
@@ -59,7 +59,7 @@ namespace Chilicki.Commline.Application.Correctors
         private bool ShoulRunBeCorrected(IEnumerable<DepartureDTO> departureRun)
         {
             return departureRun
-                .Where(p => p.IsBetweenDays == true)
+                .Where(p => p.IsNextDay == true)
                 .Count() > 0;
         }
     }
