@@ -10,6 +10,7 @@ namespace Chilicki.Commline.Domain.Entities
         public int RunIndex { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public virtual DayType DayType { get; set; }
+        public bool IsBetweenDays { get; set; }
         [Required]
         public virtual RouteStop RouteStop { get; set; }
     }
