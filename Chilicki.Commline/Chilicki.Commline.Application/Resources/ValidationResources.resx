@@ -169,7 +169,7 @@
     <value>Start stop is empty</value>
   </data>
   <data name="DeparturesTimesNotCorrect" xml:space="preserve">
-    <value>Departure time can't be less than than the previous departure in the same run</value>
+    <value>Departure time can't be less or equal than than the previous departure in the same run</value>
   </data>
   <data name="StopDoesntExist" xml:space="preserve">
     <value>Stop doesn't exist</value>
@@ -188,5 +188,14 @@
   </data>
   <data name="LineDoesntExist" xml:space="preserve">
     <value>Line doesn't exist</value>
+  </data>
+  <data name="BetweenDaysNotShouldBeChecked" xml:space="preserve">
+    <value>The Between Days option should not be checked for at least one departure run</value>
+  </data>
+  <data name="DeparturesTimesCantBeEqual" xml:space="preserve">
+    <value>Departure times can't be equal </value>
+  </data>
+  <data name="DeparturesTimesNotCorrectOnBetweenDays" xml:space="preserve">
+    <value>On Between Days option selected only on departure time can be less than the previous departure time </value>
   </data>
 </root>

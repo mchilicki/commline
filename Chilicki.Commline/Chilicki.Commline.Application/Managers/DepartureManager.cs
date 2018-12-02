@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Chilicki.Commline.Application.Correctors;
 using Chilicki.Commline.Application.DTOs;
 using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
@@ -12,20 +13,24 @@ namespace Chilicki.Commline.Application.Managers
         readonly DepartureRepository _departureRepository;
         readonly DeparturesValidator _departuresValidator;
         readonly LineRepository _lineRepository;
+        readonly DepartureRunCorrector _departureRunCorrector;
 
         public DepartureManager(
             DepartureRepository departureRepository,
             DeparturesValidator departuresValidator,
-            LineRepository lineRepository)
+            LineRepository lineRepository,
+            DepartureRunCorrector departureRunCorrector)
         {
             _departureRepository = departureRepository;
             _departuresValidator = departuresValidator;
             _lineRepository = lineRepository;
+            _departureRunCorrector = departureRunCorrector;
         }
 
         public void ChangeLineDepartures(LineDeparturesDTO lineDepartures)
         {
             _departuresValidator.Validate(lineDepartures);
+            _departureRunCorrector.Correct(lineDepartures);
             ChangeLineDeparturesFor(lineDepartures.Line, lineDepartures.Departures);
             if (lineDepartures.ReturnLine != null)
                 ChangeLineDeparturesFor(lineDepartures.ReturnLine, lineDepartures.ReturnDepartures);

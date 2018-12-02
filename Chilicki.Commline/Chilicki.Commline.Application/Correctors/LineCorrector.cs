@@ -1,12 +1,13 @@
-﻿using Chilicki.Commline.Application.DTOs;
+﻿using Chilicki.Commline.Application.Correctors.Base;
+using Chilicki.Commline.Application.DTOs;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Chilicki.Commline.Application.Correctors
 {
-    public class LineCorrector
+    public class LineCorrector : ICorrector<LineDTO>
     {
-        public LineDTO CorrectLine(LineDTO line)
+        public LineDTO Correct(LineDTO line)
         {
             StopDTO previousStop = null;
             var stopIndexesToDelete = new List<int>();

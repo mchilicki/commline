@@ -57,18 +57,59 @@ namespace Chilicki.Commline.Application.Validators
         {
             foreach (var departureRun in departureRuns)
             {
-                DepartureDTO previousDeparture = null;
-                foreach (var departure in departureRun)
-                {
-                    if (previousDeparture != null)
-                    {
-                        if (previousDeparture.DepartureTime >= departure.DepartureTime)
-                            throw new ArgumentException(ValidationResources.DeparturesTimesNotCorrect);
-                    }
-                    previousDeparture = departure;
-                }
+                if (IsRunBetweenDays(departureRun))
+                    ValidateBetweenDaysDepartureRun(departureRun);
+                else
+                    ValidateNormalDepartureRun(departureRun);
             }
             return true;
+        }
+
+        private bool ValidateNormalDepartureRun(IEnumerable<DepartureDTO> departureRun)
+        {
+            DepartureDTO previousDeparture = null;
+            foreach (var departure in departureRun)
+            {
+                if (previousDeparture != null)
+                {
+                    if (previousDeparture.DepartureTime >= departure.DepartureTime)
+                        throw new ArgumentException(ValidationResources.DeparturesTimesNotCorrect);
+                }
+                previousDeparture = departure;
+            }
+            return true;
+        }
+
+        private bool ValidateBetweenDaysDepartureRun(IEnumerable<DepartureDTO> departureRun)
+        {
+            DepartureDTO previousDeparture = null;
+            bool haveAlreadyBeenOneDepartureBetweenDays = false;
+            foreach (var departure in departureRun)
+            {
+                if (previousDeparture != null)
+                {
+                    if (previousDeparture.DepartureTime == departure.DepartureTime)
+                        throw new ArgumentException(ValidationResources.DeparturesTimesCantBeEqual);
+                    if (previousDeparture.DepartureTime > departure.DepartureTime)
+                    {
+                        if (haveAlreadyBeenOneDepartureBetweenDays == true)
+                            throw new ArgumentException(ValidationResources.DeparturesTimesNotCorrectOnBetweenDays);
+                        else
+                            haveAlreadyBeenOneDepartureBetweenDays = true;
+                    }                        
+                }
+                previousDeparture = departure;
+            }
+            if (haveAlreadyBeenOneDepartureBetweenDays == false)
+                throw new ArgumentException(ValidationResources.BetweenDaysNotShouldBeChecked);
+            return true;
+        }
+
+        private bool IsRunBetweenDays(IEnumerable<DepartureDTO> departureRun)
+        {
+            return departureRun
+                .Where(p => p.IsBetweenDays == true)
+                .Count() > 0;
         }
     }
 }

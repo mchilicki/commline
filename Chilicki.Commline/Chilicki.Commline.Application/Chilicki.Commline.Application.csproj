@@ -84,6 +84,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Correctors\Base\ICorrector.cs" />
+    <Compile Include="Correctors\DepartureRunCorrector.cs" />
     <Compile Include="Correctors\LineCorrector.cs" />
     <Compile Include="DTOs\AllLinesDTO.cs" />
     <Compile Include="DTOs\DepartureDTO.cs" />

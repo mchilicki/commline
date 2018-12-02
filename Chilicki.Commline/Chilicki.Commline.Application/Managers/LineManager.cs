@@ -112,7 +112,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(LineDTO lineDTO)
         {            
-            lineDTO = _lineCorrector.CorrectLine(lineDTO);
+            lineDTO = _lineCorrector.Correct(lineDTO);
             Line line = Mapper.Map<LineDTO, Line>(lineDTO);            
             _lineRepository.Add(line);                           
             _routeStopRepository.InsertForLineAndStops(line, 

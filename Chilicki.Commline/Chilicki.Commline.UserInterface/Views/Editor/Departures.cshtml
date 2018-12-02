@@ -220,6 +220,8 @@
             $("#searchButton").hide();
             departureRunList = initializeDepartureRunList(departureRunList, @Model.Departures.Count() + 1);
             returnDepartureRunList = initializeDepartureRunList(returnDepartureRunList, @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1);
+            setProperlyBetweenDaysOptionForRunList(lineDepartures.Departures, false);
+            setProperlyBetweenDaysOptionForRunList(lineDepartures.ReturnDepartures, true);
             $.unblockUI();
         });
 
@@ -238,6 +240,26 @@
             clearButton: true,
             clearText: '@TimepickerResources.Clear',
         });
+
+        function setProperlyBetweenDaysOptionForRunList(runList, forReturnDepartures) {
+            $.each(runList, function (index, run) {
+                setProperlyBetweenDaysOption(run, index, forReturnDepartures);
+            });
+        }
+
+        function setProperlyBetweenDaysOption(departureRun, runIndex, forReturnDepartures) {
+            var shouldBeBetweenDayOptionActive = false;
+            $.each(departureRun, function (index, departure) {
+                if (departure.IsBetweenDays === true)
+                    shouldBeBetweenDayOptionActive = true;
+            });
+            if (shouldBeBetweenDayOptionActive === true) {
+                if (forReturnDepartures === false) 
+                    $('#isBetweenDays-' + runIndex).prop("checked", true);
+                else
+                    $('#return-isBetweenDays-' + runIndex).prop("checked", true);
+            }
+        }
 
         function saveModification() {
             var times = collectDeparturesData();
