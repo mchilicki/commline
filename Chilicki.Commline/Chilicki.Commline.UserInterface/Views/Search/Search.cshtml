@@ -14,7 +14,7 @@
 </style>
 
 <div>
-    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Search } })
+    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Search }, { "settings", ViewBag.Settings } })
 </div>
 
 <div id="searchSidenav" class="sidenav-toolbox">
@@ -125,7 +125,7 @@
                 pathToDraw.push(connection.SourceStop);
                 pathToDraw.push(connection.DestinationStop);
                 if (!connection.IsTransfer) {
-                    drawLine(MAP, connection.Line.Name, connection.Line.LineType, pathToDraw, connection.Line.Color);
+                    drawLine(MAP, connection.Line.Id, connection.Line.Name, connection.Line.LineType, pathToDraw, connection.Line.Color, null, null);
                 } else {
                     drawDashedLine(MAP, pathToDraw);
                 }

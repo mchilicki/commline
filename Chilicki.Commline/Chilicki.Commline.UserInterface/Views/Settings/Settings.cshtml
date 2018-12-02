@@ -1,0 +1,89 @@
+﻿@using Chilicki.Commline.UserInterface.Resources
+
+@model Chilicki.Commline.Infrastructure.Settings.CommlineSettings
+
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ 
+<div class="form-horizontal">
+    <div class="form-group col-md-10">
+        <div class="col-md-offset-1 col-md-10">
+            <h3>@BaseResources.Settings</h3>
+        </div>
+    </div>
+    <hr />
+
+    <div class="form-group col-md-10">
+        <label for="MapCenterPointLatitude" class="control-label col-md-2">@SettingsResources.CenterPointLatitude</label>
+        <input id="MapCenterPointLatitude" value="@Model.MapCenterPointLatitude" type="number" min="-85" max="85" step="any" class="form-control col-md-10" />
+    </div>
+
+    <div class="form-group col-md-10">
+        <label for="MapCenterPointLongitude" class="control-label col-md-2">@SettingsResources.CenterPointLongitude</label>
+        <input id="MapCenterPointLongitude" value="@Model.MapCenterPointLongitude" type="number" min="-180" max="180" step="any" class="form-control col-md-10" />
+    </div>
+
+    <div class="form-group col-md-10">
+        <label for="StartZoom" class="control-label col-md-2">@SettingsResources.StartZoom</label>
+        <input id="StartZoom" value="@Model.StartZoom" type="number" min="0" max="17" step="1" class="form-control col-md-10" />
+    </div>
+
+    <div class="form-group col-md-10">
+        <label for="MinimumZoomStopsAppear" class="control-label col-md-2">@SettingsResources.MinimumZoomStopsAppear</label>
+        <input id="MinimumZoomStopsAppear" value="@Model.MinimumZoomStopsAppear" type="number" min="0" max="17" step="1" class="form-control col-md-10" />
+    </div>
+
+    <div class="form-group col-md-10">
+        <label for="CopyTimesOption1" class="control-label col-md-2">@SettingsResources.CopyTimesOption1</label>
+        <input id="CopyTimesOption1" value="@Model.CopyTimesOption1" type="number" min="1" max="360" step="1" class="form-control col-md-10" />
+    </div>
+
+    <div class="form-group col-md-10">
+        <label for="CopyTimesOption2" class="control-label col-md-2">@SettingsResources.CopyTimesOption2</label>
+        <input id="CopyTimesOption2" value="@Model.CopyTimesOption2" type="number" min="1" max="360" step="1" class="form-control col-md-10" />
+    </div>
+
+    <div class="form-group col-md-10">
+        <label for="CopyTimesOption3" class="control-label col-md-2">@SettingsResources.CopyTimesOption3</label>
+        <input id="CopyTimesOption3" value="@Model.CopyTimesOption3" type="number" min="1" max="360" step="1" class="form-control col-md-10" />
+    </div>
+
+    <div class="form-group col-md-10">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" onclick="saveSettings()" value="@BaseResources.Save" class="btn btn-primary" />
+            <input type="button" onclick="backToDefaultSettings()" value="@SettingsResources.BackToDefaultSettings" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#toolboxButton").hide();
+            $("#saveModification").hide();
+            $("#searchButton").hide();
+        });
+
+        function saveSettings() {
+            var sendData = {
+                'MapCenterPointLatitude': $('#MapCenterPointLatitude').val(),
+                'MapCenterPointLongitude': $('#MapCenterPointLongitude').val(),
+                'StartZoom': $('#StartZoom').val(),
+                'MinimumZoomStopsAppear': $('#MinimumZoomStopsAppear').val(),
+                'CopyTimesOption1': $('#CopyTimesOption1').val(),
+                'CopyTimesOption2': $('#CopyTimesOption2').val(),
+                'CopyTimesOption3': $('#CopyTimesOption3').val(),
+            }
+            $.post("@Url.Action("SaveSettings", "Settings")", sendData, function (data, status) { location.reload(); });
+        }
+
+        function backToDefaultSettings() {
+            var sendData = {};
+            $.post("@Url.Action("BackToDefault", "Settings")", sendData, function (data, status) { location.reload(); });
+        }
+    </script>
+}

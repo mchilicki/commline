@@ -14,7 +14,7 @@
 
 <div>
     @Html.Partial("~/Views/Shared/_Map.cshtml",
-        new ViewDataDictionary { { "viewName", BaseResources.StopEditor } })
+        new ViewDataDictionary { { "viewName", BaseResources.StopEditor }, { "settings", ViewBag.Settings } })
 </div>
 
 <div id="toolboxSidenav" class="sidenav-toolbox">

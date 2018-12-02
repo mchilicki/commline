@@ -2,7 +2,7 @@
 @using Chilicki.Commline.Application.DTOs
 @using Chilicki.Commline.Domain.Enums.Extensions
 @using Chilicki.Commline.Domain.Enums
-
+@using Chilicki.Commline.Infrastructure.Settings
 
 @model LineDeparturesDTO
 
@@ -15,9 +15,11 @@
     int returnDepartureRunIndex = 0;
     int returnAlreadyAddedDepartureRuns = Model.ReturnDepartures != null ? Model.ReturnDepartures.Count() : 0 + 1;
 
-    int copyTimesOption1 = 15;
-    int copyTimesOption2 = 30;
-    int copyTimesOption3 = 60;
+    var settings = TempData["settings"] as CommlineSettings;
+
+    int copyTimesOption1 = settings.CopyTimesOption1;
+    int copyTimesOption2 = settings.CopyTimesOption2;
+    int copyTimesOption3 = settings.CopyTimesOption3;
 }
 
 <link rel="stylesheet" href="~/Styles/main.css" />
@@ -27,7 +29,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div style="margin-left: 50px; margin-right: 50px">
-    <h2>@EditorResources.DeparturesFor @Model.Line.LineType.GetDescription().ToLowerInvariant() @Model.Line.Name</h2>
+    <h3>@EditorResources.DeparturesFor @Model.Line.LineType.GetDescription().ToLowerInvariant() @Model.Line.Name</h3>
 
     <table id="departureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" style="width: auto">
         <thead>
@@ -49,15 +51,15 @@
                         <td><input id="time-@departureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
                         tempDepartureIndex++;
                     }
-                        <td>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
-                            @if (departureRunIndex != 0)
-                            {
-                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
-                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
-                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
-                            }
-                        </td>
+                    <td>
+                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
+                        @if (departureRunIndex != 0)
+                        {
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                        }
+                    </td>
                 </tr>
                 departureRunIndex++;
             }
@@ -151,18 +153,18 @@
                 </tr>
                 @for (; returnDepartureRunIndex < returnAlreadyAddedDepartureRuns + 50; returnDepartureRunIndex++)
                 {
-                <tr id="return-row-time-@returnDepartureRunIndex" hidden>
-                    @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
-                    {
-                        <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
-                    }
+                    <tr id="return-row-time-@returnDepartureRunIndex" hidden>
+                        @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
+                        {
+                            <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
+                        }
                         <td>
                             <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
                             <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
                             <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
                             <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
                         </td>
-                </tr>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -191,7 +193,7 @@
         var returnDepartureRunIdToNextUnhidden = @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1;
 
         $(document).ready(function () {
-            $(document).ajaxStart(blockInterface).ajaxStop($.unblockUI);           
+            $(document).ajaxStart(blockInterface).ajaxStop($.unblockUI);
             $("#toolboxButton").hide();
             $("#saveModification").click(saveModification);
             $("#searchButton").hide();
@@ -255,23 +257,23 @@
                     if (copiedTime !== '') {
                         var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
                         $("#time-" + rowId + "-" + currentStopIndex).val(increasedTime);
-                    }               
+                    }
                 }
-            }            
+            }
         }
 
         function copyReturnDepartureRun(rowId, minutesDifference) {
             var previousRowIndex = returnDepartureRunList.indexOf(rowId) - 1;
             if (previousRowIndex >= 0) {
                 var previousRowId = returnDepartureRunList[previousRowIndex];
-                for (var currentStopIndex = 0; currentStopIndex < @Model.Line.Stops.Count(); currentStopIndex++) {
+                for (var currentStopIndex = 0; currentStopIndex < @(Model.ReturnLine != null ? Model.ReturnLine.Stops.Count() : 0); currentStopIndex++) {
                     var copiedTime = $("#return-time-" + previousRowId + "-" + currentStopIndex).val();
                     if (copiedTime !== '') {
                         var increasedTime = moment(copiedTime, 'HH:mm:ss').add(minutesDifference, 'minutes').format('HH:mm');
                         $("#return-time-" + rowId + "-" + currentStopIndex).val(increasedTime);
-                    }               
+                    }
                 }
-            }            
+            }
         }
 
         function collectDeparturesData() {
@@ -321,7 +323,7 @@
                     }
                     else if (data.error !== undefined) {
                         alert('@BaseResources.ErrorOccured: ' + data.error);
-                    }                        
+                    }
                 });
         }
 
