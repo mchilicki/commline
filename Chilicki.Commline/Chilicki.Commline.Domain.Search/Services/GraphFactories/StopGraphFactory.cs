@@ -26,7 +26,8 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
         {
             var stopVertices = GenerateEmptyStopVertices(stops);
             stopVertices = FillStopVerticesWithSimilarStopVertices(stopVertices, stops);
-            stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops, day);            
+            stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops, day);
+            stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops, day.AddDays(1));
             return new StopGraph()
             {
                 StopVertices = stopVertices,
