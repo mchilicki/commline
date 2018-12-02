@@ -13,14 +13,18 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
             StopVertex currentVertex,
             RouteStop nextRouteStop,
             StopVertex nextVertex,
-            DateTime connectionDay)
+            DateTime connectionStartDay,
+            bool betweenTwoDays)
         {
+            var endDay = connectionStartDay;
+            if (betweenTwoDays)
+                endDay = endDay.AddDays(1);
             return new StopConnection()
             {
                 Line = routeStop.Line,
-                StartDateTime = connectionDay + departure.DepartureTime,
+                StartDateTime = connectionStartDay + departure.DepartureTime,
                 SourceStop = currentVertex,
-                EndDateTime = connectionDay + nextRouteStop
+                EndDateTime = connectionStartDay + nextRouteStop
                             .Departures
                             .Where(p => p.RunIndex == departure.RunIndex)
                             .First()

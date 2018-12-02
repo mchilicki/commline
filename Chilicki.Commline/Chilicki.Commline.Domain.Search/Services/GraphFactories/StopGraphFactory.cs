@@ -26,7 +26,6 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
         {
             var stopVertices = GenerateEmptyStopVertices(stops);
             stopVertices = FillStopVerticesWithSimilarStopVertices(stopVertices, stops);
-            //stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops, day.AddDays(-1));
             stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops, day);
             stopVertices = FillStopVerticesWithStopConnections(stopVertices, stops, day.AddDays(1));
             return new StopGraph()
@@ -69,12 +68,14 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
                             if (departure.IsBetweenDays)
                             {
                                 stopConnections.Add(_stopConnectionFactory.Create(
-                                    routeStop, departure, vertex, nextRouteStop, nextVertex, connectionDay.AddDays(1)));
+                                    routeStop, departure, vertex, nextRouteStop, nextVertex, connectionDay, betweenTwoDays: true));
+                                //stopConnections.Add(_stopConnectionFactory.Create(
+                                //    routeStop, departure, vertex, nextRouteStop, nextVertex, connectionDay.AddDays(1), betweenTwoDays: true));                                
                             }
                             else
                             {
                                 stopConnections.Add(_stopConnectionFactory.Create(
-                                    routeStop, departure, vertex, nextRouteStop, nextVertex, connectionDay));
+                                    routeStop, departure, vertex, nextRouteStop, nextVertex, connectionDay, betweenTwoDays: false));
                             }                            
                         }
                     }
