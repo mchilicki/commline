@@ -28,13 +28,13 @@ namespace Chilicki.Commline.Application.Correctors
             if (ShoulRunBeCorrected(departureRun))
             {
                 DepartureDTO lastDeparture = null;
-                departureRun.Last().IsBetweenDays = false;
-                bool shouldRestBeFalse = false;
+                departureRun.Last().IsBetweenDays = true;
+                bool shouldRestBeTrue = false;
                 foreach(var departure in departureRun)
                 {
                     if (lastDeparture != null)
                     {
-                        if (!shouldRestBeFalse)
+                        if (!shouldRestBeTrue)
                         {
                             if (lastDeparture.DepartureTime < departure.DepartureTime)
                             {
@@ -42,12 +42,12 @@ namespace Chilicki.Commline.Application.Correctors
                             }
                             else
                             {
-                                shouldRestBeFalse = true;
+                                shouldRestBeTrue = true;
                             }
                         }
                         else
                         {
-                            lastDeparture.IsBetweenDays = false;
+                            lastDeparture.IsBetweenDays = true;
                         }                        
                     }
                     lastDeparture = departure;

@@ -11,14 +11,14 @@ namespace Chilicki.Commline.Domain.Search.Services.Path
         {
             var travelStartTime = fastestPath.Path.First(p => p.IsTransfer == false).StartDateTime;
             var travelEndTime = fastestPath.Path.Last(p => p.IsTransfer == false).EndDateTime;
-            return Math.Abs((travelEndTime - travelStartTime).Minutes);
+            return (int)Math.Abs((travelEndTime - travelStartTime).TotalMinutes);
         }
 
         public int CalculateConnectionTime(StopConnection waitingConnection)
         {
             var travelStartTime = waitingConnection.StartDateTime;
             var travelEndTime = waitingConnection.EndDateTime;
-            return Math.Abs((travelEndTime - travelStartTime).Minutes);
+            return (int)Math.Abs((travelEndTime - travelStartTime).TotalMinutes);
         }
     }
 }
