@@ -31,65 +31,45 @@
 <div style="margin-left: 50px; margin-right: 50px">
     <h3>@EditorResources.DeparturesFor @Model.Line.LineType.GetDescription().ToLowerInvariant() @Model.Line.Name</h3>
 
-    <table id="departureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" style="width: auto">
-        <thead>
-            <tr id="row-time-@departureRunIndex">
-                @foreach (var stop in Model.Line.Stops)
-                {
-                    <th width="auto">@stop.Name</th>
-                }
-                <th width="auto" style="text-align:center;">@EditorResources.IsBetweenDays</th>
-                <th width="auto">@BaseResources.Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var departureRun in Model.Departures)
-            {
-                int tempDepartureIndex = 0;
+    <div style="width: auto; height:auto; overflow: auto;">
+        <table id="departureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover">
+            <thead>
                 <tr id="row-time-@departureRunIndex">
-                    @foreach (var departure in departureRun)
+                    @foreach (var stop in Model.Line.Stops)
                     {
-                        <td><input id="time-@departureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
-                        tempDepartureIndex++;
+                        <th width="auto">@stop.Name</th>
                     }
-                    <td style="text-align: center;">
-                        <input id="isNextDay-@departureRunIndex" type="checkbox" class="checkbox-inline" width="13">
-                    </td>
-                    <td>
-                        
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
-                        @if (departureRunIndex != 0)
-                        {
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
-                        }
-                    </td>
+                    <th width="auto" style="text-align:center;">@EditorResources.IsBetweenDays</th>
+                    <th width="auto">@BaseResources.Actions</th>
                 </tr>
-                departureRunIndex++;
-            }
-            <tr id="row-time-@departureRunIndex">
-                @for (int stopIndex = 0; stopIndex < Model.Line.Stops.Count(); stopIndex++)
+            </thead>
+            <tbody>
+                @foreach (var departureRun in Model.Departures)
                 {
-                    <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
+                    int tempDepartureIndex = 0;
+                    <tr id="row-time-@departureRunIndex">
+                        @foreach (var departure in departureRun)
+                        {
+                            <td><input id="time-@departureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
+                            tempDepartureIndex++;
+                        }
+                        <td style="text-align: center;">
+                            <input id="isNextDay-@departureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                        </td>
+                        <td>
+                        
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
+                            @if (departureRunIndex != 0)
+                            {
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                            }
+                        </td>
+                    </tr>
+                    departureRunIndex++;
                 }
-                <td style="text-align: center;">
-                    <input id="isNextDay-@departureRunIndex" type="checkbox" class="checkbox-inline" width="13">
-                </td>
-                <td>
-                    <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
-                    @if (departureRunIndex != 0)
-                    {
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
-                    }
-                </td>
-                @{departureRunIndex++;}
-            </tr>
-            @for (; departureRunIndex < alreadyAddedDepartureRuns + 50; departureRunIndex++)
-            {
-                <tr id="row-time-@departureRunIndex" hidden>
+                <tr id="row-time-@departureRunIndex">
                     @for (int stopIndex = 0; stopIndex < Model.Line.Stops.Count(); stopIndex++)
                     {
                         <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
@@ -99,14 +79,36 @@
                     </td>
                     <td>
                         <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                        @if (departureRunIndex != 0)
+                        {
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                        }
                     </td>
+                    @{departureRunIndex++;}
                 </tr>
-            }
-        </tbody>
-    </table>
+                @for (; departureRunIndex < alreadyAddedDepartureRuns + 50; departureRunIndex++)
+                {
+                    <tr id="row-time-@departureRunIndex" hidden>
+                        @for (int stopIndex = 0; stopIndex < Model.Line.Stops.Count(); stopIndex++)
+                        {
+                            <td><input id="time-@departureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
+                        }
+                        <td style="text-align: center;">
+                            <input id="isNextDay-@departureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                        </td>
+                        <td>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeDepartureRun(this, @departureRunIndex)"><i class="fa fa-trash"></i></button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyDepartureRun(@departureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <button id="addNewDepartureRunButton" type="button" class="btn btn-default" onclick="addNewDepartureRun()">
         @EditorResources.AddNextDepartureRun
     </button>
@@ -114,26 +116,47 @@
     @if (Model.ReturnLine != null)
     {
         <p></p>
-        <table id="returnDepartureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" style="width: auto">
-            <thead>
-                <tr id="return-row-time-@returnDepartureRunIndex">
-                    @foreach (var stop in Model.ReturnLine.Stops)
-                    {
-                        <th width="auto">@stop.Name</th>
-                    }
-                    <th width="auto">@EditorResources.IsBetweenDays</th>
-                    <th width="auto">@BaseResources.Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var departureRun in Model.ReturnDepartures)
-                {
-                    int tempDepartureIndex = 0;
+        <div style="width: auto; height:auto; overflow: auto;">
+            <table id="returnDepartureTable" class="table table-bordered table-condensed table-striped table-responsive table-hover" >
+                <thead>
                     <tr id="return-row-time-@returnDepartureRunIndex">
-                        @foreach (var departure in departureRun)
+                        @foreach (var stop in Model.ReturnLine.Stops)
                         {
-                            <td><input id="return-time-@returnDepartureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
-                            tempDepartureIndex++;
+                            <th width="auto">@stop.Name</th>
+                        }
+                        <th width="auto">@EditorResources.IsBetweenDays</th>
+                        <th width="auto">@BaseResources.Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var departureRun in Model.ReturnDepartures)
+                    {
+                        int tempDepartureIndex = 0;
+                        <tr id="return-row-time-@returnDepartureRunIndex">
+                            @foreach (var departure in departureRun)
+                            {
+                                <td><input id="return-time-@returnDepartureRunIndex-@tempDepartureIndex" class="timepicker form-control" value="@departure.DepartureTime" style="width: 62px" /></td>
+                                tempDepartureIndex++;
+                            }
+                            <td style="text-align: center;">
+                                <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                            </td>
+                            <td>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
+                                @if (returnDepartureRunIndex != 0)
+                                {
+                                    <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                                    <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                                    <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                                }
+                            </td>
+                        </tr>
+                        returnDepartureRunIndex++;
+                    }
+                    <tr id="return-row-time-@returnDepartureRunIndex">
+                        @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
+                        {
+                            <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
                         }
                         <td style="text-align: center;">
                             <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
@@ -147,48 +170,29 @@
                                 <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
                             }
                         </td>
+                        @{returnDepartureRunIndex++;}
                     </tr>
-                    returnDepartureRunIndex++;
-                }
-                <tr id="return-row-time-@returnDepartureRunIndex">
-                    @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
+                    @for (; returnDepartureRunIndex < returnAlreadyAddedDepartureRuns + 50; returnDepartureRunIndex++)
                     {
-                        <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
+                        <tr id="return-row-time-@returnDepartureRunIndex" hidden>
+                            @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
+                            {
+                                <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
+                            }
+                            <td style="text-align: center;">
+                                <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
+                            </td>
+                            <td>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
+                                <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
+                            </td>
+                        </tr>
                     }
-                    <td style="text-align: center;">
-                        <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
-                    </td>
-                    <td>
-                        <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
-                        @if (returnDepartureRunIndex != 0)
-                        {
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
-                        }
-                    </td>
-                    @{returnDepartureRunIndex++;}
-                </tr>
-                @for (; returnDepartureRunIndex < returnAlreadyAddedDepartureRuns + 50; returnDepartureRunIndex++)
-                {
-                    <tr id="return-row-time-@returnDepartureRunIndex" hidden>
-                        @for (int stopIndex = 0; stopIndex < Model.ReturnLine.Stops.Count(); stopIndex++)
-                        {
-                            <td><input id="return-time-@returnDepartureRunIndex-@stopIndex" class="timepicker form-control" style="width: 62px" /></td>
-                        }
-                        <td style="text-align: center;">
-                            <input id="return-isNextDay-@returnDepartureRunIndex" type="checkbox" class="checkbox-inline" width="13">
-                        </td>
-                        <td>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="removeReturnDepartureRun(this, @returnDepartureRunIndex)"><i class="fa fa-trash"></i></button>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption1)"><i class="fa fa-copy"></i> @copyTimesOption1</button>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption2)"><i class="fa fa-copy"></i> @copyTimesOption2</button>
-                            <button style="margin-top: 0" class="btn btn-default btn-md" onclick="copyReturnDepartureRun(@returnDepartureRunIndex, @copyTimesOption3)"><i class="fa fa-copy"></i> @copyTimesOption3</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
         <button type="button" class="btn btn-default" onclick="addNewReturnDepartureRun()">
             @EditorResources.AddNextReturnDepartureRun
         </button>
@@ -209,9 +213,11 @@
 
         var departureRunList = [];
         var departureRunIdToNextUnhidden = @Model.Departures.Count() + 1;
+        var departurenRunMaxCount = @alreadyAddedDepartureRuns + 50 - 1;
 
         var returnDepartureRunList = [];
         var returnDepartureRunIdToNextUnhidden = @(Model.ReturnLine != null ? Model.ReturnDepartures.Count() : 0) + 1;
+        var returnDepartureRunMaxCount = @returnAlreadyAddedDepartureRuns + 50 - 1;
 
         $(document).ready(function () {
             $(document).ajaxStart(blockInterface).ajaxStop($.unblockUI);
@@ -268,9 +274,11 @@
         }
 
         function addNewDepartureRun() {
-            $('#row-time-' + departureRunIdToNextUnhidden).show();
-            departureRunList.push(departureRunIdToNextUnhidden);
-            departureRunIdToNextUnhidden++;
+            if (departureRunIdToNextUnhidden <= departurenRunMaxCount) {
+                $('#row-time-' + departureRunIdToNextUnhidden).show();
+                departureRunList.push(departureRunIdToNextUnhidden);
+                departureRunIdToNextUnhidden++;
+            }            
             $('#addNewDepartureRunButton')[0].scrollIntoView(false);
         }
 
@@ -280,9 +288,11 @@
         }
 
         function addNewReturnDepartureRun() {
-            $('#return-row-time-' + returnDepartureRunIdToNextUnhidden).show();
-            returnDepartureRunList.push(returnDepartureRunIdToNextUnhidden);
-            returnDepartureRunIdToNextUnhidden++;
+            if (returnDepartureRunIdToNextUnhidden <= returnDepartureRunMaxCount) {
+                $('#return-row-time-' + returnDepartureRunIdToNextUnhidden).show();
+                returnDepartureRunList.push(returnDepartureRunIdToNextUnhidden);
+                returnDepartureRunIdToNextUnhidden++;
+            }
             window.scrollTo(0, document.body.scrollHeight);
         }
 

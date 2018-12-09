@@ -19,7 +19,7 @@ namespace Chilicki.Commline.Application.Validators
                 ValidateDeparturesTimes(dto.Departures);
                 if (dto.ReturnLine != null)
                 {
-                    ValidateDeparturesStructure(dto.Line, dto.ReturnDepartures);
+                    ValidateDeparturesStructure(dto.ReturnLine, dto.ReturnDepartures);
                     ValidateDeparturesTimes(dto.ReturnDepartures);
                 }
             }            
@@ -37,8 +37,6 @@ namespace Chilicki.Commline.Application.Validators
 
         private bool ValidateDeparturesStructure(LineDTO line, IEnumerable<IEnumerable<DepartureDTO>> departureRuns)
         {
-            if (departureRuns.Count() <= 0)
-                throw new ArgumentException(ValidationResources.NoDepartures);
             int stopsCount = line.Stops.Count();
             foreach (var departureRun in departureRuns)
             {
@@ -46,7 +44,7 @@ namespace Chilicki.Commline.Application.Validators
                     throw new ArgumentException(ValidationResources.StopsInDeparturesDoNotMatch);
                 foreach (var departure in departureRun)
                 {
-                    if (departure == null || departure.DepartureTime.Equals(TimeSpan.Zero))
+                    if (departure == null)
                         throw new ArgumentException(ValidationResources.DepartureEmpty);
                 }
             }

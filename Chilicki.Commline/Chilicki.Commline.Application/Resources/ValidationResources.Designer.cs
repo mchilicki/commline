@@ -115,7 +115,7 @@ namespace Chilicki.Commline.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Departure time can&apos;t be less or equal than than the previous departure in the same run.
+        ///   Looks up a localized string similar to Departure times are not correct.
         /// </summary>
         internal static string DeparturesTimesNotCorrect {
             get {
