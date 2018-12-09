@@ -1,8 +1,7 @@
 namespace Chilicki.Commline.Infrastructure.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddIsOnNextDayInDeparture : DbMigration
     {
         public override void Up()

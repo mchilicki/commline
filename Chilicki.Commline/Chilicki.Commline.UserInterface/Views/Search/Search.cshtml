@@ -17,8 +17,8 @@
     @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Search }, { "settings", ViewBag.Settings } })
 </div>
 
-<div id="searchSidenav" class="sidenav-toolbox">
-    <div style="margin-left: 10px; margin-right: 10px">
+<div id="searchSidenav" class="sidenav-toolbox" >
+    <div style="width: auto; height:auto; overflow: auto; margin-left: 10px; margin-right: 10px">
         <label class="w3-text-light-grey" for="startStopInput">@SearchResources.StartStop</label>
         <input id="startStopInput" class="form-control" type="text" readonly placeholder="@SearchResources.StartStop">
         <label class="w3-text-light-grey" for="endStopInput">@SearchResources.EndStop</label>
@@ -30,9 +30,12 @@
         <button type="button" class="btn btn-primary" onclick="search()">
             @SearchResources.SearchAsAction
         </button>
+        <p></p>
         <div>
-            <table id="searchResult" class="w3-text-light-grey"></table>
+            <table id="searchResult" class="w3-text-light-grey table table-bordered table-condensed"></table>
+            <br /><br /><br />
         </div>
+        
     </div>
 </div>
 
@@ -81,7 +84,6 @@
         currentDate: '@DateTime.Now.ToString("yyyy-MM-dd")',
         nowText: '@TimepickerResources.Now',
         cancelText: '@TimepickerResources.Cancel',
-        //TODO datepicker langugage, use -> lang: 'fr', 
     });
 
     function setStopAsStart(stopId, stopName) {

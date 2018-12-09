@@ -96,8 +96,6 @@ namespace Chilicki.Commline.Domain.Search.Services.Descriptions
             return new DescriptionRow
             {
                 First = DescriptionResources.Transfer,
-                Third = $"{_timeCalculator.CalculateConnectionTime(connection).ToString()} " +
-                                $"{ DescriptionResources.Minutes}"
             };
         }
 

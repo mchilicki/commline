@@ -29,6 +29,8 @@ namespace Chilicki.Commline.Application.Managers
 
         public void ChangeLineDepartures(LineDeparturesDTO lineDepartures)
         {
+            lineDepartures.Departures = lineDepartures.Departures ?? new List<List<DepartureDTO>>();
+            lineDepartures.ReturnDepartures = lineDepartures.ReturnDepartures ?? new List<List<DepartureDTO>>();
             _departuresValidator.Validate(lineDepartures);
             _departureRunCorrector.Correct(lineDepartures);
             ChangeLineDeparturesFor(lineDepartures.Line, lineDepartures.Departures);
