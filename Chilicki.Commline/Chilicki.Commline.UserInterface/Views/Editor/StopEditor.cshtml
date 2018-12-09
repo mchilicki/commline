@@ -179,7 +179,6 @@
         drawMarker(MAP, '', $("#modalStopName").val(), lastCoordinates, $("#modalStopType").val());
         allLines.Stops.push(newStop);
         editedStops.Added.push(newStop);
-        $("#modalStopName").val('');
     }
 
     function addStopToEditedContainer() {
@@ -214,7 +213,6 @@
         }   
         lastEditedStopMarker.setMap(null);
         drawMarker(MAP, editedStop.Id, editedStop.Name, new google.maps.LatLng(latitude, longitude), editedStop.StopType, undefined);
-        $("#editModalStopName").val('');
     }
 
     function removeStopAndAddToRemovedContainer() {
