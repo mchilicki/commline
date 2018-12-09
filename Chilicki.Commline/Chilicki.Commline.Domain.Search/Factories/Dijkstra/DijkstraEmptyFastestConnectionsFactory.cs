@@ -1,5 +1,4 @@
-﻿using Chilicki.Commline.Domain.Entities;
-using Chilicki.Commline.Domain.Search.Aggregates;
+﻿using Chilicki.Commline.Domain.Search.Aggregates;
 using Chilicki.Commline.Domain.Search.Aggregates.Graphs;
 using System;
 using System.Collections.Generic;
