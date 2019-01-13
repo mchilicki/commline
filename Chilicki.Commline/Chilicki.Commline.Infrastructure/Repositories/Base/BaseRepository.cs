@@ -1,6 +1,6 @@
 ﻿using Chilicki.Commline.Infrastructure.Databases;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace Chilicki.Commline.Infrastructure.Repositories.Base

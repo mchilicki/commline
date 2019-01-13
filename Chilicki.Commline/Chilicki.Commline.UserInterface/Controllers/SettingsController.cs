@@ -1,9 +1,11 @@
 ﻿using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Managers.Settings;
 using Chilicki.Commline.Infrastructure.Settings;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {

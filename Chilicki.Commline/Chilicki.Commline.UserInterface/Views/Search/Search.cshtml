@@ -14,7 +14,7 @@
 </style>
 
 <div>
-    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary { { "viewName", BaseResources.Search }, { "settings", ViewBag.Settings } })
+    @Html.Partial("~/Views/Shared/_Map.cshtml", new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(), new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "viewName", BaseResources.Search }, { "settings", ViewBag.Settings } })
 </div>
 
 <div id="searchSidenav" class="sidenav-toolbox" >

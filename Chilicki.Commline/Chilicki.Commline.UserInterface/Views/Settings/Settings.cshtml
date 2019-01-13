@@ -59,31 +59,29 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $(document).ready(function () {
-            $("#toolboxButton").hide();
-            $("#saveModification").hide();
-            $("#searchButton").hide();
-        });
+<script>
+    $(document).ready(function () {
+        $("#toolboxButton").hide();
+        $("#saveModification").hide();
+        $("#searchButton").hide();
+    });
 
-        function saveSettings() {
-            var sendData = {
-                'MapCenterPointLatitude': $('#MapCenterPointLatitude').val(),
-                'MapCenterPointLongitude': $('#MapCenterPointLongitude').val(),
-                'StartZoom': $('#StartZoom').val(),
-                'MinimumZoomStopsAppear': $('#MinimumZoomStopsAppear').val(),
-                'CopyTimesOption1': $('#CopyTimesOption1').val(),
-                'CopyTimesOption2': $('#CopyTimesOption2').val(),
-                'CopyTimesOption3': $('#CopyTimesOption3').val(),
-            }
-            $.post("@Url.Action("SaveSettings", "Settings")", sendData, function (data, status) { location.reload(); });
+    function saveSettings() {
+        var sendData = {
+            'MapCenterPointLatitude': $('#MapCenterPointLatitude').val(),
+            'MapCenterPointLongitude': $('#MapCenterPointLongitude').val(),
+            'StartZoom': $('#StartZoom').val(),
+            'MinimumZoomStopsAppear': $('#MinimumZoomStopsAppear').val(),
+            'CopyTimesOption1': $('#CopyTimesOption1').val(),
+            'CopyTimesOption2': $('#CopyTimesOption2').val(),
+            'CopyTimesOption3': $('#CopyTimesOption3').val(),
         }
+        $.post("@Url.Action("SaveSettings", "Settings")", sendData, function (data, status) { location.reload(); });
+    }
 
-        function backToDefaultSettings() {
-            var sendData = {};
-            $.post("@Url.Action("BackToDefault", "Settings")", sendData, function (data, status) { location.reload(); });
-        }
-    </script>
-}
+    function backToDefaultSettings() {
+        var sendData = {};
+        $.post("@Url.Action("BackToDefault", "Settings")", sendData, function (data, status) { location.reload(); });
+    }
+</script>
+

@@ -2,11 +2,13 @@
 using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Managers.Settings;
 using Chilicki.Commline.UserInterface.Resources;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {
@@ -117,7 +119,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
             {
                 return Json(new { error = ex.Message });
             }
-            return Json(stop, JsonRequestBehavior.AllowGet);
+            return Json(stop);
         }
     }
 }

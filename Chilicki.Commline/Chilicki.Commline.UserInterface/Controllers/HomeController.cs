@@ -1,8 +1,10 @@
 ﻿using Chilicki.Commline.Application.Managers;
 using Chilicki.Commline.Application.Managers.Settings;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {
@@ -35,12 +37,12 @@ namespace Chilicki.Commline.UserInterface.Controllers
 
         public JsonResult GetAllLines()
         {
-            return Json(_lineManager.GetEverything(), JsonRequestBehavior.AllowGet);
+            return Json(_lineManager.GetEverything());
         }
 
         public JsonResult GetAllStopsConnectedToAnyLine()
         {
-            return Json(_stopManager.GetAllConnectedToAnyLine(), JsonRequestBehavior.AllowGet);
+            return Json(_stopManager.GetAllConnectedToAnyLine());
         }
 
         public IEnumerable<SelectListItem> GetAllLinesIdsAndNamesOnly()

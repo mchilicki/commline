@@ -1,11 +1,11 @@
 ﻿using Chilicki.Commline.Domain.Entities;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Chilicki.Commline.Infrastructure.Databases
 {
     public class CommlineDBContext : DbContext
     {
-        public CommlineDBContext() : base("Commline") {  }
+        public CommlineDBContext() : base() {  }
 
         public virtual DbSet<Departure> Departures { get; set; }
         public virtual DbSet<Line> Lines { get; set; }

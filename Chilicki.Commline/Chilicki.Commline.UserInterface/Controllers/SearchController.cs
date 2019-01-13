@@ -2,10 +2,12 @@
 using Chilicki.Commline.Application.Managers.Settings;
 using Chilicki.Commline.Application.Search.DTOs;
 using Chilicki.Commline.Application.Search.Managers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace Chilicki.Commline.UserInterface.Controllers
 {
