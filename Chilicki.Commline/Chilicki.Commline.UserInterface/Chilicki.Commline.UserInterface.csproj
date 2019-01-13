@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\bootstrap-material-datetimepicker.css" />
+    <None Include="wwwroot\css\main.css" />
+    <None Include="wwwroot\css\map.css" />
+    <None Include="wwwroot\css\modal-window.css" />
+    <None Include="wwwroot\css\shared.css" />
+    <None Include="wwwroot\css\sidenav.css" />
+    <None Include="wwwroot\images\loading.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />

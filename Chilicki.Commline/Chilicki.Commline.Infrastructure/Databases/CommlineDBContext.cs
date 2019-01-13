@@ -5,7 +5,7 @@ namespace Chilicki.Commline.Infrastructure.Databases
 {
     public class CommlineDBContext : DbContext
     {
-        public CommlineDBContext() : base() {  }
+        public CommlineDBContext(DbContextOptions options) : base(options) {  }
 
         public virtual DbSet<Departure> Departures { get; set; }
         public virtual DbSet<Line> Lines { get; set; }
