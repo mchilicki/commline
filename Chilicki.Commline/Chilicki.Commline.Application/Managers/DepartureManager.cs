@@ -14,17 +14,20 @@ namespace Chilicki.Commline.Application.Managers
         readonly DeparturesValidator _departuresValidator;
         readonly LineRepository _lineRepository;
         readonly DepartureRunCorrector _departureRunCorrector;
+        readonly IMapper _mapper;
 
         public DepartureManager(
             DepartureRepository departureRepository,
             DeparturesValidator departuresValidator,
             LineRepository lineRepository,
-            DepartureRunCorrector departureRunCorrector)
+            DepartureRunCorrector departureRunCorrector,
+            IMapper mapper)
         {
             _departureRepository = departureRepository;
             _departuresValidator = departuresValidator;
             _lineRepository = lineRepository;
             _departureRunCorrector = departureRunCorrector;
+            _mapper = mapper;
         }
 
         public void ChangeLineDepartures(LineDeparturesDTO lineDepartures)
@@ -41,7 +44,7 @@ namespace Chilicki.Commline.Application.Managers
         private void ChangeLineDeparturesFor(LineDTO lineDTO, IEnumerable<IEnumerable<DepartureDTO>> departuresDTO)
         {
             Line line = _lineRepository.Find(lineDTO.Id);
-            var departures = Mapper.Map
+            var departures = _mapper.Map
                 <IEnumerable<IEnumerable<DepartureDTO>>,
                 IEnumerable<IEnumerable<Departure>>>
                 (departuresDTO);

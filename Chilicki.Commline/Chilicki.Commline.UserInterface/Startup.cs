@@ -21,10 +21,6 @@ using Chilicki.Commline.Infrastructure.IO;
 using Chilicki.Commline.Infrastructure.Repositories;
 using Chilicki.Commline.UserInterface.Controllers;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +28,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using System;
 
 namespace Chilicki.Commline.UserInterface
 {
@@ -44,17 +43,15 @@ namespace Chilicki.Commline.UserInterface
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureCookies(services);
-
+            ConfigureDatabase(services);
             ConfigureDependencyInjection(services);
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            ConfigureMappings(services);            
+            ConfigureMvc(services);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -71,6 +68,8 @@ namespace Chilicki.Commline.UserInterface
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            AppDomain.CurrentDomain.SetData("DataDirectory", env.ContentRootPath);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -83,16 +82,20 @@ namespace Chilicki.Commline.UserInterface
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
         }
 
+        private void ConfigureDatabase(IServiceCollection services)
+        {
+            var connection = @"Server=localhost;Database=Commline;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<CommlineDBContext>
+                (options => options.UseSqlServer(connection));
+        }
+
         private void ConfigureDependencyInjection(IServiceCollection services)
         {
-            services.AddDbContext<CommlineDBContext>();
-
             services.AddTransient<StopRepository>();
             services.AddTransient<LineRepository>();
             services.AddTransient<DepartureRepository>();
@@ -126,6 +129,7 @@ namespace Chilicki.Commline.UserInterface
             services.AddTransient<StopValidator>();
 
             services.AddTransient<LineCorrector>();
+            services.AddTransient<DepartureRunCorrector>();
 
             services.AddTransient<SearchInputManualMapper>();
 
@@ -137,6 +141,22 @@ namespace Chilicki.Commline.UserInterface
             services.AddTransient<EditorController>();
             services.AddTransient<SearchController>();
             services.AddTransient<SettingsController>();
+        }
+
+        private void ConfigureMappings(IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutomapperProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+        }
+
+        private void ConfigureMvc(IServiceCollection services)
+        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
     }
 }

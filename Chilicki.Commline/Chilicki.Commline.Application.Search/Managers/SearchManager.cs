@@ -22,6 +22,7 @@ namespace Chilicki.Commline.Application.Search.Managers
         readonly SearchInputManualMapper _searchInputManualMapper;
         readonly LineRepository _lineRepository;
         readonly StopRepository _stopRepository;
+        readonly IMapper _mapper;
 
         public SearchManager(
             IConnectionSearchEngine connectionSearchEngine,
@@ -31,7 +32,8 @@ namespace Chilicki.Commline.Application.Search.Managers
             SearchValidator searchValidator,
             SearchInputManualMapper searchInputManualMapper,
             LineRepository lineRepository,
-            StopRepository stopRepository)
+            StopRepository stopRepository,
+            IMapper mapper)
         {
             _connectionSearchEngine = connectionSearchEngine;
             _graphGenerator = graphGenerator;
@@ -41,6 +43,7 @@ namespace Chilicki.Commline.Application.Search.Managers
             _lineRepository = lineRepository;
             _stopRepository = stopRepository;
             _fastestPathResolver = fastestPathResolver;
+            _mapper = mapper;
         }
 
         public FastestPathDTO SearchFastestConnections(SearchInputDTO searchInputDTO)
@@ -51,7 +54,7 @@ namespace Chilicki.Commline.Application.Search.Managers
             var stopGraph = _graphGenerator.CreateGraph(stops, searchInput.StartDate);
             var fastestConnections = _connectionSearchEngine.SearchConnections(searchInput, stopGraph);
             var fastestPath = _fastestPathResolver.ResolveFastestPath(searchInput, fastestConnections);
-            var fastestPathDTO = Mapper.Map<FastestPath, FastestPathDTO>(fastestPath);
+            var fastestPathDTO = _mapper.Map<FastestPath, FastestPathDTO>(fastestPath);
             fastestPathDTO.PathDescription = _fastestPathDescriptionWriter.WriteDescription(searchInput, fastestPath);
             return fastestPathDTO;
         }

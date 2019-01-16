@@ -14,48 +14,51 @@ namespace Chilicki.Commline.Application.Managers
         readonly MixedRepository _mixedRepository;
         readonly StopValidator _stopValidator;
         readonly StopFactory _stopFactory;
+        readonly IMapper _mapper;
 
         public StopManager(
             StopRepository stopRepository, 
             MixedRepository mixedRepository,
             StopValidator stopValidator,
-            StopFactory stopFactory)
+            StopFactory stopFactory,
+            IMapper mapper)
         {
             _stopRepository = stopRepository;
             _mixedRepository = mixedRepository;
             _stopValidator = stopValidator;
             _stopFactory = stopFactory;
+            _mapper = mapper;
         }
 
         public StopDTO GetById(long id)
         {
-            var stopDTO = Mapper.Map<Stop, StopDTO>(_stopRepository.Find(id));
+            var stopDTO = _mapper.Map<Stop, StopDTO>(_stopRepository.Find(id));
             return stopDTO;
         }
 
         public IEnumerable<StopDTO> GetAll()
         {
-            var stopDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_stopRepository.GetAll());
+            var stopDTOs = _mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_stopRepository.GetAll());
             return stopDTOs;
         }
 
         public IEnumerable<StopDTO> GetAllNotConnectedToAnyLine()
         {
-            var stopsDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>
+            var stopsDTOs = _mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>
                 (_stopRepository.GetAllNotConnectedToAnyLine());
             return stopsDTOs;
         }
 
         public IEnumerable<StopDTO> GetAllConnectedToAnyLine()
         {
-            var stopsDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>
+            var stopsDTOs = _mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>
                 (_stopRepository.GetAllConnectedToAnyLine());
             return stopsDTOs;
         }
 
         public IEnumerable<StopDTO> GetAllForLine(long id)
         {
-            var stopDTOs = Mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_mixedRepository.GetAllStopsForLineId(id));
+            var stopDTOs = _mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_mixedRepository.GetAllStopsForLineId(id));
             return stopDTOs;
         }
 
@@ -75,7 +78,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public void Create(StopDTO stopDTO)
         {
-            var stop = Mapper.Map<StopDTO, Stop>(stopDTO);
+            var stop = _mapper.Map<StopDTO, Stop>(stopDTO);
             stop.StopNumber = _stopRepository.GetNextStopNumberForStopName(stopDTO.Name);
             _stopRepository.Add(stop);
         }

@@ -18,6 +18,7 @@ namespace Chilicki.Commline.Application.Managers
         readonly LineValidator _lineValidator;
         readonly LineCorrector _lineCorrector;
         readonly LineFactory _lineFactory;
+        readonly IMapper _mapper;
 
         public LineManager(
             LineRepository lineRepository, 
@@ -26,7 +27,8 @@ namespace Chilicki.Commline.Application.Managers
             DepartureRepository departureRepository,
             LineValidator lineValidator,
             LineCorrector lineCorrector,
-            LineFactory lineFactory)
+            LineFactory lineFactory,
+            IMapper mapper)
         {
             _lineRepository = lineRepository;
             _stopManager = stopManager;
@@ -35,11 +37,12 @@ namespace Chilicki.Commline.Application.Managers
             _departureRepository = departureRepository;
             _lineCorrector = lineCorrector;
             _lineFactory = lineFactory;
+            _mapper = mapper;
         }
 
         public LineDTO GetById(long id)
         {
-            LineDTO lineDTO = Mapper.Map<Line, LineDTO>(_lineRepository.Find(id));
+            LineDTO lineDTO = _mapper.Map<Line, LineDTO>(_lineRepository.Find(id));
             lineDTO.Stops = _stopManager.GetAllForLine(id);
             return lineDTO;
         }
@@ -47,7 +50,7 @@ namespace Chilicki.Commline.Application.Managers
         public LineDTO GetReturnLine(LineDTO lineDTO)
         {
             Line line = _lineRepository.Find(lineDTO.Id);
-            LineDTO returnLineDTO = Mapper.Map<Line, LineDTO>(_lineRepository.GetReturnLine(line));
+            LineDTO returnLineDTO = _mapper.Map<Line, LineDTO>(_lineRepository.GetReturnLine(line));
             if (returnLineDTO != null)
                 returnLineDTO.Stops = _stopManager.GetAllForLine(returnLineDTO.Id);
             return returnLineDTO;
@@ -55,7 +58,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public IEnumerable<LineDTO> GetAll()
         {
-            var lineDTOs = Mapper.Map<IEnumerable<Line>, IEnumerable<LineDTO>>
+            var lineDTOs = _mapper.Map<IEnumerable<Line>, IEnumerable<LineDTO>>
                 (_lineRepository.GetAll());
             foreach (var lineDTO in lineDTOs)
             {
@@ -75,18 +78,18 @@ namespace Chilicki.Commline.Application.Managers
 
         public LineDeparturesDTO GetDeparturesForLine(long lineId)
         {
-            var line = Mapper.Map<Line, LineDTO>(_lineRepository.Find(lineId));
+            var line = _mapper.Map<Line, LineDTO>(_lineRepository.Find(lineId));
             var returnLine = GetReturnLine(line);
             IEnumerable<IEnumerable<DepartureDTO>> returnDepartures = null;
             if (returnLine != null)
-                returnDepartures = Mapper.Map<
+                returnDepartures = _mapper.Map<
                         IEnumerable<IEnumerable<Departure>>,
                         IEnumerable<IEnumerable<DepartureDTO>>>
                     (_departureRepository.GetAllLineDeparturesOrderedByRuns(returnLine.Id));
             return new LineDeparturesDTO()
             {
                 Line = GetById(line.Id),
-                Departures = Mapper.Map<
+                Departures = _mapper.Map<
                         IEnumerable<IEnumerable<Departure>>,
                         IEnumerable<IEnumerable<DepartureDTO>>>
                     (_departureRepository.GetAllLineDeparturesOrderedByRuns(line.Id)),
@@ -97,7 +100,7 @@ namespace Chilicki.Commline.Application.Managers
 
         public IEnumerable<LineDTO> GetAllWithoutReturnLines()
         {
-            return Mapper.Map<IEnumerable<Line>, IEnumerable<LineDTO>>
+            return _mapper.Map<IEnumerable<Line>, IEnumerable<LineDTO>>
                 (_lineRepository.GetAllWithoutReturnLines());
         }
 
@@ -113,10 +116,10 @@ namespace Chilicki.Commline.Application.Managers
         public void Create(LineDTO lineDTO)
         {            
             lineDTO = _lineCorrector.Correct(lineDTO);
-            Line line = Mapper.Map<LineDTO, Line>(lineDTO);            
+            Line line = _mapper.Map<LineDTO, Line>(lineDTO);            
             _lineRepository.Add(line);                           
-            _routeStopRepository.InsertForLineAndStops(line, 
-                Mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
+            _routeStopRepository.InsertForLineAndStops(line,
+                _mapper.Map<IEnumerable<StopDTO>, IEnumerable<Stop>>(lineDTO.Stops));
         }
 
         public void Edit(IEnumerable<LineDTO> lineDTOs)

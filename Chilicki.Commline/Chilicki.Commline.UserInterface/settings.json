@@ -1,0 +1,9 @@
+{
+  "MapCenterPointLatitude": 50.120965,
+  "MapCenterPointLongitude": 19.01512,
+  "StartZoom": 13,
+  "MinimumZoomStopsAppear": 12,
+  "CopyTimesOption1": 15,
+  "CopyTimesOption2": 30,
+  "CopyTimesOption3": 60
+}
