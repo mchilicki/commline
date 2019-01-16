@@ -332,3 +332,4 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 Chilicki.Commline/Chilicki.Commline.UserInterface/App_Data/
+Chilicki.Commline/Chilicki.Commline.UserInterface/commlineSettings.json
