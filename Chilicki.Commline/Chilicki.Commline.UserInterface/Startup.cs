@@ -31,6 +31,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System;
+using System.Globalization;
 
 namespace Chilicki.Commline.UserInterface
 {
@@ -48,7 +49,7 @@ namespace Chilicki.Commline.UserInterface
             ConfigureCookies(services);
             ConfigureDatabase(services);
             ConfigureDependencyInjection(services);
-            ConfigureMappings(services);            
+            ConfigureMappings(services);
             ConfigureMvc(services);
         }
 
@@ -67,6 +68,12 @@ namespace Chilicki.Commline.UserInterface
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseRequestLocalization();
+            var cultureInfo = new CultureInfo("en-GB");
+            cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             AppDomain.CurrentDomain.SetData("DataDirectory", env.ContentRootPath);
 
