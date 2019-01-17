@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Infrastructure.Databases;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +22,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories.Base
             return _entities.Count();
         }
 
-        public virtual TEntity Find(long id)
+        public virtual TEntity Find(Guid id)
         {
             return _entities.Find(id);
         }

@@ -1,5 +1,6 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +15,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             _db = db;
         }
 
-        public IEnumerable<Stop> GetAllStopsForLineId(long lineId)
+        public IEnumerable<Stop> GetAllStopsForLineId(Guid lineId)
         {
             return _db.RouteStops
                 .Where(r => r.Line != null && r.Line.Id == lineId)

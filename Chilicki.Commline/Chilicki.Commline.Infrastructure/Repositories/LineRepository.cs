@@ -1,6 +1,7 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +16,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             _stopRepository = stopRepository;
         }
 
-        public bool DoesLineWithIdExist(long lineId)
+        public bool DoesLineWithIdExist(Guid lineId)
         {
             return _entities
                 .Where(p => p.Id == lineId)

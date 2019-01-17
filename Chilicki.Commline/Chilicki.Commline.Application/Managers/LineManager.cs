@@ -5,6 +5,7 @@ using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Domain.Factories;
 using Chilicki.Commline.Infrastructure.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace Chilicki.Commline.Application.Managers
@@ -40,7 +41,7 @@ namespace Chilicki.Commline.Application.Managers
             _mapper = mapper;
         }
 
-        public LineDTO GetById(long id)
+        public LineDTO GetById(Guid id)
         {
             LineDTO lineDTO = _mapper.Map<Line, LineDTO>(_lineRepository.Find(id));
             lineDTO.Stops = _stopManager.GetAllForLine(id);
@@ -76,7 +77,7 @@ namespace Chilicki.Commline.Application.Managers
             };
         }
 
-        public LineDeparturesDTO GetDeparturesForLine(long lineId)
+        public LineDeparturesDTO GetDeparturesForLine(Guid lineId)
         {
             var line = _mapper.Map<Line, LineDTO>(_lineRepository.Find(lineId));
             var returnLine = GetReturnLine(line);

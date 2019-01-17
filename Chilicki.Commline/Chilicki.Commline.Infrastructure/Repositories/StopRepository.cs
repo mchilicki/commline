@@ -1,6 +1,7 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +13,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         {
         }
 
-        public bool DoesStopWithIdExist(long id)
+        public bool DoesStopWithIdExist(Guid id)
         {
             return _entities
                 .Where(p => p.Id == id)
@@ -48,7 +49,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             return currentStopNumber;
         }             
         
-        public bool IsStopConnectedToAnyLine(long id)
+        public bool IsStopConnectedToAnyLine(Guid id)
         {
             return _entities
                 .Find(id)

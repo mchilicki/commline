@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Chilicki.Commline.Domain.Entities
 {
     public class RouteStop
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public int StopIndex { get; set; }
         public virtual ICollection<Departure> Departures { get; set; }

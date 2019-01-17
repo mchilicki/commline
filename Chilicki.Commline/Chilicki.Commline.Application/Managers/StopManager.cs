@@ -4,6 +4,7 @@ using Chilicki.Commline.Application.Validators;
 using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Domain.Factories;
 using Chilicki.Commline.Infrastructure.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace Chilicki.Commline.Application.Managers
@@ -30,7 +31,7 @@ namespace Chilicki.Commline.Application.Managers
             _mapper = mapper;
         }
 
-        public StopDTO GetById(long id)
+        public StopDTO GetById(Guid id)
         {
             var stopDTO = _mapper.Map<Stop, StopDTO>(_stopRepository.Find(id));
             return stopDTO;
@@ -56,7 +57,7 @@ namespace Chilicki.Commline.Application.Managers
             return stopsDTOs;
         }
 
-        public IEnumerable<StopDTO> GetAllForLine(long id)
+        public IEnumerable<StopDTO> GetAllForLine(Guid id)
         {
             var stopDTOs = _mapper.Map<IEnumerable<Stop>, IEnumerable<StopDTO>>(_mixedRepository.GetAllStopsForLineId(id));
             return stopDTOs;

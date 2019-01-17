@@ -20,9 +20,9 @@ namespace Chilicki.Commline.Application.Search.Validators
         {
             if (search == null)
                 throw new ArgumentNullException(nameof(search));
-            if (search.StartStopId == -1)
+            if (search.StartStopId == Guid.Empty)
                 throw new ArgumentException(SearchValidationResources.StartStopIsEmpty);
-            if (search.DestinationStopId == -1)
+            if (search.DestinationStopId == Guid.Empty)
                 throw new ArgumentException(SearchValidationResources.EndStopIsEmpty);
             if (!_stopRepository.DoesStopWithIdExist(search.StartStopId))
                 throw new ArgumentException($"{SearchValidationResources.StopWithIdDoesNotExist} {search.StartStopId}");

@@ -1,6 +1,7 @@
 ﻿using Chilicki.Commline.Domain.Entities;
 using Chilicki.Commline.Infrastructure.Databases;
 using Chilicki.Commline.Infrastructure.Repositories.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,7 +48,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         }
 
         public IEnumerable<IEnumerable<Departure>> 
-            GetAllLineDeparturesOrderedByRuns(long lineId)
+            GetAllLineDeparturesOrderedByRuns(Guid lineId)
         {
             var departures = new List<List<Departure>>();
             var runIndexes = GetLineRunIndexes(lineId);
@@ -63,7 +64,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             return departures;            
         }
 
-        private IEnumerable<int> GetLineRunIndexes(long lineId)
+        private IEnumerable<int> GetLineRunIndexes(Guid lineId)
         {
             return _entities
                 .Where(p => p.RouteStop.Line.Id == lineId)

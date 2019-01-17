@@ -49,7 +49,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
             return View("LineEditor");
         }
 
-        public ActionResult Departures(long lineId)
+        public ActionResult Departures(Guid lineId)
         {
             ViewBag.LinesIdsNames = GetAllLinesIdsAndNamesOnly();
             TempData["settings"] = _settingsManager.GetSettings();
@@ -108,7 +108,7 @@ namespace Chilicki.Commline.UserInterface.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetStop(long id)
+        public JsonResult GetStop(Guid id)
         {
             StopDTO stop = null;
             try
