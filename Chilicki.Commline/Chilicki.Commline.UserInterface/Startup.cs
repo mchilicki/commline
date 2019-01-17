@@ -32,6 +32,10 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System;
 using System.Globalization;
+using Newtonsoft.Json.Serialization;
+using Chilicki.Commline.Domain.Search.Factories.StopConnections;
+using Chilicki.Commline.Domain.Services.Lines;
+using Chilicki.Commline.Domain.Search.Services.Descriptions;
 
 namespace Chilicki.Commline.UserInterface
 {
@@ -111,18 +115,26 @@ namespace Chilicki.Commline.UserInterface
 
             services.AddTransient<StopLineTypesMatchChecker>();
             services.AddTransient<NextRouteStopResolver>();
+            services.AddTransient<LineDirectionService>();
 
             services.AddTransient<IConnectionSearchEngine, DijkstraConnectionSearchEngine>();
             services.AddTransient<IGraphFactory<StopGraph>, StopGraphFactory>();
-            services.AddTransient<DijkstraNextVertexResolver>();
+            services.AddTransient<StopConnectionFactory>();            
             services.AddTransient<DijkstraEmptyFastestConnectionsFactory>();
+            services.AddTransient<DijkstraNextVertexResolver>();
             services.AddTransient<DijkstraFastestConnectionReplacer>();
+            services.AddTransient<DijkstraStopConnectionsService>();
+            services.AddTransient<DijkstraStopGraphService>();
 
             services.AddTransient<FastestPathResolver>();
             services.AddTransient<FastestPathTransferService>();
+            services.AddTransient<StopConnectionCloner>();
+            services.AddTransient<FastestPathDescriptionWriter>();
+            services.AddTransient<FastestPathTimeCalculator>();
 
             services.AddTransient<StopFactory>();
             services.AddTransient<LineFactory>();
+            
 
             services.AddTransient<SearchManager>();
             services.AddTransient<StopManager>();
@@ -163,7 +175,9 @@ namespace Chilicki.Commline.UserInterface
 
         private void ConfigureMvc(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
         }
     }
 }

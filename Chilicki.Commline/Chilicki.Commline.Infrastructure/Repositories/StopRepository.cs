@@ -51,10 +51,8 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         
         public bool IsStopConnectedToAnyLine(Guid id)
         {
-            return _entities
-                .Find(id)
-                .RouteStops
-                .Count > 0;
+            var stop = _entities.Find(id);
+            return (stop.RouteStops != null && stop.RouteStops.Count > 0);
         }
     }
 }
