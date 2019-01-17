@@ -8,25 +8,24 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 
-namespace Chilicki.Commline.UserInterface.HtmlExtensions
+namespace Chilicki.Commline.UserInterface.Views.HtmlExtensions
 {
-    public static class HtmlLineTypeExtensions
-    {       
-
-        public static SelectList ToSelectList(this LineType selectedValueOutput)
+    public static class HtmlDayTypeExtensions
+    {
+        public static SelectList ToSelectList(this DayType selectedValueOutput)
         {
-            var values = from LineType e in Enum.GetValues(typeof(LineType))
+            var values = from DayType e in Enum.GetValues(typeof(DayType))
                          select new { Id = (int)e, Name = e.GetDescription() };
             return new SelectList(values, "Id", "Name", selectedValueOutput);
         }
 
-        public static IHtmlContent LineTypeToString(this IHtmlHelper helper)
+        public static IHtmlContent DayTypeToString(this IHtmlHelper helper)
         {
-            var enumValues = Enum.GetValues(typeof(LineType)).Cast<LineType>();
+            var enumValues = Enum.GetValues(typeof(DayType)).Cast<DayType>();
             var enumDictionary = enumValues.ToDictionary(value => value.GetDescription());
             var reversedEnumDictionary = enumDictionary.ReverseKeyValue();
             var descriptions = reversedEnumDictionary.Select(p => p.Value);
-            var intEnumValues = Enum.GetValues(typeof(LineType)).Cast<int>();
+            var intEnumValues = Enum.GetValues(typeof(DayType)).Cast<int>();
             var composedEnumDictionary = intEnumValues.Zip(descriptions, (key, value) => new { key, value })
                 .ToDictionary(x => x.key, x => x.value);
 

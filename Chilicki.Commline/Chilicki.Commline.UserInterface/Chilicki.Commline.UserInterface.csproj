@@ -29,5 +29,9 @@
     <ProjectReference Include="..\Chilicki.Commline.Application\Chilicki.Commline.Application.csproj" />
     <ProjectReference Include="..\Chilicki.Commline.Common\Chilicki.Commline.Common.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   
 </Project>

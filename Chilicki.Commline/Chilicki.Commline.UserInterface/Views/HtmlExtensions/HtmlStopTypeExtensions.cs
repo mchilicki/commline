@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 
-namespace Chilicki.Commline.UserInterface.HtmlExtensions
+namespace Chilicki.Commline.UserInterface.Views.HtmlExtensions
 {
     public static class HtmlStopTypeExtensions
     {
