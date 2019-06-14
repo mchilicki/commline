@@ -1,4 +1,5 @@
 ﻿using Chilicki.Commline.UserInterface.App_Start;
+using Chilicki.Commline.UserInterface.Helpers.ControllerActivators;
 using log4net;
 using System;
 using System.Web.Mvc;
@@ -21,6 +22,7 @@ namespace Chilicki.Commline.UserInterface
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Startup application.");
+            ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory(new CultureAwareControllerActivator()));
         }
 
         protected void Application_Error(Object sender, EventArgs e)
