@@ -8,13 +8,13 @@ namespace Chilicki.Commline.Domain.Factories
     public class LineFactory
     {
         public Line FillIn(Line line, string name, string color, 
-            bool IsCircular, LineType lineType, IEnumerable<RouteStop> routeStops)
+            bool IsCircular, LineType lineType, IEnumerable<Trip> routeStops)
         {
             line.Name = name;
             line.Color = color;
             line.IsCircular = IsCircular;
             line.LineType = lineType;
-            line.RouteStops = routeStops.ToList();
+            line.Trips = routeStops.ToList();
             return line;
         }
     }

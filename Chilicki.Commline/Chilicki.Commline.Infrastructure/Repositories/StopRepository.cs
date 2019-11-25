@@ -22,14 +22,14 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         public IEnumerable<Stop> GetAllConnectedToAnyLine()
         {
             return _entities
-                .Where(e => e.RouteStops.Any())
+                .Where(e => e.Trips.Any())
                 .ToList();
         }
 
         public IEnumerable<Stop> GetAllNotConnectedToAnyLine()
         {
             return _entities
-                .Where(e => !e.RouteStops.Any())
+                .Where(e => !e.Trips.Any())
                 .ToList();
         }
 
@@ -52,7 +52,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
         {
             return _entities
                 .Find(id)
-                .RouteStops
+                .Trips
                 .Count > 0;
         }
     }

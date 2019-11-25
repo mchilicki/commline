@@ -12,6 +12,6 @@ namespace Chilicki.Commline.Domain.Entities
         public string Color { get; set; }
         public bool IsCircular { get; set; }
         public virtual LineType LineType { get; set; }
-        public virtual ICollection<RouteStop> RouteStops { get; set; }
+        public virtual ICollection<Trip> Trips { get; set; }
     }
 }

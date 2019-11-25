@@ -80,7 +80,7 @@
     <Compile Include="Enums\Extensions\EnumExtensions.cs" />
     <Compile Include="Enums\Extensions\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Enums\LineType.cs" />
-    <Compile Include="Entities\RouteStop.cs" />
+    <Compile Include="Entities\Trip.cs" />
     <Compile Include="Entities\Stop.cs" />
     <Compile Include="Enums\StopType.cs" />
     <Compile Include="Factories\LineFactory.cs" />

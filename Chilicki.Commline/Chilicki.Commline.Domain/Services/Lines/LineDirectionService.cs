@@ -7,7 +7,7 @@ namespace Chilicki.Commline.Domain.Services.Lines
     {
         public Stop GetDirectionStop(Line line)
         {
-            return line.RouteStops.Last().Stop;
+            return line.Trips.Last().Stop;
         }
     }
 }

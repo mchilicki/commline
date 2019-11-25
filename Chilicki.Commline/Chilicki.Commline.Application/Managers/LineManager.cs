@@ -132,7 +132,7 @@ namespace Chilicki.Commline.Application.Managers
         {            
             var line = _lineRepository.Find(lineDTO.Id);
             _lineFactory.FillIn(line, lineDTO.Name, lineDTO.Color, 
-                line.IsCircular, line.LineType, line.RouteStops);
+                line.IsCircular, line.LineType, line.Trips);
             _lineRepository.Update(line);
         }
 

@@ -6,9 +6,9 @@ namespace Chilicki.Commline.Domain.Services.Routes
 {
     public class NextRouteStopResolver
     {
-        public RouteStop GetNextRouteStop(RouteStop routeStop)
+        public Trip GetNextRouteStop(Trip routeStop)
         {
-            var lineRouteStops = routeStop.Line.RouteStops;
+            var lineRouteStops = routeStop.Line.Trips;
             return lineRouteStops
                 .Where(p => p.StopIndex == routeStop.StopIndex + 1)
                 .FirstOrNull();

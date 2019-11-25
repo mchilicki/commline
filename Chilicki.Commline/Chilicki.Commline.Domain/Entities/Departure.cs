@@ -7,12 +7,13 @@ namespace Chilicki.Commline.Domain.Entities
     public class Departure
     {
         public long Id { get; set; }
+        public int StopIndex { get; set; }
         public int RunIndex { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public virtual DayType DayType { get; set; }
         public bool IsOnNextDay { get; set; }
         public bool IsBetweenDays { get; set; }
         [Required]
-        public virtual RouteStop RouteStop { get; set; }
+        public virtual Stop Stop { get; set; }
     }
 }

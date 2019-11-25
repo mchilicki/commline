@@ -55,7 +55,7 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
             foreach (var vertex in allStopVertices)
             {
                 var stopConnections = vertex.StopConnections.ToList();
-                foreach (var routeStop in vertex.Stop.RouteStops)
+                foreach (var routeStop in vertex.Stop.Trips)
                 {
                     var nextRouteStop = _routeService.GetNextRouteStop(routeStop);
                     if (nextRouteStop != null)

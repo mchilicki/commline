@@ -26,7 +26,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
                     foreach (var departure in departureRun)
                     {
                         departure.RunIndex = runIndex;
-                        departure.RouteStop = line.RouteStops
+                        departure.RouteStop = line.Trips
                             .First(p => p.StopIndex == stopIndex);
                         _entities.Add(departure);
                         stopIndex++;

@@ -13,6 +13,6 @@ namespace Chilicki.Commline.Domain.Entities
         public double Latitude { get; set; }
         public int StopNumber { get; set; }
         public StopType StopType { get; set; }
-        public virtual ICollection<RouteStop> RouteStops { get; set; }
+        public virtual ICollection<Trip> Trips { get; set; }
     }
 }

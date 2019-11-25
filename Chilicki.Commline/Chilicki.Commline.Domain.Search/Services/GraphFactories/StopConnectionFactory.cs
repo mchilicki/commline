@@ -8,10 +8,10 @@ namespace Chilicki.Commline.Domain.Search.Services.GraphFactories
     public class StopConnectionFactory
     {
         public StopConnection Create(
-            RouteStop routeStop, 
+            Trip routeStop, 
             Departure departure,
             StopVertex currentVertex,
-            RouteStop nextRouteStop,
+            Trip nextRouteStop,
             StopVertex nextVertex,
             DateTime connectionStartDay,
             bool betweenTwoDays)

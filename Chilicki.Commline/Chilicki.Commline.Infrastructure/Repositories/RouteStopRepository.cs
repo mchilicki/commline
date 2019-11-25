@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Chilicki.Commline.Infrastructure.Repositories
 {
-    public class RouteStopRepository : BaseRepository<RouteStop>
+    public class RouteStopRepository : BaseRepository<Trip>
     {
         readonly LineRepository _lineRepository;
         readonly StopRepository _stopRepository;
@@ -24,7 +24,7 @@ namespace Chilicki.Commline.Infrastructure.Repositories
             foreach (var stop in stops)
             {
                 var entityStop = _stopRepository.Find(stop.Id);
-                _entities.Add(new RouteStop()
+                _entities.Add(new Trip()
                 {
                     Line = entityLine,
                     Stop = entityStop,
