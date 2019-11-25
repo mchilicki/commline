@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Chilicki.Commline.UserInterface.HtmlExtensions
+namespace Chilicki.Commline.UserInterface.Helpers.HtmlExtensions
 {
     public static class HtmlDayTypeExtensions
     {

@@ -6,25 +6,24 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Chilicki.Commline.UserInterface.HtmlExtensions
+namespace Chilicki.Commline.UserInterface.Helpers.HtmlExtensions
 {
-    public static class HtmlLineTypeExtensions
-    {       
-
-        public static SelectList ToSelectList(this LineType selectedValueOutput)
+    public static class HtmlStopTypeExtensions
+    {
+        public static SelectList ToSelectList(this StopType selectedValueOutput)
         {
-            var values = from LineType e in Enum.GetValues(typeof(LineType))
+            var values = from StopType e in Enum.GetValues(typeof(StopType))
                          select new { Id = (int)e, Name = e.GetDescription() };
             return new SelectList(values, "Id", "Name", selectedValueOutput);
         }
 
-        public static MvcHtmlString LineTypeToString(this HtmlHelper helper)
+        public static MvcHtmlString StopTypeToString(this HtmlHelper helper)
         {
-            var enumValues = Enum.GetValues(typeof(LineType)).Cast<LineType>();
+            var enumValues = Enum.GetValues(typeof(StopType)).Cast<StopType>();
             var enumDictionary = enumValues.ToDictionary(value => value.GetDescription());
             var reversedEnumDictionary = enumDictionary.ReverseKeyValue();
             var descriptions = reversedEnumDictionary.Select(p => p.Value);
-            var intEnumValues = Enum.GetValues(typeof(LineType)).Cast<int>();
+            var intEnumValues = Enum.GetValues(typeof(StopType)).Cast<int>();
             var composedEnumDictionary = intEnumValues.Zip(descriptions, (key, value) => new { key, value })
                 .ToDictionary(x => x.key, x => x.value);
 
